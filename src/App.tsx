@@ -1,7 +1,10 @@
+import Access from "./pages/Access"
+
 function App() {
 
   return (
     <>
+    <Access/>
     </>
   )
 }
