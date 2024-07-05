@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import Exclamation from "../../assets/icons/Exclamation";
+import Exclamation from "../common/Exclamation";
 
 type InputProps = {
   label?: string;
@@ -36,11 +36,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {errorMsg !== null ? (
           <div className="flex items-center text-red-500 text-xs mt-1">
             <Exclamation
-              width="11px"
               fill="red"
-              className="mr-1 flex-shrink-0"
+              width="11px"
+              className="mr-1 flex-shrink-0 border-red-500"
             />
-            <span className="text-red-500 text-[10px] mt-1 leading-tight">
+            <span className="text-red-500 text-[10px] mt-px leading-tight">
               {errorMsg}
             </span>
           </div>
