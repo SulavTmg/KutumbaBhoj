@@ -22,13 +22,14 @@ const Access = () => {
     });
 
   return (
-    <div className=" flex w-screen h-screen">
+    <div className="flex w-full h-screen items-start">
       <ImgSlider />
-      <div className="w-1/2">
+      <div className="w-1/2 h-full">
         <div className="px-[120px]">
-          <div className="mt-11">
+          <div className="mt-8">
             <img src={Logo} alt="kutumba-bhoj-logo" className=" w-60 " />
           </div>
+          <div className="flex flex-grow" />
           <div className="max-w-[445px] max-h-[425px] mt-12">
             <header className="mb-[46px]">
               <h1 className=" font-sans text-3xl leading-10 font-semibold mb-[5px]">
