@@ -10,7 +10,7 @@ const ImgSlider = () => {
       setIndex((currIndex) =>
         currIndex === ImageURLS.length - 1 ? 0 : currIndex + 1
       );
-    }, 2000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [ImageURLS.length]);
   return (
