@@ -4,12 +4,10 @@
 @tailwind utilities;
 
 @layer base {
-  
-    
 
-    label, a, span {
+    /* label, a, span {
         color: #0D693C;
         font-family: "Josefin Sans", sans-serif;
-    }
+    } */
     
 }
