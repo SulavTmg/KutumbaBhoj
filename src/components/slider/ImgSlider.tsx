@@ -19,7 +19,6 @@ const ImgSlider = () => {
         style={{ transform: `translateX(-${index * 100}%)` }}
         className="flex h-full transition-transform ease-[cubic-bezier(0.19,1,0.22,1)] duration-[1200ms] "
       >
-
         {ImageURLS.map((image, index) => (
           <div
             key={index}
@@ -31,12 +30,12 @@ const ImgSlider = () => {
         ))}
       </div>
       <div className="absolute bottom-8 right-0 left-0">
-        <div className="flex items-center justify-center gap-2">
+        <div className=" flex justify-center gap-[14px]  ">
           {ImageURLS.map((_, i) => (
             <div
-            key={i}
-              className={`transition-all ease-out w-[6px] h-[6px] bg-slate-300 rounded-full ${
-                index === i ? "" : "bg-opacity-50"
+              key={i}
+              className={`transition-all ease-out size-2 bg-[#0D693C] rounded-full ${
+                index === i ? "" : "bg-white"
               }`}
             />
           ))}

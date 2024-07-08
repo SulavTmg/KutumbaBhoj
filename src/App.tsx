@@ -1,12 +1,13 @@
-import Access from "./pages/Access"
+// import Access from "./pages/Access"
+import SideBar from "./components/dashboard/SideBar"
 
 function App() {
 
   return (
     <>
-    <Access/>
+    <SideBar/>
     </>
   )
 }
 
-export default App
+export default App;
