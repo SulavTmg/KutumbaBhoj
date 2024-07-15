@@ -45,6 +45,7 @@ const Access = () => {
                   label="Email Address"
                   name="email"
                   type="email"
+                  className="border-b-[3px] border-[#0D693C] w-full h-10"
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -56,6 +57,7 @@ const Access = () => {
                   label="Password"
                   name="password"
                   type="password"
+                  className="border-b-[3px] border-[#0D693C] w-full h-10"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -71,7 +73,10 @@ const Access = () => {
                 <a className="text-sm">Forget Password?</a>
               </div>
               <div className="my-[30px]">
-                <Button name="Login" />
+                <Button
+                  name="Login"
+                  className="border bg-[#0D693C] text-base rounded-[10px] text-white font-medium h-[56px] mt-4 w-full"
+                />
               </div>
               <div className="text-center">
                 <span className="font-light">

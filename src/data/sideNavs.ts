@@ -5,7 +5,7 @@ const {
   CartIcon,
   EmployeesIcon,
   EndUserIcon,
-  ResturantIcon,
+  RestaurantIcon,
   MenuIcon,
   InsightsIcon,
   SettingsIcon,
@@ -14,7 +14,7 @@ const {
   ActiveDashIcon,
   ActiveEndUser,
   ActiveMenu,
-  ActiveResturant,
+  ActiveRestaurant,
   ActiveInsights,
   ActiveSettings,
 } = assets;
@@ -52,9 +52,9 @@ export const userSec = [
 export const adminSec = [
   {
     path: "/resturants",
-    icon: ResturantIcon,
-    activeIcon: ActiveResturant,
-    name: "Resturant",
+    icon: RestaurantIcon,
+    activeIcon: ActiveRestaurant,
+    name: "Restaurant",
   },
   {
     path: "/menu",

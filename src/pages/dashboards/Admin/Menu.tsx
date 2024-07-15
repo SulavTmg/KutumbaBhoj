@@ -1,28 +1,36 @@
 import Header from "../../../components/dashboard/Header";
-import {resturants} from "../../../data/resturants";
+import { restaurants } from "../../../data/restaurants";
+import { NavLink } from "react-router-dom";
 const Menu = () => {
   return (
-    <div className="rounded-lg mx-3 my-3 shadow-[rgba(0,0,0,0.1)_0px_0px_10px] relative flex flex-col break-words bg-white bg-clip-border border-[rgba(0,0,.125)]">
-      <div className="px-6 py-3">
-        <Header heading={"Menu"} />
-        <div className="grid grid-cols-[repeat(auto-fit,_minmax(21rem,_1fr))] gap-[40px]">
-          {resturants.map((res) => (
-            <div className="rounded-lg h-60 w-[336px] border">
-              <div>
-                <img src={res.img} className="rounded-t-lg" />
-              </div>
-              <div className="flex">
+    <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
+      <div className="px-6 py-5">
+        <Header heading={"Menu"} className={"mb-8"} path="/" />
+        <ul className="grid grid-cols-[repeat(auto-fill,_minmax(21rem,_1fr))] gap-[40px] mt-8">
+          {restaurants.map((res, index) => (
+            <NavLink to={`/menu/${res.id}`} key={index}>
+              <li className="rounded-xl border list-none">
                 <div>
-                  <img src={res.logo} />
+                  <img
+                    src={res.img}
+                    className="rounded-t-xl w-full object-cover"
+                  />
                 </div>
-                <div>
-                  <h1>{res.name}</h1>
-                  <span>{res.location}</span>
+                <div className="flex items-center gap-9 m-8">
+                  <div>
+                    <img src={res.logo} />
+                  </div>
+                  <div className="font-josefin">
+                    <h1 className="text-base font-medium">{res.name}</h1>
+                    <span className="text-xs text-[#ABABAB]">
+                      {res.location}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </li>
+            </NavLink>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );
