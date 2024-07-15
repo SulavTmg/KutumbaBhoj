@@ -6,7 +6,7 @@ const SideBar = () => {
   const { Logo } = assets;
 
   return (
-    <nav className="max-w-[290px] px-[1.875rem] py-4 fixed z-20 bottom-0 top-0 w-full border-r">
+    <nav className="max-w-[290px] px-[1.875rem] bg-white py-4 fixed z-20 bottom-0 top-0 w-full border-r">
       <div className="flex flex-col min-w-full items-stretch ">
         <a className="mb-[2.375rem] w-max leading-6 text-center py-[6px]">
           <img src={Logo} />

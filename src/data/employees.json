@@ -1,0 +1,170 @@
+[
+  {
+    "employee name": "Joshua Stephens",
+    "contact": "9865412091",
+    "gender": "Female",
+    "designation": "Support",
+    "shift": "Evening",
+    "joined": "2024-06-01"
+  },
+  {
+    "employee name": "Kevin Walsh",
+    "contact": "9812345678",
+    "gender": "Male",
+    "designation": "Designer",
+    "shift": "Night",
+    "joined": "2021-01-17"
+  },
+  {
+    "employee name": "Christine Lewis",
+    "contact": "9823456789",
+    "gender": "Male",
+    "designation": "Tester",
+    "shift": "Evening",
+    "joined": "2022-10-22"
+  },
+  {
+    "employee name": "Gabrielle Johnson",
+    "contact": "9834567890",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Evening",
+    "joined": "2021-10-21"
+  },
+  {
+    "employee name": "Lisa Williams",
+    "contact": "9845678901",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Night",
+    "joined": "2020-09-09"
+  },
+  {
+    "employee name": "Alexander Stephenson",
+    "contact": "9856789012",
+    "gender": "Female",
+    "designation": "Designer",
+    "shift": "Evening",
+    "joined": "2021-02-08"
+  },
+  {
+    "employee name": "Leslie Cervantes",
+    "contact": "9867890123",
+    "gender": "Female",
+    "designation": "Tester",
+    "shift": "Morning",
+    "joined": "2021-08-27"
+  },
+  {
+    "employee name": "Joseph Anderson",
+    "contact": "9878901234",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Night",
+    "joined": "2021-03-18"
+  },
+  {
+    "employee name": "Tanya Beck",
+    "contact": "9889012345",
+    "gender": "Female",
+    "designation": "Developer",
+    "shift": "Night",
+    "joined": "2022-02-22"
+  },
+  {
+    "employee name": "John Mcdaniel",
+    "contact": "9890123456",
+    "gender": "Male",
+    "designation": "Support",
+    "shift": "Morning",
+    "joined": "2023-03-05"
+  },
+  {
+    "employee name": "Daniel Bailey",
+    "contact": "9801234567",
+    "gender": "Male",
+    "designation": "Support",
+    "shift": "Night",
+    "joined": "2023-08-19"
+  },
+  {
+    "employee name": "Angela Roberts DDS",
+    "contact": "9812345678",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Night",
+    "joined": "2022-07-13"
+  },
+  {
+    "employee name": "Sonya Coffey",
+    "contact": "9823456789",
+    "gender": "Female",
+    "designation": "Developer",
+    "shift": "Evening",
+    "joined": "2022-11-15"
+  },
+  {
+    "employee name": "Rebecca Kelly",
+    "contact": "9834567890",
+    "gender": "Female",
+    "designation": "Manager",
+    "shift": "Evening",
+    "joined": "2021-06-16"
+  },
+  {
+    "employee name": "Joshua Nguyen",
+    "contact": "9845678901",
+    "gender": "Male",
+    "designation": "Manager",
+    "shift": "Evening",
+    "joined": "2021-09-18"
+  },
+  {
+    "employee name": "Lisa Smith",
+    "contact": "9856789012",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Night",
+    "joined": "2020-08-07"
+  },
+  {
+    "employee name": "James Dickerson",
+    "contact": "9867890123",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Morning",
+    "joined": "2022-01-08"
+  },
+  {
+    "employee name": "Christopher Lopez",
+    "contact": "9878901234",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Morning",
+    "joined": "2020-05-30"
+  },
+  {
+    "employee name": "Nicole Marshall",
+    "contact": "9889012345",
+    "gender": "Male",
+    "designation": "Developer",
+    "shift": "Morning",
+    "joined": "2024-06-10"
+  },
+  {
+    "employee name": "Ashley Graves",
+    "contact": "9890123456",
+    "gender": "Male",
+    "designation": "Support",
+    "shift": "Night",
+    "joined": "2021-10-25"
+  },
+  {
+    "employee name": "Susan Neal",
+    "contact": "9801234567",
+    "gender": "Male",
+    "designation": "Support",
+    "shift": "Morning",
+    "joined": "2024-03-01"
+  }
+]

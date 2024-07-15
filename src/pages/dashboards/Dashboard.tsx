@@ -2,10 +2,10 @@ import assets from "../../assets/assets";
 import profile from "../../assets/profile/Pp.png";
 
 const Dashboard = () => {
-  const { MsgIcon, BellIcon } = assets;
+  const { MsgIcon, BellIcon, SearchIcon } = assets;
   return (
     <>
-      <header className="bg-white flex justify-between items-center px-10 py-4">
+      <header className="bg-white flex justify-between items-center px-10 py-4 -mx-3 -my-3">
         <div>
           <h1 className="text-[#CE1B22] font-bold text-[28px]">Welcome</h1>
           <span className="text-[#808080] font-josefin">
@@ -15,8 +15,14 @@ const Dashboard = () => {
         <nav>
           <ul className="flex items-center gap-8">
             <li>
-              <div>
-                <input className="border rounded-[40px] outline-none px-2 w-[280px] h-[48px]" />
+              <div className="relative">
+                <button className="absolute left-5 top-[14.5px]">
+                  <img src={SearchIcon} />
+                </button>
+                <input
+                  placeholder="Search for something"
+                  className="border rounded-[40px] outline-none pl-14 w-[280px] h-[48px]"
+                />
               </div>
             </li>
             <li>
