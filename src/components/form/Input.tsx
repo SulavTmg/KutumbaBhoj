@@ -19,7 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {label && (
             <label
               htmlFor={`${name}`}
-              className={`text-[11px] leading-4 ${labelCss}`}
+              className={`text-[11px] leading-4 text-[#0D693C] ${labelCss}`}
             >
               {label}
             </label>
@@ -34,7 +34,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
         </div>
         {errorMsg ? (
-          <div className="flex items-center text-[#CC3D3D] text-xs mt-1">
+          <div className="flex absolute items-center text-[#CC3D3D] text-xs mt-1">
             <Exclamation
               fill="red"
               width="11px"

@@ -1,22 +1,24 @@
 import assets from "../assets/assets";
 
 const {
-  DashIcon,
-  CartIcon,
-  EmployeesIcon,
-  EndUserIcon,
-  RestaurantIcon,
-  MenuIcon,
-  InsightsIcon,
-  SettingsIcon,
-  ActiveEmpIcon,
-  ActiveCartIcon,
-  ActiveDashIcon,
-  ActiveEndUser,
-  ActiveMenu,
-  ActiveRestaurant,
-  ActiveInsights,
-  ActiveSettings,
+  icons: {
+    DashIcon,
+    CartIcon,
+    EmployeesIcon,
+    EndUserIcon,
+    RestaurantIcon,
+    MenuIcon,
+    InsightsIcon,
+    SettingsIcon,
+    ActiveEmpIcon,
+    ActiveCartIcon,
+    ActiveDashIcon,
+    ActiveEndUser,
+    ActiveMenu,
+    ActiveRestaurant,
+    ActiveInsights,
+    ActiveSettings,
+  },
 } = assets;
 
 export const defaultSec = [

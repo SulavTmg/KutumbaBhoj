@@ -1,11 +1,11 @@
-import Header from "../../../components/dashboard/Header";
-import { endUsers as data } from "../../../data/end-users";
+import Header from "../../components/dashboard/Header";
+import { endUsers as data } from "../../data/endUsers";
 import { useState } from "react";
-import assets from "../../../assets/assets";
-import Pagination from "../../../components/common/Pagination";
+import assets from "../../assets/assets";
+import Pagination from "../../components/common/Pagination";
 
 const Restaurants = () => {
-  const { EyeIcon, EditIcon, DeleteIcon } = assets;
+  const { icons: {EyeIcon, EditIcon, DeleteIcon} } = assets;
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;

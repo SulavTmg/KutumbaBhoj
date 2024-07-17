@@ -1,6 +1,6 @@
-import Header from "../../components/dashboard/Header";
-import Table from "../../components/table/Table";
-import orders from  "../../data/orders.json";
+import Header from "../components/dashboard/Header";
+import Table from "../components/table/Table";
+import orders from  "../data/orders.json";
 
 const Orders = () => {
   const columns = [

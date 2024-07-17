@@ -1,6 +1,6 @@
 import assets from "../assets/assets";
 
-const { FalchaEatryLogo, Anmol, DajuBhaiLogo } = assets;
+const { logos: {FalchaEatryLogo, Anmol, DajuBhaiLogo} } = assets;
 
 export const endUsers = [
   {

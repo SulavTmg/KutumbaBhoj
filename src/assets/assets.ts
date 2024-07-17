@@ -10,7 +10,7 @@ import FalchaEatryLogo from "./logo/restaurants/FalchaEatry.svg";
 import FalchaEatryLogo2 from "./logo/restaurants/FalchaEatryLogo.svg";
 import SearchIcon from "./icons/Dash/SearchIcon.svg";
 ////////////SideBarIcons///////////////////
-import DashIcon from"./icons/Dash/DashboardIcon.svg";
+import DashIcon from "./icons/Dash/DashboardIcon.svg";
 import ActiveDashIcon from "./icons/Dash/ActiveDash.svg";
 import CartIcon from "./icons/Dash/CartIcon.svg";
 import ActiveCartIcon from "./icons/Dash/ActiveCartIcon.svg";
@@ -36,61 +36,72 @@ import AnmolSweets from "./images/Resturants/AnmolSweets.svg";
 import DajuBhai from "./images/Resturants/DajuBhai.svg";
 import BhungroThakali from "./images/Resturants/BhungroThakali.svg";
 import FalchaEatry from "./images/Resturants/FalchaEatery.svg";
-import FalchaEatryImg from "./images/Resturants/FalchaEateryImg.svg"
+import FalchaEatryImg from "./images/Resturants/FalchaEateryImg.svg";
 //////////ActionIcons///////////////////
 import EyeIcon from "./icons/Users/EyeIcon.svg";
 import EditIcon from "./icons/Users/EditIcon.svg";
 import DeleteIcon from "./icons/Users/DeleteIcon.svg";
 import Edit from "./icons/Edit.svg";
-import AddIcon from"./icons/AddIcons/AddIcon.svg";
-import AddIcon2 from"./icons/AddIcons/AddIcon2.svg";
-import AddIcon3 from"./icons/AddIcons/AddIcon3.svg";
+import AddIcon from "./icons/AddIcons/AddIcon.svg";
+import AddIcon2 from "./icons/AddIcons/AddIcon2.svg";
+import AddIcon3 from "./icons/AddIcons/AddIcon3.svg";
 import FilterIcon from "./icons/FilterIcon.svg";
-
-
-
+import EyeOpen from "./icons/EyeIcons/EyeOpen.svg"
+import EyeClose from "./icons/EyeIcons/EyeClose.svg"
+// icons:{....icons},imgs:{....imgs},.....
+//const {icons: {icon1, icon2}, imgs: {img1,..}} = assets;
 export default {
-  Dish1,
-  Dish2,
-  Dish3,
-  Logo,
-  DashIcon,
-  CartIcon,
-  EmployeesIcon,
-  EndUserIcon,
-  RestaurantIcon,
-  MenuIcon,
-  InsightsIcon,
-  SettingsIcon,
-  ActiveEmpIcon,
-  ActiveCartIcon,
-  ActiveDashIcon,
-  SearchIcon,
-  ActiveEndUser,
-  ActiveMenu,
-  ActiveRestaurant,
-  ActiveInsights,
-  ActiveSettings,
-  MsgIcon,
-  BellIcon,
-  LocationIcon,
-  PhoneIcon,
-  AnmolSweets,
-  Anmol,
-  DajuBhai,
-  DajuBhaiLogo,
-  BhungroThakali,
-  BhungroThakaliLogo,
-  EyeIcon,
-  EditIcon,
-  DeleteIcon,
-  FalchaEatry,
-  FalchaEatryLogo,
-  FalchaEatryLogo2,
-  FalchaEatryImg,
-  Edit,
-  AddIcon,
-  AddIcon2,
-  AddIcon3,
-  FilterIcon
+  icons: {
+    DashIcon,
+    CartIcon,
+    EmployeesIcon,
+    EndUserIcon,
+    RestaurantIcon,
+    MenuIcon,
+    InsightsIcon,
+    SettingsIcon,
+    ActiveEmpIcon,
+    ActiveCartIcon,
+    ActiveDashIcon,
+    SearchIcon,
+    MsgIcon,
+    BellIcon,
+    LocationIcon,
+    PhoneIcon,
+    EyeIcon,
+    EditIcon,
+    DeleteIcon,
+    AddIcon,
+    AddIcon2,
+    AddIcon3,
+    Edit,
+    FilterIcon,
+    ActiveEndUser,
+    ActiveMenu,
+    ActiveRestaurant,
+    ActiveInsights,
+    ActiveSettings,
+    EyeOpen,
+    EyeClose
+  },
+  imgs: {
+    Dish1,
+    Dish2,
+    Dish3,
+    AnmolSweets,
+
+    DajuBhai,
+    BhungroThakali,
+
+    FalchaEatry,
+    FalchaEatryImg,
+  },
+  logos: {
+    Logo,
+    Anmol,
+    DajuBhaiLogo,
+    BhungroThakaliLogo,
+    FalchaEatryLogo2,
+    FalchaEatryLogo,
+  },
 };

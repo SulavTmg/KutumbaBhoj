@@ -1,6 +1,6 @@
-import Header from "../../../components/dashboard/Header";
-import { restaurants } from "../../../data/restaurants";
-import { NavLink } from "react-router-dom";
+import Header from "../../components/dashboard/Header";
+import { restaurants } from "../../data/restaurants";
+import { Link } from "react-router-dom";
 const Menu = () => {
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
@@ -8,7 +8,7 @@ const Menu = () => {
         <Header heading={"Menu"} className={"mb-8"} path="/" />
         <ul className="grid grid-cols-[repeat(auto-fill,_minmax(21rem,_1fr))] gap-[40px] mt-8">
           {restaurants.map((res, index) => (
-            <NavLink to={`/menu/${res.id}`} key={index}>
+            <Link to={`/menu/${res.id}`} key={index}>
               <li className="rounded-xl border list-none">
                 <div>
                   <img
@@ -28,7 +28,7 @@ const Menu = () => {
                   </div>
                 </div>
               </li>
-            </NavLink>
+            </Link>
           ))}
         </ul>
       </div>

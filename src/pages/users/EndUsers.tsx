@@ -1,6 +1,6 @@
-import Header from "../../../components/dashboard/Header";
-import Table from "../../../components/table/Table";
-import endUsers from "../../../data/endUsers.json";
+import Header from "../../components/dashboard/Header";
+import Table from "../../components/table/Table";
+import endUsers from "../../data/endUsers.json";
 
 const EndUsers = () => {
   const columns = ["Customer Name", "Contact", "Address", "Email"];

@@ -11,7 +11,9 @@ const Pagination = ({
   currentPage,
   onPageChange,
 }: PaginationProps) => {
-  const { AddIcon2 } = assets;
+  const {
+    icons: { AddIcon2 },
+  } = assets;
 
   const getPaginationRange = (
     totalPages: number,

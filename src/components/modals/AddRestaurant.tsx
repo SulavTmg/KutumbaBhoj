@@ -1,16 +1,19 @@
-import Header from "../components/dashboard/Header";
-import Button from "../components/Button";
-import Input from "../components/form/Input";
-import Select from "../components/form/Select";
+import Header from "../dashboard/Header";
+import Button from "../Button";
+import Input from "../form/Input";
+import Select from "../form/Select";
 
-const AddEmployees = () => {
+const AddRestaurant = () => {
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">
       <div className="px-6 py-5">
         <Header heading="Add Employee" className="!text-[#5C59E8]" />
       </div>
       <div className="p-10">
-        <form className="grid grid-cols-[repeat(2,_minmax(0,_1fr))] gap-6">
+        <form className="flex flex-col gap-6">
+            <div className="">
+            </div>
+          
           <Input
             name="firstName"
             type="text"
@@ -93,4 +96,4 @@ const AddEmployees = () => {
   );
 };
 
-export default AddEmployees;
+export default AddRestaurant;

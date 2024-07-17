@@ -1,25 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import App from './App.tsx'
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Layout";
-import Dashboard from "./pages/dashboards/Dashboard";
-import Orders from "./pages/dashboards/Orders";
-import Employees from "./pages/dashboards/users/Employees";
-import EndUser from "./pages/dashboards/users/EndUsers";
-import Resturants from "./pages/dashboards/admin/Restaurants";
-import Menu from "./pages/dashboards/admin/Menu";
-import Insights from "./pages/dashboards/admin/Insights";
-import Settings from "./pages/dashboards/admin/Settings";
-import AddEmployees from "./actions/AddEmployees";
-import MenuDetails from "./pages/dashboards/menu/MenuDetails";
-// import MenuLists from "./components/dashboard/Menu/MenuLists";
+import Dashboard from "./pages/Dashboard";
+import Orders from "./pages/Orders";
+import Employees from "./pages/users/Employees";
+import EndUser from "./pages/users/EndUsers";
+import Resturants from "./pages/admin/Restaurants";
+import Menu from "./pages/admin/Menu";
+import Insights from "./pages/admin/Insights";
+import Settings from "./pages/admin/Settings";
+import AddEmployees from "./components/modals/AddEmployees";
+import MenuDetails from "./components/dashboard/menu/MenuDetails";
+import AccessControl from "./components/dashboard/Settings/AccessControl";
+import UserControl from "./components/dashboard/Settings/UserControl";
+import PrivateRoute from "./PrivateRoute";
+import Access from "./pages/Access";
 
 const router = createBrowserRouter([
   {
+    
     path: "/",
-    element: <Layout />,
+    element:
+    <PrivateRoute>
+      <Layout />
+    </PrivateRoute>,
     children: [
       {
         path: "",
@@ -59,10 +65,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/menu/:id",
-        element: <MenuDetails/>,
+        element: <MenuDetails />,
+      },
+      {
+        path: "/settings/access-control",
+        element: <AccessControl />,
+      },
+      {
+        path: "/settings/user-control",
+        element: <UserControl />,
       },
     ],
   },
+
+  {
+    path: "/login",
+    element: <Access/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

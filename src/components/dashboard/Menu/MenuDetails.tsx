@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { restaurants } from "../../../data/restaurants";
 import assets from "../../../assets/assets";
-import Button from "../../../components/Button";
-import MenuLists from "../../../components/dashboard/Menu/MenuLists";
+import Button from "../../Button";
+import MenuLists from "./MenuLists";
 
 const MenuDetails = () => {
   const { id } = useParams<{ id: string }>();
   const restaurant = restaurants.find(
     (res) => res.id === parseInt(id as string)
   );
-  const { LocationIcon, PhoneIcon, Edit, AddIcon3 } = assets;
+  const { icons:{LocationIcon, PhoneIcon, Edit, AddIcon3} } = assets;
 
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
@@ -26,7 +26,7 @@ const MenuDetails = () => {
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
       <div className="w-full">
         <div>
-          <img src={restaurant.photo} className="w-full rounded-t-lg"/>
+          <img src={restaurant.photo} className="w-full rounded-t-lg" />
         </div>
         <div className="mx-[50px]">
           <div className="py-[30px] border-b flex justify-between">
@@ -79,14 +79,14 @@ const MenuDetails = () => {
             </div>
           </ul>
         </div>
-          {selectedItem && (
-            <MenuLists
-              menuLists={
-                restaurant.menu.find((res) => res.item === selectedItem)
-                  ?.types || []
-              }
-            />
-          )}
+        {selectedItem && (
+          <MenuLists
+            menuLists={
+              restaurant.menu.find((res) => res.item === selectedItem)?.types ||
+              []
+            }
+          />
+        )}
       </div>
     </div>
   );
