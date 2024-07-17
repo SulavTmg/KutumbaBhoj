@@ -9,7 +9,7 @@ type TableProps = {
 };
 
 const Table = ({ columns, data, actions }: TableProps) => {
-  const { EyeIcon, EditIcon, DeleteIcon } = assets;
+  const { icons: {EyeIcon, EditIcon, DeleteIcon} } = assets;
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(data.length / itemsPerPage);

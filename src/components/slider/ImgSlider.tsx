@@ -3,7 +3,7 @@ import assets from "../../assets/assets";
 
 const ImgSlider = () => {
   const [index, setIndex] = useState(0);
-  const {Dish1, Dish2, Dish3} = assets;
+  const {imgs: {Dish1, Dish2, Dish3}} = assets;
   const ImageURLS = [Dish1, Dish2, Dish3];
   useEffect(() => {
     const interval = setInterval(() => {

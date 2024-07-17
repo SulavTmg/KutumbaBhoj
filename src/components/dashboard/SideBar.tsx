@@ -3,7 +3,7 @@ import { defaultSec, userSec, adminSec } from "../../data/sideNavs";
 import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
-  const { Logo } = assets;
+  const { logos: {Logo} } = assets;
 
   return (
     <nav className="max-w-[290px] px-[1.875rem] bg-white py-4 fixed z-20 bottom-0 top-0 w-full border-r">

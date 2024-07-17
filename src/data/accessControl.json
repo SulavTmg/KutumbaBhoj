@@ -1,0 +1,18 @@
+[
+  {
+    "Role Set Name": "Super Admin Role",
+    "Permissions": "All Page Permissions"
+  },
+  {
+    "Role Set Name": "Admin Role",
+    "Permissions": "Selective Page Permissions"
+  },
+  {
+    "Role Set Name": "User Role",
+    "Permissions": "Operational Page Permissions"
+  },
+  {
+    "Role Set Name": "Visitor Role",
+    "Permissions": "Selective Page View Only Permission"
+  }
+]

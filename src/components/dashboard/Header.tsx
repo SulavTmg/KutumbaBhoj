@@ -9,6 +9,8 @@ type HeaderProps = {
   path?: string;
   search?: boolean;
   filter?: boolean;
+  subHeading?: string;
+  onClick?: () => void;
 };
 
 const Header = ({
@@ -19,13 +21,24 @@ const Header = ({
   search,
   filter,
   className = "",
+  subHeading,
+  onClick,
 }: HeaderProps) => {
-  const {AddIcon, FilterIcon} = assets;
+  const {
+    icons: { AddIcon, FilterIcon },
+  } = assets;
   return (
     <div className="flex justify-between items-center">
-      <h1 className={`text-xl text-[#ED1C24] font-josefin ${className}`}>
-        {heading}
-      </h1>
+      <div>
+        <h1 className={`text-xl text-[#ED1C24] font-josefin ${className}`}>
+          {heading}
+        </h1>
+        {subHeading && (
+          <span className="font-light text-[#808080] text-sm">
+            {subHeading}
+          </span>
+        )}
+      </div>
       <div className="flex gap-4">
         {search === true ? (
           <input
@@ -38,7 +51,10 @@ const Header = ({
         {path ? (
           <>
             <Link to={path}>
-              <button className="flex items-center bg-[#5C59E8] py-[10px] px-[14px] h-[40px] w-[114px] rounded-lg">
+              <button
+                onClick={onClick}
+                className="flex items-center bg-[#5C59E8] py-[10px] px-[14px] h-[40px] w-[114px] rounded-lg"
+              >
                 <img src={icon ? icon : AddIcon} className="mr-[4px]" />
                 <span className="text-sm text-white font-semibold tracking-tight">
                   {btnName ? btnName : "Add New"}

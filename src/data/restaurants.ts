@@ -1,44 +1,43 @@
 import assets from "../assets/assets";
 
 const {
-  AnmolSweets,
-  Anmol,
-  DajuBhai,
-  DajuBhaiLogo,
-  BhungroThakali,
-  BhungroThakaliLogo,
-  FalchaEatry,
-  FalchaEatryLogo,
-  FalchaEatryImg,
-  FalchaEatryLogo2
+  imgs: { AnmolSweets, DajuBhai, BhungroThakali, FalchaEatry, FalchaEatryImg },
+  logos: {
+    FalchaEatryLogo2,
+    FalchaEatryLogo,
+    BhungroThakaliLogo,
+    DajuBhaiLogo,
+    Anmol,
+  },
 } = assets;
 
 export const restaurants = [
-  { id:1,
+  {
+    id: 1,
     path: "/menu-anmol-sweets",
     img: AnmolSweets,
     logo: Anmol,
     location: "TCN Road",
     name: "Anmol Sweets",
-    menu:[]
+    menu: [],
   },
   {
-    id:2,
+    id: 2,
     path: "/dajubhai",
     img: DajuBhai,
     logo: DajuBhaiLogo,
     location: "School Road",
     name: "Daju Bhai",
-    menu:[]
+    menu: [],
   },
   {
-    id:3,
+    id: 3,
     path: "/bhungro-thakali",
     img: BhungroThakali,
     logo: BhungroThakaliLogo,
     location: "Huprachaur",
     name: "Bhungro Thakali",
-    menu:[]
+    menu: [],
   },
   {
     id: 4,
