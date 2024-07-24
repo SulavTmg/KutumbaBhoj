@@ -1,5 +1,5 @@
 import Table from "../../table/Table";
-import Header from "../Header";
+import Header from "../../common/Header";
 import userControl from "../../../data/userControl.json";
 import Modal from "../../Modal";
 import { useState } from "react";

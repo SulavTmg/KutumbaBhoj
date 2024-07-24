@@ -1,79 +1,100 @@
-import { useState } from "react";
+import LineChart from "../components/dashboard/insights/LineChart";
+import TimeNav from "../components/dashboard/insights/TimeNav";
+import Cards from "../components/dashboard/insights/Cards";
+import RadialBarChart from "../components/dashboard/insights/RadialBarChart";
+import BarChart from "../components/dashboard/insights/BarChart";
+import DashHeader from "../components/dashboard/DashHeader";
 import assets from "../assets/assets";
-import profile from "../assets/profile/Pp.png";
-import { authStore } from "../store";
-import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    authStore.getState().logout();
-    navigate("/login");
-  };
-
   const {
-    icons: { MsgIcon, BellIcon, SearchIcon },
+    imgs: { FishBurger, Pizza, Ramen },
+    Ratings,
   } = assets;
   return (
     <>
-      <header className="bg-white flex justify-between items-center px-10 py-4 -mx-3 -my-3">
-        <div>
-          <h1 className="text-[#CE1B22] font-bold text-[28px]">Welcome</h1>
-          <span className="text-[#808080] font-josefin">
-            Your dahboard is ready
-          </span>
+      <DashHeader />
+      <div className="min-h-screen h-full w-full flex flex-col gap-8">
+        <TimeNav />
+        <Cards />
+        <div className=" bg-white rounded-lg max-w[1010px] shadow-md">
+          <LineChart />
         </div>
-        <nav>
-          <ul className="flex items-center gap-8">
-            <li>
-              <div className="relative">
-                <button className="absolute left-5 top-[14.5px]">
-                  <img src={SearchIcon} />
-                </button>
-                <input
-                  placeholder="Search for something"
-                  className="border rounded-[40px] outline-none pl-14 w-[280px] h-[48px]"
-                />
+        <div className="flex flex-wrap gap-8">
+          <div className=" md:basis-[60%] md:flex-grow bg-white rounded-lg shadow-md">
+            <div className="mx-7 mt-6">
+              <h1 className="text-[#464255] font-bold text-2xl font-josefin">
+                Pie Chart
+              </h1>
+            </div>
+            <div className="flex sm:flex-wrap justify-center items-center">
+              <RadialBarChart
+                data={[81]}
+                color={"#FF5B5B"}
+                title={"Total Orders"}
+              />
+              <RadialBarChart
+                data={[22]}
+                color={"#00B074"}
+                title={"Customer Growth"}
+              />
+              <RadialBarChart
+                data={[62]}
+                color={"#2D9CDB"}
+                title={"Total Revenue"}
+              />
+            </div>
+          </div>
+          <div className="bg-white flex-grow basis-80 rounded-md shadow-md w-full">
+            <BarChart />
+          </div>
+        </div>
+        <div className="bg-white rounded-lg p-6 shadow-md">
+          <h1 className="text-[#464255] text-2xl font-josefin font-bold mb-14">
+            Popular Dishes
+          </h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-col items-center">
+              <img src={FishBurger} />
+              <div className="font-josefin mt-6">
+                <img src={Ratings} />
+                <h2 className="text-lg">Fish Burger</h2>
+                <h1 className="font-bold text-2xl text-[#F8B602]">Rs 250</h1>
+                <span className="text-lg text-[#A098AE]">Solti Resturant</span>
               </div>
-            </li>
-            <li>
-              <div className="bg-[#F5F7FA] rounded-full">
-                <img src={MsgIcon} className="py-3 px-3" />
+              <div className="bg-[#EB5757] text-white w-fit px-[5px] py-[2px] rounded-md mt-1">
+                <span>50 orders</span>
               </div>
-            </li>
-            <li>
-              <div className="bg-[#F5F7FA] rounded-full">
-                <img src={BellIcon} className="py-3 px-3" />
+            </div>
+            <div className="flex flex-col items-center">
+              <img src={Pizza} />
+              <div className="font-josefin  mt-6">
+                <img src={Ratings} />
+                <h2 className="text-lg">Meat Lover’s Pizza</h2>
+                <h1 className="font-bold text-2xl text-[#F8B602]">Rs 550</h1>
+                <span className="text-lg text-[#A098AE]">Pepe Pizza</span>
               </div>
-            </li>
-            <li>
-              <div className="relative inline-block">
-                <button onClick={() => setIsVisible(!isVisible)}>
-                  <img
-                    src={profile}
-                    className="size-[48px] border rounded-full cursor-pointer"
-                  />
-                </button>
-                {isVisible === true && (
-                  <div className="absolute origin-top-right right-1 mt-2 w-32 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <ul>
-                      <li>
-                        <button
-                          className=" block w-full px-4 py-2 text-sm text-gray-700"
-                          onClick={() => handleLogout()}
-                        >
-                          Log Out
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                )}
+              <div className="bg-[#EB5757] text-white w-fit px-[5px] py-[2px] rounded-md  mt-1">
+                <span>30 orders</span>
               </div>
-            </li>
-          </ul>
-        </nav>
-      </header>
+            </div>
+            <div className="flex flex-col items-center">
+              <img src={Ramen} />
+              <div className="font-josefin  mt-6">
+                <img src={Ratings} />
+                <h2 className="text-lg">Ichiran Ramen</h2>
+                <h1 className="font-bold text-2xl text-[#F8B602]">Rs 350</h1>
+                <span className="text-lg text-[#A098AE]">
+                  Ichiran Restaurant
+                </span>
+              </div>
+              <div className="bg-[#EB5757] text-white w-fit px-[5px] py-[2px] rounded-md  mt-1">
+                <span>25 orders</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

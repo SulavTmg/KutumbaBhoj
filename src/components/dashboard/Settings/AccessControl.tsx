@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "../Header";
+import Header from "../../common/Header";
 import Table from "../../table/Table";
 import accessPolicies from "../../../data/accessControl.json";
 import Modal from "../../Modal";
@@ -7,8 +7,8 @@ import Input from "../../form/Input";
 import Button from "../../Button";
 
 const AccessControl = () => {
-    const columns = ["Role Set Name", "Permissions"];
-      const [open, setOpen] = useState(false);
+  const columns = ["Role Set Name", "Permissions"];
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
@@ -32,7 +32,10 @@ const AccessControl = () => {
             placeholder="Role Name"
             className=" w-full h-[56px] border rounded-[10px] "
           />
-          <textarea placeholder="Description" className="w-full h-28 outline-none p-4 border rounded-[10px]" />
+          <textarea
+            placeholder="Description"
+            className="w-full h-28 outline-none p-4 border rounded-[10px]"
+          />
 
           <div className="col-span-2">
             <div className="flex justify-end gap-3 mt-3">

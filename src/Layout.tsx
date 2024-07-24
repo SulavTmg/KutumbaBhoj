@@ -1,12 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "./components/dashboard/SideBar";
-import { Outlet } from "react-router-dom";
-import { employeeStore } from "./store";
-const Layout = () => {
+import { Outlet, useNavigate } from "react-router-dom";
+import { customerStore, employeeStore, orderStore } from "./store";
+import { router } from "./main.tsx";
 
-  useEffect(()=>{
-      employeeStore.getState().getEmployees();
-  },[])
+const Layout = () => {
+  const navigate = useNavigate();
+  const [location] = useState(router.state.location);
+
+  useEffect(() => {
+    if (location.search) {
+      navigate(location.pathname);
+    }
+    employeeStore.getState().getEmployees();
+    orderStore.getState().getOrders();
+    customerStore.getState().getCustomers();
+  }, [location.pathname, location.search, navigate]);
   return (
     <>
       <SideBar />

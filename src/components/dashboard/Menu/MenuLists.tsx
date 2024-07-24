@@ -1,4 +1,4 @@
-import AddIcon3 from "../../../assets/icons/AddIcons/AddIcon3.svg";
+import AddIcon3 from "../../../assets/icons/addIcons/AddIcon3.svg";
 import Button from "../../Button";
 
 interface List {

@@ -1,6 +1,9 @@
-import Dish1 from "./images/Food/Dish1.svg";
-import Dish2 from "./images/Food/Dish2.svg";
-import Dish3 from "./images/Food/Dish3.svg";
+import Dish1 from "./images/food/Dish1.svg";
+import Dish2 from "./images/food/Dish2.svg";
+import Dish3 from "./images/food/Dish3.svg";
+import FishBurger from "./images/food/FishBurger.svg";
+import Ramen from "./images/food/Ramen.svg";
+import Pizza from "./images/food/Pizza.svg";
 ////////////Logos//////////////////////////
 import Logo from "./logo/Logo.svg";
 import Anmol from "./logo/restaurants/Anmol.svg";
@@ -8,50 +11,64 @@ import DajuBhaiLogo from "./logo/restaurants/DajuBhaiLogo.svg";
 import BhungroThakaliLogo from "./logo/restaurants/BhungroThakaliLogo.svg";
 import FalchaEatryLogo from "./logo/restaurants/FalchaEatry.svg";
 import FalchaEatryLogo2 from "./logo/restaurants/FalchaEatryLogo.svg";
-import SearchIcon from "./icons/Dash/SearchIcon.svg";
+import SearchIcon from "./icons/dash/SearchIcon.svg";
+import Falcha from "./logo/restaurants/smallLogos/Falcha.svg"
+import Sesame from "./logo/restaurants/smallLogos/Sesame.svg"
+import DajuBhaiSmall from "./logo/restaurants/smallLogos/DajuBhai.svg"
 ////////////SideBarIcons///////////////////
-import DashIcon from "./icons/Dash/DashboardIcon.svg";
-import ActiveDashIcon from "./icons/Dash/ActiveDash.svg";
-import CartIcon from "./icons/Dash/CartIcon.svg";
-import ActiveCartIcon from "./icons/Dash/ActiveCartIcon.svg";
-import EmployeesIcon from "./icons/Users/EmployeesIcon.svg";
-import ActiveEmpIcon from "./icons/Users/ActiveEmp.svg";
-import EndUserIcon from "./icons/Users/EndUser.svg";
-import ActiveEndUser from "./icons/Users/ActiveEndUser.svg";
-import RestaurantIcon from "./icons/Admin/Resturant.svg";
-import ActiveRestaurant from "./icons/Admin/ActiveResturant.svg";
-import InsightsIcon from "./icons/Admin/Insights.svg";
-import ActiveInsights from "./icons/Admin/ActiveInsights.svg";
-import MenuIcon from "./icons/Admin/Menu.svg";
-import ActiveMenu from "./icons/Admin/ActiveMenu.svg";
-import SettingsIcon from "./icons/Admin/Settings.svg";
-import ActiveSettings from "./icons/Admin/ActiveSetting.svg";
+import DashIcon from "./icons/dash/DashboardIcon.svg";
+import ActiveDashIcon from "./icons/dash/ActiveDash.svg";
+import CartIcon from "./icons/dash/CartIcon.svg";
+import ActiveCartIcon from "./icons/dash/ActiveCartIcon.svg";
+import EmployeesIcon from "./icons/users/EmployeesIcon.svg";
+import ActiveEmpIcon from "./icons/users/ActiveEmp.svg";
+import EndUserIcon from "./icons/users/EndUser.svg";
+import ActiveEndUser from "./icons/users/ActiveEndUser.svg";
+import RestaurantIcon from "./icons/admin/Resturant.svg";
+import ActiveRestaurant from "./icons/admin/ActiveResturant.svg";
+import InsightsIcon from "./icons/admin/Insights.svg";
+import ActiveInsights from "./icons/admin/ActiveInsights.svg";
+import MenuIcon from "./icons/admin/Menu.svg";
+import ActiveMenu from "./icons/admin/ActiveMenu.svg";
+import SettingsIcon from "./icons/admin/Settings.svg";
+import ActiveSettings from "./icons/admin/ActiveSetting.svg";
 ///////////DashpageIcon//////////////////
-import MsgIcon from "./icons/Dash/MsgIcon.svg";
-import BellIcon from "./icons/Dash/BellIcon.svg";
+import MsgIcon from "./icons/dash/MsgIcon.svg";
+import BellIcon from "./icons/dash/BellIcon.svg";
 import LocationIcon from "./icons/LocationIcon.svg";
 import PhoneIcon from "./icons/PhoneIcon.svg";
+import Orders from "./icons/card/Orders.svg";
+import Cancelled from "./icons/card/Cancelled.svg";
+import Delivered from "./icons/card/Delivered.svg";
+import Revenue from "./icons/card/Revenue.svg";
+
 //////////ResturantImgs/////////////////
-import AnmolSweets from "./images/Resturants/AnmolSweets.svg";
-import DajuBhai from "./images/Resturants/DajuBhai.svg";
-import BhungroThakali from "./images/Resturants/BhungroThakali.svg";
-import FalchaEatry from "./images/Resturants/FalchaEatery.svg";
-import FalchaEatryImg from "./images/Resturants/FalchaEateryImg.svg";
+import AnmolSweets from "./images/restaurants/AnmolSweets.svg";
+import DajuBhai from "./images/restaurants/DajuBhai.svg";
+import BhungroThakali from "./images/restaurants/BhungroThakali.svg";
+import FalchaEatry from "./images/restaurants/FalchaEatery.svg";
+import FalchaEatryImg from "./images/restaurants/FalchaEateryImg.svg";
 //////////ActionIcons///////////////////
-import EyeIcon from "./icons/Users/EyeIcon.svg";
-import EditIcon from "./icons/Users/EditIcon.svg";
-import DeleteIcon from "./icons/Users/DeleteIcon.svg";
+import EyeIcon from "./icons/users/EyeIcon.svg";
+import EditIcon from "./icons/users/EditIcon.svg";
+import DeleteIcon from "./icons/users/DeleteIcon.svg";
 import Edit from "./icons/Edit.svg";
-import AddIcon from "./icons/AddIcons/AddIcon.svg";
-import AddIcon2 from "./icons/AddIcons/AddIcon2.svg";
-import AddIcon3 from "./icons/AddIcons/AddIcon3.svg";
+import AddIcon from "./icons/addIcons/AddIcon.svg";
+import AddIcon2 from "./icons/addIcons/AddIcon2.svg";
+import AddIcon3 from "./icons/addIcons/AddIcon3.svg";
 import FilterIcon from "./icons/FilterIcon.svg";
-import EyeOpen from "./icons/EyeIcons/EyeOpen.svg"
-import EyeClose from "./icons/EyeIcons/EyeClose.svg"
-// icons:{....icons},imgs:{....imgs},.....
-//const {icons: {icon1, icon2}, imgs: {img1,..}} = assets;
+import EyeOpen from "./icons/eyeIcons/EyeOpen.svg"
+import EyeClose from "./icons/eyeIcons/EyeClose.svg"
+import Ratings from "./Ratings.svg";
+import DownIcon from"./icons/DownIcon.svg";
+import UploadIcon from "./icons/UploadIcon.svg";
+import CLoseIcon from "./icons/CloseIcon.svg"
+
 export default {
   icons: {
+    CLoseIcon,
+    UploadIcon,
+    DownIcon,
     DashIcon,
     CartIcon,
     EmployeesIcon,
@@ -82,17 +99,22 @@ export default {
     ActiveInsights,
     ActiveSettings,
     EyeOpen,
-    EyeClose
+    EyeClose,
+    Orders,
+    Revenue,
+    Delivered,
+    Cancelled,
   },
   imgs: {
     Dish1,
     Dish2,
     Dish3,
+    FishBurger,
+    Pizza,
+    Ramen,
     AnmolSweets,
-
     DajuBhai,
     BhungroThakali,
-
     FalchaEatry,
     FalchaEatryImg,
   },
@@ -103,5 +125,9 @@ export default {
     BhungroThakaliLogo,
     FalchaEatryLogo2,
     FalchaEatryLogo,
+    DajuBhaiSmall,
+    Sesame,
+    Falcha,
   },
+  Ratings
 };

@@ -1,18 +1,19 @@
-import React, {useId} from "react";
-import Exclamation from "../common/Exclamation";
+import React, { useId } from "react";
+import Exclamation from "../common/icon/Exclamation";
 
 type SelectProps = {
   label?: string;
   name: string;
   className?: string;
   labelCss?: string;
+  placeholder?: string;
   errorMsg?: string | null;
   options: string[];
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   (
-    { label, name, errorMsg, labelCss, className = "", options = [], ...props },
+    { label, name, errorMsg,placeholder, labelCss, className = "", options = [], ...props },
     ref
   ) => {
     const id = useId();
@@ -29,10 +30,13 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <select
           id={id}
           name={name}
-          className={`border  h-full rounded-[10px] px-4 text-[#9CA3AF] outline-none ${className}`}
+          className={`border h-[56px] rounded-[10px] px-4 text-[#9CA3AF] outline-none ${className}`}
           ref={ref}
           {...props}
         >
+          <option value="" disabled selected hidden>
+           {placeholder}
+          </option>
           {options?.map((option) => (
             <option key={option} value={option}>
               {option}

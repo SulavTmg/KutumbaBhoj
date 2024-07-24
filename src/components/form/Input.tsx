@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import Exclamation from "../common/Exclamation";
+import Exclamation from "../common/icon/Exclamation";
 
 type InputProps = {
   label?: string;
@@ -11,7 +11,10 @@ type InputProps = {
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, name, type, errorMsg, labelCss, className = "", ...props }, ref) => {
+  (
+    { label, name, type, errorMsg, labelCss, className = "", ...props },
+    ref
+  ) => {
     const id = useId();
     return (
       <>

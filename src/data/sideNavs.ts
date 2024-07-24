@@ -53,7 +53,7 @@ export const userSec = [
 
 export const adminSec = [
   {
-    path: "/resturants",
+    path: "/restaurants",
     icon: RestaurantIcon,
     activeIcon: ActiveRestaurant,
     name: "Restaurant",

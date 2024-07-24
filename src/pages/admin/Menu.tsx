@@ -1,4 +1,4 @@
-import Header from "../../components/dashboard/Header";
+import Header from "../../components/common/Header";
 import { restaurants } from "../../data/restaurants";
 import { Link } from "react-router-dom";
 const Menu = () => {

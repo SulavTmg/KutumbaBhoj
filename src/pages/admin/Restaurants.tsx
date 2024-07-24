@@ -1,11 +1,13 @@
-import Header from "../../components/dashboard/Header";
+import Header from "../../components/common/Header";
 import { endUsers as data } from "../../data/endUsers";
 import { useState } from "react";
 import assets from "../../assets/assets";
 import Pagination from "../../components/common/Pagination";
 
 const Restaurants = () => {
-  const { icons: {EyeIcon, EditIcon, DeleteIcon} } = assets;
+  const {
+    icons: { EyeIcon, EditIcon, DeleteIcon },
+  } = assets;
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -30,7 +32,11 @@ const Restaurants = () => {
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
       <div className="px-6 py-5">
-        <Header heading="End-Users" search={true} />
+        <Header
+          heading="End-Users"
+          search={true}
+          path="/restaurants/add-restaurant"
+        />
       </div>
       <div className="w-full overflow-x-auto">
         <table className="w-full">

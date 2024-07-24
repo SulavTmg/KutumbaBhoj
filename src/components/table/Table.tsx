@@ -2,14 +2,23 @@ import { useState } from "react";
 import assets from "../../assets/assets";
 import Pagination from "../common/Pagination";
 
-type TableProps = {
-  columns: string[];
-  data: { [key: string]: string | number }[];
-  actions: boolean;
+type Column = {
+  header: string;
+  accessor: string;
 };
 
-const Table = ({ columns, data, actions }: TableProps) => {
-  const { icons: {EyeIcon, EditIcon, DeleteIcon} } = assets;
+type TableProps = {
+  columns: Column[];
+  data: { [key: string]: string | number }[];
+  actions: boolean;
+  nameId?: boolean;
+};
+
+const Table = ({ columns, data, actions, nameId }: TableProps) => {
+  const {
+    icons: { EyeIcon, EditIcon, DeleteIcon },
+  } = assets;
+  // const [search, set]
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -32,15 +41,13 @@ const Table = ({ columns, data, actions }: TableProps) => {
                   key={index}
                   className="text-start font-medium py-[18px] px-6 text-[#333843] text-sm capitalize"
                 >
-                  {column}
+                  {column.header}
                 </th>
               ))}
-              {actions ? (
+              {actions && (
                 <th className="text-start font-medium py-[18px] px-6 text-[#333843] text-sm">
                   Action
                 </th>
-              ) : (
-                ""
               )}
             </tr>
           </thead>
@@ -52,29 +59,49 @@ const Table = ({ columns, data, actions }: TableProps) => {
                     key={colIndex}
                     className="py-[22px] px-6 text-sm text-[#667085]"
                   >
-                    {column === "Created" && typeof row[column] === "string" ? (
+                    {nameId && column.accessor === "Name" ? (
+                      <>
+                        <span className="text-[#333843]">
+                          {row[column.accessor]}
+                        </span>
+                        <span className="block text-[#667085]">
+                          ID: {row["Id"]}
+                        </span>
+                      </>
+                    ) : column.accessor === "CreatedAt" || column.accessor === "Joined" ? (
                       <div>
-                        <div>{(row[column] as string).split("&")[0]}</div>
-                        <div>{(row[column] as string).split("&")[1]}</div>
+                        {(() => {
+                          const date = new Date(row[column.accessor]);
+                          const formattedDate = date.toLocaleDateString();
+                          const formattedTime = date.toLocaleTimeString();
+                          return (
+                            <>
+                              <div>Date: {formattedDate}</div>
+                              <div>Time: {formattedTime}</div>
+                            </>
+                          );
+                        })()}
                       </div>
                     ) : (
                       <span
                         className={`${
-                          column === "Status"
-                            ? row[column] === "Processing"
+                          column.accessor === "Status"
+                            ? row[column.accessor] === "Processing"
                               ? "text-[#E46A11] bg-[#FDF1E8] px-3 py-2 rounded-full font-semibold text-sm"
-                              : row[column] === "Delivered"
+                              : row[column.accessor] === "Delivered"
                               ? "text-[#0D894F] bg-[#E7F4EE] px-3 py-2 rounded-full font-semibold text-sm"
                               : "text-[#F04438] bg-[#FEEDEC] px-3 py-2 rounded-full font-semibold text-sm"
                             : ""
                         }`}
                       >
-                        {row[column]}
+                        {row[column.accessor]}
                       </span>
-                    )}
+                    ) 
+                    }
+                    
                   </td>
                 ))}
-                {actions ? (
+                {actions && (
                   <td className="py-[22px] px-6 flex gap-2">
                     <button>
                       <img src={EyeIcon} alt="View" />
@@ -86,8 +113,6 @@ const Table = ({ columns, data, actions }: TableProps) => {
                       <img src={DeleteIcon} alt="Delete" />
                     </button>
                   </td>
-                ) : (
-                  ""
                 )}
               </tr>
             ))}

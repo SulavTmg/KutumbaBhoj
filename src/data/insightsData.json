@@ -1,0 +1,27 @@
+{
+  "frequentOrderingCustomers": [
+    { "name": "Jesse Thomas", "orders": 20, "rank": 1, "trend": "up" },
+    { "name": "Thisal Mathiyazhagan", "orders": 19, "rank": 2, "trend": "down" },
+    { "name": "Helen Chuang", "orders": 18, "rank": 3, "trend": "up" },
+    { "name": "Lura Silverman", "orders": 17, "rank": 4, "trend": "up" },
+    { "name": "Winifred Groton", "orders": 16, "rank": 5, "trend": "down" },
+    { "name": "Ken Alba", "orders": 15, "rank": 6, "trend": "up" },
+    { "name": "Alice LeBeau", "orders": 14, "rank": 7, "trend": "down" },
+    { "name": "Adrian Lu", "orders": 12, "rank": 8, "trend": "up" },
+    { "name": "Evelyn Hamilton", "orders": 9, "rank": 9, "trend": "down" },
+    { "name": "Rosa Fiddlebrook", "orders": 8, "rank": 10, "trend": "up" }
+  ],
+  "restaurantsWithGoodReviews": [
+    { "name": "Daju Bhai Sweets", "stars": 56, "rank": 1, "trend": "up" },
+    { "name": "Sesame", "stars": 54, "rank": 2, "trend": "down" },
+    { "name": "Bhungro Thakali", "stars": 52, "rank": 3, "trend": "up" },
+    { "name": "Jheer Hetauda", "stars": 51, "rank": 4, "trend": "up" },
+    { "name": "Grace Cafe", "stars": 48, "rank": 5, "trend": "down" },
+    { "name": "Anmol Sweets", "stars": 46, "rank": 6, "trend": "up" },
+    { "name": "Falcha Eatery", "stars": 42, "rank": 7, "trend": "down" },
+    { "name": "Hotel Bashukala", "stars": 41, "rank": 8, "trend": "up" },
+    { "name": "Vaishnab Sweets", "stars": 35, "rank": 9, "trend": "down" },
+    { "name": "Sutra Lounge", "stars": 30, "rank": 10, "trend": "up" }
+  ]
+}
+

@@ -1,6 +1,6 @@
 import React from "react";
 import { tailspin } from "ldrs";
-import { authStore } from "../store";
+import { globalStore } from "../store";
 tailspin.register();
 
 type ButtonProps = {
@@ -10,13 +10,12 @@ type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({ name, icon, className = "", ...props }: ButtonProps) => {
-  const loading = authStore((store) => store.loading);
+  const loading = globalStore((store) => store.loading);
   return (
     <button type="submit" className={`${className}`} {...props}>
       {icon && <img src={icon} />}
       <div className="flex justify-center">
       {loading ? (
-
         <l-tailspin
           size="32"
           stroke="5"
