@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Header from "../../components/dashboard/Header";
+import Header from "../../components/common/Header";
 
 const Settings = () => {
   return (
@@ -8,9 +8,9 @@ const Settings = () => {
         <Header heading="Settings" search={false} />
         <div className="mx-3 mt-[46px]">
           <ul className="flex flex-col gap-6">
-            <Link to={"/settings/access-control"} className=" hover:shadow-md">
+            <Link to={"/settings/access-control"}>
               <li className="">
-                <div className="border rounded-lg px-6 py-3">
+                <div className="border rounded-lg px-6 py-3 hover:shadow-md">
                   <h1 className="font-semibold">Access Control</h1>
                   <span className="text-[#808080]">
                     Manage data access and role policies between employees and
@@ -19,9 +19,9 @@ const Settings = () => {
                 </div>
               </li>
             </Link>
-            <Link to={"/settings/user-control"} className=" hover:shadow-md">
+            <Link to={"/settings/user-control"}>
               <li>
-                <div className="border rounded-lg px-6 py-3">
+                <div className="border rounded-lg px-6 py-3 hover:shadow-md">
                   <h1 className="font-semibold">User Control</h1>
                   <span className="text-[#808080]">
                     Create and Edit user login informations

@@ -1,4 +1,4 @@
-import Header from "../dashboard/Header";
+import Header from "../common/Header";
 import Button from "../Button";
 import Input from "../form/Input";
 import Select from "../form/Select";
@@ -51,7 +51,8 @@ const AddEmployees = () => {
           />
           <Select
             name="shift"
-            options={["Shift", "Morning", "Day", "Evening", "Night"]}
+            placeholder="Shift"
+            options={["Morning", "Day", "Evening", "Night"]}
           />
           <Input
             name="designation"
@@ -60,8 +61,9 @@ const AddEmployees = () => {
             className="w-full h-[56px] border rounded-[10px]"
           />
           <Select
-            name="shift"
-            options={["Role", "Admin", "Employee", "Manager", "Staff"]}
+            name="role"
+            placeholder="Role"
+            options={["Admin", "Employee", "Manager", "Staff"]}
           />
           <Input
             name="vehicleType"

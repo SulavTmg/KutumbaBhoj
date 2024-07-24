@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { FetchAPI } from "../api/FetchAPI";
 import { AuthState } from "../types/types";
-const api = new FetchAPI("https://admin.kutumbabazar.com/foodapi");
+import { globalStore } from ".";
+
+const api = new FetchAPI();
 
 const authStore = create<AuthState>((set) => ({
-  loading: false,
-  error: null,
   token: localStorage.getItem("token"),
   isAuthenticated: !!localStorage.getItem("token"),
 
@@ -20,19 +20,25 @@ const authStore = create<AuthState>((set) => ({
   },
 
   login: async (credentials: { email: string; password: string }) => {
-    set({ loading: true, error: null });
+    const globalState = globalStore.getState();
+    globalState.setLoading(true);
+    globalState.setError(null);
     const response = await api.post<{
-      token: string;
+      token?: string;
+      message?: string;
     }>("/Logins", credentials);
 
     if (response.error) {
-      set({ error: response.error, loading: false });
+      console.log(response.error)
+      globalState.setError(response.error?.message);
+      globalState.setLoading(false);
     } else if (response.data) {
       const { token } = response.data;
-      authStore.getState().setToken(token);
-      set({loading: false})
+      authStore.getState().setToken(token!);
+      globalState.setLoading(false);
     } else {
-      set({ error: "Unexpected response format", loading: false });
+      globalState.setError("Unexpected Error");
+      globalState.setLoading(false);
     }
   },
 
@@ -41,9 +47,9 @@ const authStore = create<AuthState>((set) => ({
       authStore.getState().setToken(null);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        set({ error: error.message });
+        globalStore.getState().setError(error.message);
       } else {
-        set({ error: "An unknown error occurred"});
+        globalStore.getState().setError("Unkown error occured");
       }
     }
   },

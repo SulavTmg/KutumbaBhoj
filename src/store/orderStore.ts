@@ -1,22 +1,34 @@
 import { create } from "zustand";
 import { FetchAPI } from "../api/FetchAPI";
 import { Order, OrderStore } from "../types/types";
-const api = new FetchAPI("https://admin.kutumbabazar.com/foodapi");
+import { globalStore } from ".";
 
-const orderStore = create<OrderStore>((set) =>({
+const api = new FetchAPI();
 
-    loading: false,
-    error: null,
-    orders: [],
+const orderStore = create<OrderStore>((set, get) => ({
+  orders: [],
+  searchQuery: "",
 
-    getOrders: async () => {
-    set({ loading: true, error: null });
-    const response = await api.get<Order[]>("/orders");
+  getOrders: async () => {
+    const globalState = globalStore.getState();
+    globalState.setLoading(true);
+    globalState.setError(null);
+
+    const search = get().searchQuery;
+    const response = await api.get<Order[]>(
+      `/orders${search ? `?s=${search}` : ""}`
+    );
     if (response.error) {
-      set({ error: response.error, loading: false });
+      globalState.setError(response.error);
+      globalState.setLoading(false);
     } else {
-      set({ orders: response.data || [], loading: false });
+      set({ orders: response.data || [] });
+      globalState.setLoading(false);
     }
+  },
+  setSearchQuery: (query: string) => {
+    set({ searchQuery: query });
+    get().getOrders();
   },
 }));
 

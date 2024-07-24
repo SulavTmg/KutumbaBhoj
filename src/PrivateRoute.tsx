@@ -6,14 +6,13 @@ type PrivateRouteProps = PropsWithChildren;
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const navigate = useNavigate();
-  console.log(userDetails())
   useEffect(() => {
-    if (userDetails() === null) {
+    if (!userDetails()) {
       return navigate("/login", { replace: true });
     }
   }, [navigate]);
 
-  return children;
+  return userDetails()? children : <></>;
 };
 
 export default PrivateRoute;

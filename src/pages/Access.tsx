@@ -6,7 +6,7 @@ import assets from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { singnInSchema } from "../schemas";
 import { useFormik } from "formik";
-import { authStore } from "../store";
+import { authStore, globalStore } from "../store";
 import { useEffect, useState } from "react";
 
 const Access = () => {
@@ -15,7 +15,7 @@ const Access = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token !== null) {
+    if (token) {
       navigate("/");
     }
   }, [token, navigate]);
@@ -33,14 +33,18 @@ const Access = () => {
     useFormik({
       initialValues: initialValues,
       validationSchema: singnInSchema,
-      onSubmit: async (values, action) => {
+      onSubmit: async (values) => {
         await authStore.getState().login(values);
-        action.resetForm();
+        const error = globalStore.getState().error;
+        console.log(error)
+        if (error) {
+          alert(error);
+        }
       },
     });
 
   return (
-    token === null && (
+    !token && (
       <div className="flex w-full h-screen items-start">
         <ImgSlider />
         <div className="w-1/2 h-full relative">

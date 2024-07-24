@@ -6,7 +6,7 @@ import Layout from "./Layout";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
 import Employees from "./pages/users/Employees";
-import EndUser from "./pages/users/EndUsers";
+import EndUser from "./pages/users/Customers";
 import Resturants from "./pages/admin/Restaurants";
 import Menu from "./pages/admin/Menu";
 import Insights from "./pages/admin/Insights";
@@ -17,8 +17,9 @@ import AccessControl from "./components/dashboard/Settings/AccessControl";
 import UserControl from "./components/dashboard/Settings/UserControl";
 import PrivateRoute from "./PrivateRoute";
 import Access from "./pages/Access";
+import AddRestaurant from "./components/modals/AddRestaurant";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     
     path: "/",
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
         element: <EndUser />,
       },
       {
-        path: "/resturants",
+        path: "/restaurants",
         element: <Resturants />,
       },
       {
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
       {
-        path: "/employees/add-employees",
+        path: "/employees/add-employee",
         element: <AddEmployees />,
       },
       {
@@ -74,7 +75,10 @@ const router = createBrowserRouter([
       {
         path: "/settings/user-control",
         element: <UserControl />,
-      },
+      },{
+        path: "/restaurants/add-restaurant",
+        element: <AddRestaurant/>
+      }
     ],
   },
 
