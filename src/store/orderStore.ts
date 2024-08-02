@@ -32,7 +32,7 @@ const orderStore = create<OrderStore>((set, get) => ({
     const globalState = globalStore.getState();
     globalState.setLoading(true);
     globalState.setError(null);
-    const response = await api.get<Order[]>(`/orderdetails?id=${id}`);
+    const response = await api.get<Order[]>(`/orderdetails/${id}?id=${id}`);
     if (response.error) {
       globalState.setError(response.error.message);
       globalState.setLoading(false);
@@ -55,7 +55,7 @@ const orderStore = create<OrderStore>((set, get) => ({
       get().getOrders();
     }
   },
-  
+
   setSearchQuery: (query: string) => {
     set({ searchQuery: query });
     get().getOrders();

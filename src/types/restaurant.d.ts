@@ -40,7 +40,9 @@ export type Restaurant = {
 };
 export interface RestaurantStore {
   restaurants: Restaurant[];
+  restaurant: Restaurant | null
   getRestaurants: () => Promise<void>;
+  getRestaurant: (id: number) => Promise<void>;
   removeRestaurant: (id: number) => Promise< number | undefined>;
   addRestaurant: (restaurant: AddRestaurant) => Promise<unknown>;
   setSearchQuery: (query: string) => void;

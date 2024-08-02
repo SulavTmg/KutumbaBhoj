@@ -1,12 +1,3 @@
-export interface CustomerStore {
-  customers: Customer[];
-  getCustomers: () => Promise<void>;
-  updateCustomers: (formData: FormData) => Promise<void>;
-  removeCustomers: (id: number) => Promise<number | undefined>;
-  getCustomers: () => Promise<void>;
-  setSearchQuery: (query: string) => void;
-  searchQuery: string;
-}
 export type Customer = {
   Id: number;
   Name: string;
@@ -14,3 +5,14 @@ export type Customer = {
   Phone: string;
   Address: string;
 };
+
+export interface CustomerStore {
+  customers: Customer[];
+  customer: Customer | null;
+  getCustomers: () => Promise<void>;
+  getCustomer: (id: number) => Promise<void>;
+  updateCustomers: (customer: Customer) => Promise<void>;
+  removeCustomers: (id: number) => Promise<number | undefined>;
+  setSearchQuery: (query: string) => void;
+  searchQuery: string;
+}

@@ -11,6 +11,7 @@ const api = new FetchAPI();
 
 const restaurantStore = create<RestaurantStore>((set, get) => ({
   restaurants: [],
+  restaurant: null,
   searchQuery: "",
 
   getRestaurants: async () => {
@@ -27,6 +28,20 @@ const restaurantStore = create<RestaurantStore>((set, get) => ({
       globalState.setLoading(false);
     } else {
       set({ restaurants: response.data || [] });
+      globalState.setLoading(false);
+    }
+  },
+
+  getRestaurant: async (id: number) => {
+    const globalState = globalStore.getState();
+    globalState.setLoading(true);
+    globalState.setError(null);
+    const response = await api.get<Restaurant>(`/restaurants/${id}`);
+    if (response.error) {
+      globalState.setError(response.error.message);
+      globalState.setLoading(false);
+    } else {
+      set({ restaurant: response.data || null });
       globalState.setLoading(false);
     }
   },

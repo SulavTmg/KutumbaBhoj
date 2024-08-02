@@ -20,6 +20,9 @@ import Access from "./pages/Access";
 import AddRestaurant from "./components/modals/AddRestaurant";
 import Orderdetails from "./components/order_details/Orderdetails";
 import AddMenuCategory from "./components/modals/AddMenuCategory";
+import EditRestaurant from "./components/modals/EditRestaurant";
+import EditEmployee from "./components/modals/EditEmployee";
+import EditEndUser from "./components/modals/EditCustomer";
 
 export const router = createBrowserRouter([
   {
@@ -43,12 +46,28 @@ export const router = createBrowserRouter([
         element: <Employees />,
       },
       {
+        path: "/employees/edit-employee/:id",
+        element: <EditEmployee />,
+      },
+      {
         path: "/end-user",
         element: <EndUser />,
       },
       {
+        path: "/end-user/edit-endUser/:id",
+        element: <EditEndUser />,
+      },
+      {
         path: "/restaurants",
         element: <Resturants />,
+      },
+      {
+        path: "/restaurants/add-restaurant",
+        element: <AddRestaurant />,
+      },
+      {
+        path: "/restaurants/edit-restaurant/:id",
+        element: <EditRestaurant />,
       },
       {
         path: "/menu",
@@ -83,10 +102,7 @@ export const router = createBrowserRouter([
         path: "/settings/user-control",
         element: <UserControl />,
       },
-      {
-        path: "/restaurants/add-restaurant",
-        element: <AddRestaurant />,
-      },
+
       {
         path: "/orders/orderdetails/:id",
         element: <Orderdetails />,

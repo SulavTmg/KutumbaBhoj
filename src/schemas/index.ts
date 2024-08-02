@@ -59,6 +59,17 @@ export const employeeSchema = Yup.object({
   role: Yup.string().required("Please select the role"),
 });
 
+export const editEmployeeSchema = Yup.object({
+  firstName: Yup.string().required("Please enter First Name"),
+  lastName: Yup.string().required("Please enter Last Name"),
+  gender: Yup.string().required("Please enter gender"),
+  contact: Yup.string()
+    .matches(/(\+977)?[9][6-9]\d{8}$/, "Contact number is not valid")
+    .required("Please enter the contact number"),
+  shift: Yup.string().required("Please select the shift"),
+  designation: Yup.string().required("Please enter the designation"),
+});
+
 export const addCategorySchema = Yup.object({
   category: Yup.string().required("Please enter the category"),
   name: Yup.string().required("Please enter the name"),

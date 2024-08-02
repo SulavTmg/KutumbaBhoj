@@ -15,13 +15,10 @@ type ToggleProps = {
 
 const SignUpForm = ({ isActive, toggleActive }: ToggleProps) => {
   const {
-    icons: { CloseIcon },
-  } = assets;
-  const [isVisible, setIsVisible] = useState(false);
-  const {
-    icons: { EyeOpen, EyeClose },
+    icons: { CloseIcon, EyeOpen, EyeClose },
   } = assets;
 
+  const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };

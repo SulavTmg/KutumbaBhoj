@@ -2,22 +2,31 @@ import Header from "../common/Header";
 import Button from "../Button";
 import Input from "../form_elements/Input";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addRestaurantSchema } from "../../schemas";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
 import Exclamation from "../common/icon/Exclamation";
 import assets from "../../assets/assets";
 import Dropzone from "../dropzone/Dropzone";
-import { RestaurantDetails } from "../../types/restaurant";
 import { globalStore, restaurantStore } from "../../store";
 import moment from "moment";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
-const AddRestaurant = () => {
+const EditRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const [logoId, setLogoId] = useState<number | null>(null);
   const [imageId, setImageId] = useState<number | null>(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      await restaurantStore.getState().getRestaurant(Number(id));
+    })();
+  }, [id]);
+
+  const { restaurant } = restaurantStore();
 
   const handleReset = () => {
     resetForm();
@@ -33,15 +42,17 @@ const AddRestaurant = () => {
     icons: { DownIcon, BackArrow },
   } = assets;
 
-  const initialValues: RestaurantDetails = {
-    restaurantName: "",
-    address: "",
-    contact: "",
+  const timeString = restaurant?.OpeningHours || "";
+  const [openingTime, closingTime] = timeString.split("-");
+
+  const initialValues = {
+    restaurantName: restaurant?.Name || "",
+    address: restaurant?.Address || "",
+    contact: restaurant?.Contact || "",
     restaurantOwner: "",
     ownerContactDetails: "",
-    openingTime: "",
-    closingTime: "",
-    openingHours: "",
+    openingTime: openingTime,
+    closingTime: closingTime,
   };
 
   const {
@@ -55,6 +66,7 @@ const AddRestaurant = () => {
     resetForm,
   } = useFormik({
     initialValues: initialValues,
+    enableReinitialize: true,
     validationSchema: addRestaurantSchema,
     onSubmit: async (values) => {
       const imgIds: number[] = [];
@@ -86,7 +98,7 @@ const AddRestaurant = () => {
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">
       <div className="px-6 py-5">
         <Header
-          heading="Add Restaurant"
+          heading="Edit Restaurant"
           className="!text-[#5C59E8]"
           icon={BackArrow}
           path="/restaurants"
@@ -271,4 +283,4 @@ const AddRestaurant = () => {
   );
 };
 
-export default AddRestaurant;
+export default EditRestaurant;

@@ -7,7 +7,7 @@ import moment from "moment";
 
 const Orderdetails = () => {
   const {
-    icons: { DownArrow },
+    icons: { DownArrow, BackArrow },
     imgs: { GoogleMap },
   } = assets;
 
@@ -20,13 +20,19 @@ const Orderdetails = () => {
   }, [id]);
 
   const { order } = orderStore();
+  console.log(order)
 
   if (!order) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">
       <div className="px-6 py-5">
-        <Header heading="Order Details" />
+        <Header
+          heading="Order Details"
+          icon={BackArrow}
+          path="/orders"
+          btnName="Go Back"
+        />
       </div>
       <div className="flex gap-3 px-6 mb-6">
         <div className="min-w-[600px] border shadow-md rounded-md p-6 flex flex-col gap-12">

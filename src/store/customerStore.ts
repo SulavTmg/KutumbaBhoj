@@ -7,6 +7,7 @@ const api = new FetchAPI();
 
 const customerStore = create<CustomerStore>((set, get) => ({
   customers: [],
+  customer: null,
   searchQuery: "",
 
   getCustomers: async () => {
@@ -46,11 +47,25 @@ const customerStore = create<CustomerStore>((set, get) => ({
     }
   },
 
-  updateCustomers: async (formData: FormData) => {
+  getCustomer: async(id: number) => {
+      const globalState = globalStore.getState();
+      globalState.setLoading(true);
+      globalState.setError(null);
+      const response = await api.get<Customer>(`/customers/${id}`);
+      if (response.error) {
+        globalState.setError(response.error.message);
+        globalState.setLoading(false);
+      } else {
+        set({ customer: response.data || null });
+        globalState.setLoading(false);
+      }
+  },
+
+  updateCustomers: async (customer: Customer) => {
     const globalState = globalStore.getState();
     globalState.setLoading(true);
     globalState.setError(null);
-    const response = await api.put("/customers", formData);
+    const response = await api.put("/customers", customer);
     if (response.error) {
       globalState.setError(response.error.message);
       globalState.setLoading(false);
@@ -59,6 +74,8 @@ const customerStore = create<CustomerStore>((set, get) => ({
       get().getCustomers();
     }
   },
+
+
 }));
 
 export default customerStore;
