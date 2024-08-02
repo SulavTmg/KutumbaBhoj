@@ -1,16 +1,16 @@
-import TimeNav from "../../components/dashboard/insights/TimeNav";
-import Cards from "../../components/dashboard/insights/Cards";
-import LineChart from "../../components/dashboard/insights/LineChart";
-import RadialBarChart from "../../components/dashboard/insights/RadialBarChart";
-import BarChart from "../../components/dashboard/insights/BarChart";
+import TimeNav from "../../components/insights/TimeNav";
+import Cards from "../../components/insights/Cards";
+import LineChart from "../../components/insights/LineChart";
+import RadialBarChart from "../../components/insights/RadialBarChart";
+import BarChart from "../../components/insights/BarChart";
 import Header from "../../components/common/Header";
 import ProgressBar from "../../components/common/ProgressBar";
 import assets from "../../assets/assets";
-import RankingList from "../../components/dashboard/insights/RankingList";
+import RankingList from "../../components/insights/RankingList";
 
 const Insights = () => {
   const {
-    logos: { Sesame, DajuBhaiSmall, Falcha },
+    logos: { Sesame, DajuBhai, Falcha },
   } = assets;
   return (
     <>
@@ -59,7 +59,7 @@ const Insights = () => {
             </div>
             <div className="flex flex-col gap-8">
               <div className="flex gap-3">
-                <img src={DajuBhaiSmall} />
+                <img src={DajuBhai} />
                 <div className="flex-grow">
                   <h2 className="text-sm font-semibold mb-1">
                     Daju Bhai Sweets

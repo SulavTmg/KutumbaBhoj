@@ -6,6 +6,7 @@ import assets from "../../assets/assets";
 
 const DashHeader = () => {
   const [isVisible, setIsVisible] = useState(false);
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,18 +15,18 @@ const DashHeader = () => {
   };
 
   const {
-    icons: { MsgIcon, BellIcon, SearchIcon }
+    icons: { MsgIcon, BellIcon, SearchIcon },
   } = assets;
   return (
     <>
-      <header className="bg-white flex flex-wrap justify-between items-center px-10 py-4 -mx-3 -my-3 mb-8">
-        <div>
+      <header className="bg-white flex flex-wrap justify-between items-center px-10 py-4 -m-3 mb-8">
+        <div className="ml-2">
           <h1 className="text-[#CE1B22] font-bold text-[28px]">Welcome</h1>
-          <span className="text-[#808080] font-josefin">
-            Your dahboard is ready
-          </span>
+          <p className="text-[#808080] -mt-[2px] pl-[2px] tracking-wide font-josefin">
+            Your dashboard is ready
+          </p>
         </div>
-        <nav className="">
+        <nav>
           <ul className="flex items-center gap-8">
             <li>
               <div className="relative">
@@ -34,7 +35,7 @@ const DashHeader = () => {
                 </button>
                 <input
                   placeholder="Search for something"
-                  className="border rounded-[40px] outline-none pl-14 w-[280px] h-[48px]"
+                  className="border rounded-[40px] outline-none pl-14 w-[280px] py-3 bg-[#F5F7FA]"
                 />
               </div>
             </li>
@@ -49,15 +50,24 @@ const DashHeader = () => {
               </div>
             </li>
             <li>
-              <div className="relative inline-block">
+              <div className="relative">
+                <div
+                  onClick={() => setIsVisible(!isVisible)}
+                  className={`left-0 right-0 top-0 bottom-0 fixed inset-0 z-20 ${
+                    isVisible ? "visible" : "invisible"
+                  }`}
+                ></div>
                 <button onClick={() => setIsVisible(!isVisible)}>
                   <img
                     src={profile}
                     className="size-[48px] border rounded-full cursor-pointer"
                   />
                 </button>
-                {isVisible === true && (
-                  <div className="absolute origin-top-right right-1 mt-2 w-32 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                {isVisible && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute mt-2 z-30 w-32 right-1 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  >
                     <ul>
                       <li>
                         <button

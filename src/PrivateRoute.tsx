@@ -1,18 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, PropsWithChildren } from "react";
+import { Navigate } from "react-router-dom";
 import userDetails from "./utils/userDetails";
+import { PropsWithChildren } from "react";
 
-type PrivateRouteProps = PropsWithChildren;
-
-const PrivateRoute = ({ children }: PrivateRouteProps) => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!userDetails()) {
-      return navigate("/login", { replace: true });
-    }
-  }, [navigate]);
-
-  return userDetails()? children : <></>;
+const PrivateRoute = ({ children }: PropsWithChildren) => {
+  return userDetails() ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

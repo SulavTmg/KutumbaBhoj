@@ -1,9 +1,9 @@
-import data from "../../../data/insightsData.json";
+import data from "../../data/insightsData.json";
 
 const RankingList = () => {
   return (
     <div className="flex flex-wrap gap-8 font-josefin">
-      <div className=" flex-grow bg-white rounded-md">
+      <div className="flex-grow bg-white rounded-md">
         <h2 className=" text-[#000] opacity-50 text-center mb-8 mt-4">
           Frequent Ordering Customer
         </h2>
