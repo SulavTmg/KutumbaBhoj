@@ -2,7 +2,7 @@ import { useState } from "react";
 import assets from "../../assets/assets";
 import Pagination from "../common/Pagination";
 import { Restaurant } from "../../types/restaurant";
-import { Customer } from "../../types/customer";
+import { TableProps } from "../../types/table";
 import { Employee } from "../../types/employee";
 import { Order } from "../../types/order";
 import { Link } from "react-router-dom";
@@ -13,19 +13,6 @@ import {
   restaurantStore,
 } from "../../store";
 import toast from "react-hot-toast";
-
-type Column = {
-  header: string;
-  accessor: string;
-};
-
-type TableProps = {
-  columns: Column[];
-  data: Customer[] | Employee[] | Restaurant[] | Order[];
-  actions: boolean;
-  type: string;
-  nameId?: boolean;
-};
 
 const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
   const {
@@ -40,6 +27,19 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+  };
+
+  const getPath = (type: string, id: number) => {
+    switch (type) {
+      case "restaurant":
+        return `/restaurants/edit-restaurant/${id}`;
+      case "customer":
+        return `/end-user/edit-endUser/${id}`;
+      case "employee":
+        return `/employees/edit-employee/${id}`;
+      default:
+        return "/";
+    }
   };
 
   return (
@@ -159,7 +159,9 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
                         <img src={EyeIcon} alt="View" />
                       </button>
                       <button>
-                        <img src={EditIcon} alt="Edit" />
+                        <Link to={getPath(type, row["Id"])}>
+                          <img src={EditIcon} alt="Edit" />
+                        </Link>
                       </button>
                       <button
                         onClick={async () => {
