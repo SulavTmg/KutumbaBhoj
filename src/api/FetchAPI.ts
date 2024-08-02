@@ -1,4 +1,4 @@
-import { FetchResponse, FetchOptions } from "../types/types";
+import { FetchResponse, FetchOptions } from "../types/api";
 
 export class FetchAPI {
   private baseURL: string;
@@ -16,6 +16,7 @@ export class FetchAPI {
     const url = `${this.baseURL}${path}`;
     try {
       const reqHeader = new Headers();
+
       if (!(options.body instanceof FormData)) {
         reqHeader.append("Content-Type", "application/json");
       }
@@ -49,11 +50,16 @@ export class FetchAPI {
     body: unknown,
     headers: { [key: string]: string } = {}
   ): Promise<FetchResponse<T>> {
-    return this.request<T>(path, {
+    const options: FetchOptions = {
       method: "POST",
       headers,
-      body: JSON.stringify(body),
-    });
+    };
+    if (body instanceof FormData) {
+      options.body = body;
+    } else {
+      options.body = JSON.stringify(body);
+    }
+    return this.request<T>(path, options);
   }
 
   delete<T>(
@@ -65,13 +71,18 @@ export class FetchAPI {
 
   put<T>(
     path: string,
-    headers: { [key: string]: string } = {},
-    body: unknown
+    body: unknown,
+    headers: { [key: string]: string } = {}
   ): Promise<FetchResponse<T>> {
-    return this.request(path, {
+    const options: FetchOptions = {
       method: "PUT",
       headers,
-      body: JSON.stringify(body),
-    });
+    };
+    if (body instanceof FormData) {
+      options.body = body;
+    } else {
+      options.body = JSON.stringify(body);
+    }
+    return this.request(path, options);
   }
 }

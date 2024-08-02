@@ -56,7 +56,7 @@ export const adminSec = [
     path: "/restaurants",
     icon: RestaurantIcon,
     activeIcon: ActiveRestaurant,
-    name: "Restaurant",
+    name: "Restaurants",
   },
   {
     path: "/menu",
