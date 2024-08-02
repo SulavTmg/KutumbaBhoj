@@ -1,3 +1,4 @@
+import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 type ChartProps = {
   data: number[];
@@ -6,7 +7,7 @@ type ChartProps = {
 }
 
 const RadialBarChart = ({data, color, title}: ChartProps) => {
-  const options = {
+  const options: ApexOptions = {
     chart: {
       type: "radialBar",
     },
@@ -32,7 +33,7 @@ const RadialBarChart = ({data, color, title}: ChartProps) => {
     },
     fill: {
       type: "gradient",
-      colors: color,
+      colors: [color],
       gradient: {
         shade: "dark",
         type: "vertical",

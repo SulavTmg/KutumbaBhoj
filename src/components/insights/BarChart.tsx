@@ -1,7 +1,8 @@
+import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 
 const BarChart = () => {
-  const options = {
+  const options: ApexOptions = {
     series: [
       {
         name: "Orders",
@@ -46,22 +47,6 @@ const BarChart = () => {
         fontFamily: "Josefin Sans , sans-serif",
       },
     },
-    // responsive: [
-    //   {
-    //     breakpoint: 480,
-    //     options: {
-    //       chart: {
-    //         width: "100%",
-    //         height: 200,
-    //       },
-    //       dataLabels: {
-    //         value: {
-    //           fontSize: "14px",
-    //         },
-    //       },
-    //     },
-    //   },
-    // ],
   };
 
   return (

@@ -21,7 +21,7 @@ const EndUsers = () => {
           onSearchChange={setSearchQuery}
         />
       </div>
-      <Table actions={true} columns={columns} data={customers} />
+      <Table type="customer" actions={true} columns={columns} data={customers} />
     </div>
   );
 };

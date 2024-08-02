@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
-import SideBar from "./components/dashboard/SideBar";
+import SideBar from "./components/navbar/SideBar.tsx";
 import { Outlet, useNavigate } from "react-router-dom";
-import { customerStore, employeeStore, orderStore } from "./store";
 import { router } from "./main.tsx";
+import { Toaster } from "react-hot-toast";
+import {
+  customerStore,
+  employeeStore,
+  orderStore,
+  restaurantStore,
+} from "./store";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -15,12 +21,14 @@ const Layout = () => {
     employeeStore.getState().getEmployees();
     orderStore.getState().getOrders();
     customerStore.getState().getCustomers();
+    restaurantStore.getState().getRestaurants();
   }, [location.pathname, location.search, navigate]);
   return (
     <>
       <SideBar />
-      <main className="ml-[290px] bg-[#F3F2F7] min-h-screen h-full max-w-[calc(100vw-290px)] py-3 px-3">
+      <main className="ml-[290px] bg-[#F3F2F7] min-h-screen h-full max-w-[calc(100vw-290px)] p-3">
         <Outlet />
+        <Toaster/>
       </main>
     </>
   );

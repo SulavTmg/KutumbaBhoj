@@ -41,7 +41,7 @@ const Employees = () => {
           onSearchChange={setSearchQuery}
         />
       </div>
-      <Table actions={true} columns={columns} data={employees} nameId={true} />
+      <Table type="employee" actions={true} columns={columns} data={employees} nameId={true} />
     </div>
   );
 };

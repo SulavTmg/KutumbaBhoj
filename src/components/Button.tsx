@@ -7,9 +7,11 @@ type ButtonProps = {
   name: string;
   className?: string;
   icon?: string;
+  loadingSize? : string;
+  loadingStroke? : string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ name, icon, className = "", ...props }: ButtonProps) => {
+const Button = ({ name, loadingSize,loadingStroke, icon, className = "", ...props }: ButtonProps) => {
   const loading = globalStore((store) => store.loading);
   return (
     <button type="submit" className={`${className}`} {...props}>
@@ -17,8 +19,8 @@ const Button = ({ name, icon, className = "", ...props }: ButtonProps) => {
       <div className="flex justify-center">
       {loading ? (
         <l-tailspin
-          size="32"
-          stroke="5"
+          size={`${loadingSize}`}
+          stroke={`${loadingStroke}`}
           speed="0.9"
           color="white"
           ></l-tailspin>

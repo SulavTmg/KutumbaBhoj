@@ -1,9 +1,13 @@
+import { useEffect } from "react";
 import Header from "../components/common/Header";
 import Table from "../components/table/Table";
 import { orderStore } from "../store";
 const Orders = () => {
   const { orders, setSearchQuery } = orderStore();
 
+  useEffect(() => {
+    orderStore.getState().order = null;
+  });
   const columns = [
     {
       header: "Order Id",
@@ -41,7 +45,7 @@ const Orders = () => {
           onSearchChange={setSearchQuery}
         />
       </div>
-      <Table columns={columns} data={orders} actions={false} />
+      <Table type="order" columns={columns} data={orders} actions={false} />
     </div>
   );
 };

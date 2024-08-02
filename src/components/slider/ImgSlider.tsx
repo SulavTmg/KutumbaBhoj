@@ -16,7 +16,7 @@ const ImgSlider = () => {
     return () => clearInterval(interval);
   }, [ImageURLS.length]);
   return (
-    <div className="w-1/2 h-full overflow-hidden relative ">
+    <>
       <div
         style={{ transform: `translateX(-${index * 100}%)` }}
         className="flex h-full transition-transform ease-[cubic-bezier(0.19,1,0.22,1)] duration-[1200ms] "
@@ -43,7 +43,7 @@ const ImgSlider = () => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
-import chartData from "../../../data/lineChartData.json";
+import { ApexOptions } from "apexcharts";
+import chartData from "../../data/lineChartData.json";
 import ReactApexChart from "react-apexcharts";
 
 const AreaChart = () => {
@@ -7,7 +8,7 @@ const AreaChart = () => {
     data: dataset.data,
   }));
 
-  const options = {
+  const options: ApexOptions = {
     chart: {
       zoom: {
         enabled: false,
@@ -39,7 +40,7 @@ const AreaChart = () => {
           if (value >= 1000) {
             return "$" + value / 1000 + "K";
           } else if (value == 0) {
-            return value;
+            return value.toString();
           } else {
             return "$" + value;
           }
@@ -84,7 +85,7 @@ const AreaChart = () => {
       margin: 15,
     },
     subtitle: {
-      text: "Revenue and Sales", 
+      text: "Revenue and Sales",
       style: {
         fontFamily: "Josefin Sans , sans-serif",
       },

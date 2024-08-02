@@ -12,21 +12,23 @@ import Menu from "./pages/admin/Menu";
 import Insights from "./pages/admin/Insights";
 import Settings from "./pages/admin/Settings";
 import AddEmployees from "./components/modals/AddEmployees";
-import MenuDetails from "./components/dashboard/menu/MenuDetails";
-import AccessControl from "./components/dashboard/Settings/AccessControl";
-import UserControl from "./components/dashboard/Settings/UserControl";
+import MenuDetails from "./components/menu_details/MenuDetails";
+import AccessControl from "./components/settings/AccessControl";
+import UserControl from "./components/settings/UserControl";
 import PrivateRoute from "./PrivateRoute";
 import Access from "./pages/Access";
 import AddRestaurant from "./components/modals/AddRestaurant";
+import Orderdetails from "./components/order_details/Orderdetails";
+import AddMenuCategory from "./components/modals/AddMenuCategory";
 
 export const router = createBrowserRouter([
   {
-    
     path: "/",
-    element:
-    <PrivateRoute>
-      <Layout />
-    </PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <Layout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "",
@@ -53,6 +55,14 @@ export const router = createBrowserRouter([
         element: <Menu />,
       },
       {
+        path: "/menu/:id",
+        element: <MenuDetails />,
+      },
+      {
+        path: "/menu/add-category/:id",
+        element: <AddMenuCategory />,
+      },
+      {
         path: "/insights",
         element: <Insights />,
       },
@@ -64,10 +74,7 @@ export const router = createBrowserRouter([
         path: "/employees/add-employee",
         element: <AddEmployees />,
       },
-      {
-        path: "/menu/:id",
-        element: <MenuDetails />,
-      },
+
       {
         path: "/settings/access-control",
         element: <AccessControl />,
@@ -75,17 +82,22 @@ export const router = createBrowserRouter([
       {
         path: "/settings/user-control",
         element: <UserControl />,
-      },{
+      },
+      {
         path: "/restaurants/add-restaurant",
-        element: <AddRestaurant/>
-      }
+        element: <AddRestaurant />,
+      },
+      {
+        path: "/orders/orderdetails/:id",
+        element: <Orderdetails />,
+      },
     ],
   },
 
   {
     path: "/login",
-    element: <Access/>
-  }
+    element: <Access />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

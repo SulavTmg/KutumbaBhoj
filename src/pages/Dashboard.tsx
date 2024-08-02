@@ -1,9 +1,9 @@
-import LineChart from "../components/dashboard/insights/LineChart";
-import TimeNav from "../components/dashboard/insights/TimeNav";
-import Cards from "../components/dashboard/insights/Cards";
-import RadialBarChart from "../components/dashboard/insights/RadialBarChart";
-import BarChart from "../components/dashboard/insights/BarChart";
-import DashHeader from "../components/dashboard/DashHeader";
+import LineChart from "../components/insights/LineChart";
+import TimeNav from "../components/insights/TimeNav";
+import Cards from "../components/insights/Cards";
+import RadialBarChart from "../components/insights/RadialBarChart";
+import BarChart from "../components/insights/BarChart";
+import DashHeader from "../components/header/DashHeader";
 import assets from "../assets/assets";
 
 const Dashboard = () => {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import assets from "../../assets/assets";
-import { HeaderProps } from "../../types/types";
+import { HeaderProps } from "../../types/header";
 
 const Header = ({
   icon,

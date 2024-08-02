@@ -7,7 +7,7 @@ const CheckBox = () => {
       >
         <input
           type="checkbox"
-          className="before:content[''] peer relative h-6 w-6 cursor-pointer appearance-none rounded-[5px] border-[#0D693C] border checked:bg-[#0D693C] "
+          className="before:content[''] peer relative size-4 sm:size-6 cursor-pointer appearance-none rounded-[5px] border-[#0D693C] border checked:bg-[#0D693C] "
           id="check"
         />
         <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
@@ -28,7 +28,7 @@ const CheckBox = () => {
         </span>
       </label>
       <label
-        className="mt-px text-[#16151C] cursor-pointer select-none"
+        className="mt-px text-[#16151C] cursor-pointer select-none text-[10px] sm:text-base"
         htmlFor="check"
       >
         Remember Me

@@ -1,6 +1,18 @@
 import { useState } from "react";
 import assets from "../../assets/assets";
 import Pagination from "../common/Pagination";
+import { Restaurant } from "../../types/restaurant";
+import { Customer } from "../../types/customer";
+import { Employee } from "../../types/employee";
+import { Order } from "../../types/order";
+import { Link } from "react-router-dom";
+import {
+  customerStore,
+  employeeStore,
+  orderStore,
+  restaurantStore,
+} from "../../store";
+import toast from "react-hot-toast";
 
 type Column = {
   header: string;
@@ -9,16 +21,16 @@ type Column = {
 
 type TableProps = {
   columns: Column[];
-  data: { [key: string]: string | number }[];
+  data: Customer[] | Employee[] | Restaurant[] | Order[];
   actions: boolean;
+  type: string;
   nameId?: boolean;
 };
 
-const Table = ({ columns, data, actions, nameId }: TableProps) => {
+const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
   const {
     icons: { EyeIcon, EditIcon, DeleteIcon },
   } = assets;
-  // const [search, set]
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -59,21 +71,62 @@ const Table = ({ columns, data, actions, nameId }: TableProps) => {
                     key={colIndex}
                     className="py-[22px] px-6 text-sm text-[#667085]"
                   >
-                    {nameId && column.accessor === "Name" ? (
+                    {type === "restaurant" && column.accessor === "Name" ? (
+                      <div className="flex items-center">
+                        <img
+                          src={`https://admin.kutumbabazar.com/foodapi/${
+                            (row as Restaurant).Images[0]?.Url
+                          }`}
+                          alt={(row as Restaurant).Images[0]?.Name}
+                          className="size-11 mr-2"
+                        />
+                        <span>{(row as Restaurant).Name}</span>
+                      </div>
+                    ) : type === "order" && column.accessor === "Id" ? (
+                      <Link to={`/orders/orderdetails/${row["Id"]}`}>
+                        <span className="block text-[#5C59E8] font-semibold">
+                          {row["Id"]}
+                        </span>
+                      </Link>
+                    ) : nameId && column.accessor === "Name" ? (
                       <>
                         <span className="text-[#333843]">
-                          {row[column.accessor]}
+                          {(row as Employee)["Name"]}
                         </span>
                         <span className="block text-[#667085]">
                           ID: {row["Id"]}
                         </span>
                       </>
-                    ) : column.accessor === "CreatedAt" || column.accessor === "Joined" ? (
+                    ) : column.accessor === "CreatedAt" && type === "order" ? (
                       <div>
                         {(() => {
-                          const date = new Date(row[column.accessor]);
+                          const date = new Date(
+                            (row as Order)[column.accessor]
+                          );
                           const formattedDate = date.toLocaleDateString();
-                          const formattedTime = date.toLocaleTimeString();
+                          const formattedTime = date.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          });
+                          return (
+                            <>
+                              <div>Date: {formattedDate}</div>
+                              <div>Time: {formattedTime}</div>
+                            </>
+                          );
+                        })()}
+                      </div>
+                    ) : column.accessor === "Joined" ? (
+                      <div>
+                        {(() => {
+                          const date = new Date(
+                            (row as Restaurant | Employee)[column.accessor]
+                          );
+                          const formattedDate = date.toLocaleDateString();
+                          const formattedTime = date.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          });
                           return (
                             <>
                               <div>Date: {formattedDate}</div>
@@ -85,33 +138,72 @@ const Table = ({ columns, data, actions, nameId }: TableProps) => {
                     ) : (
                       <span
                         className={`${
-                          column.accessor === "Status"
-                            ? row[column.accessor] === "Processing"
+                          column.accessor === "Status" && type === "order"
+                            ? (row as Order)[column.accessor] === "Processing"
                               ? "text-[#E46A11] bg-[#FDF1E8] px-3 py-2 rounded-full font-semibold text-sm"
-                              : row[column.accessor] === "Delivered"
+                              : (row as Order)[column.accessor] === "Delivered"
                               ? "text-[#0D894F] bg-[#E7F4EE] px-3 py-2 rounded-full font-semibold text-sm"
                               : "text-[#F04438] bg-[#FEEDEC] px-3 py-2 rounded-full font-semibold text-sm"
                             : ""
                         }`}
                       >
-                        {row[column.accessor]}
+                        {row[column.accessor as keyof typeof row]}
                       </span>
-                    ) 
-                    }
-                    
+                    )}
                   </td>
                 ))}
                 {actions && (
-                  <td className="py-[22px] px-6 flex gap-2">
-                    <button>
-                      <img src={EyeIcon} alt="View" />
-                    </button>
-                    <button>
-                      <img src={EditIcon} alt="Edit" />
-                    </button>
-                    <button>
-                      <img src={DeleteIcon} alt="Delete" />
-                    </button>
+                  <td className="px-6">
+                    <div className="flex gap-2">
+                      <button>
+                        <img src={EyeIcon} alt="View" />
+                      </button>
+                      <button>
+                        <img src={EditIcon} alt="Edit" />
+                      </button>
+                      <button
+                        onClick={async () => {
+                          switch (type) {
+                            case "customer": {
+                              const response = await customerStore
+                                .getState()
+                                .removeCustomers(Number(row["Id"]));
+                              if (response) {
+                                toast.success("Successfully deleted");
+                              }
+                              break;
+                            }
+                            case "employee": {
+                              const response = await employeeStore
+                                .getState()
+                                .removeEmployee(Number(row["Id"]));
+                              if (response) {
+                                toast.success("Successfully deleted");
+                              }
+                              break;
+                            }
+                            case "order": {
+                              await orderStore
+                                .getState()
+                                .removeOrder(Number(row["Id"]));
+
+                              break;
+                            }
+                            case "restaurant": {
+                              const response = await restaurantStore
+                                .getState()
+                                .removeRestaurant(Number(row["Id"]));
+                              if (response) {
+                                toast.success("Successfully deleted");
+                              }
+                              break;
+                            }
+                          }
+                        }}
+                      >
+                        <img src={DeleteIcon} alt="Delete" />
+                      </button>
+                    </div>
                   </td>
                 )}
               </tr>

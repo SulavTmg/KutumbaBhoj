@@ -9,11 +9,24 @@ type SelectProps = {
   placeholder?: string;
   errorMsg?: string | null;
   options: string[];
+  value?: string;
+  defaultValue?: string;
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   (
-    { label, name, errorMsg,placeholder, labelCss, className = "", options = [], ...props },
+    {
+      label,
+      name,
+      errorMsg,
+      placeholder,
+      labelCss,
+      className = "",
+      options = [],
+      value,
+      defaultValue,
+      ...props
+    },
     ref
   ) => {
     const id = useId();
@@ -32,30 +45,28 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           name={name}
           className={`border h-[56px] rounded-[10px] px-4 text-[#9CA3AF] outline-none ${className}`}
           ref={ref}
+          value={value}
+          defaultValue={defaultValue}
           {...props}
         >
-          <option value="" disabled selected hidden>
-           {placeholder}
-          </option>
-          {options?.map((option) => (
+          {placeholder && (
+            <option value="" disabled hidden>
+              {placeholder}
+            </option>
+          )}
+          {options.map((option) => (
             <option key={option} value={option}>
               {option}
             </option>
           ))}
         </select>
-        {errorMsg ? (
-          <div className="flex items-center text-red-500 text-xs mt-1">
-            <Exclamation
-              width="11px"
-              fill="red"
-              className="mr-1 flex-shrink-0"
-            />
-            <span className="text-red-500 text-[10px] leading-tight">
+        {errorMsg && (
+          <div className="pl-2 flex items-center absolute text-[#CC3D3D] text-xs mt-1">
+            <Exclamation fill="red" className="mr-1 size-2 sm:size-[10px]" />
+            <span className="text-[#CC3D3D] text-[8px] sm:text-[10px] leading-tight">
               {errorMsg}
             </span>
           </div>
-        ) : (
-          ""
         )}
       </>
     );
