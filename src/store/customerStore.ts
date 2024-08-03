@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { FetchAPI } from "../api/FetchAPI";
-import { CustomerStore, Customer } from "../types/customer";
+import { CustomerStore, Customer, EditCustomer } from "../types/customer";
 import { globalStore } from ".";
 
 const api = new FetchAPI();
@@ -47,21 +47,21 @@ const customerStore = create<CustomerStore>((set, get) => ({
     }
   },
 
-  getCustomer: async(id: number) => {
-      const globalState = globalStore.getState();
-      globalState.setLoading(true);
-      globalState.setError(null);
-      const response = await api.get<Customer>(`/customers/${id}`);
-      if (response.error) {
-        globalState.setError(response.error.message);
-        globalState.setLoading(false);
-      } else {
-        set({ customer: response.data || null });
-        globalState.setLoading(false);
-      }
+  getCustomer: async (id: number) => {
+    const globalState = globalStore.getState();
+    globalState.setLoading(true);
+    globalState.setError(null);
+    const response = await api.get<EditCustomer>(`/customers/${id}`);
+    if (response.error) {
+      globalState.setError(response.error.message);
+      globalState.setLoading(false);
+    } else {
+      set({ customer: response.data || null });
+      globalState.setLoading(false);
+    }
   },
 
-  updateCustomers: async (customer: Customer) => {
+  updateCustomers: async (customer: EditCustomer) => {
     const globalState = globalStore.getState();
     globalState.setLoading(true);
     globalState.setError(null);
@@ -74,8 +74,6 @@ const customerStore = create<CustomerStore>((set, get) => ({
       get().getCustomers();
     }
   },
-
-
 }));
 
 export default customerStore;

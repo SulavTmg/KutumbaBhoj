@@ -18,7 +18,7 @@ const EditEndUser = () => {
   }, [id]);
 
   const { customer } = customerStore();
-  
+
   const {
     icons: { BackArrow, EyeOpen, EyeClose },
   } = assets;
@@ -53,7 +53,7 @@ const EditEndUser = () => {
   });
 
   if (globalStore.getState().loading) return <div>Loading...</div>;
-  
+
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">
       <div className="px-6 py-5">
