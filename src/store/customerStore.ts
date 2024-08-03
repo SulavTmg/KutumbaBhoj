@@ -72,6 +72,7 @@ const customerStore = create<CustomerStore>((set, get) => ({
     } else {
       globalState.setLoading(false);
       get().getCustomers();
+      return response.data;
     }
   },
 }));

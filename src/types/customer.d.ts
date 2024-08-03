@@ -20,7 +20,7 @@ export interface CustomerStore {
   customer: EditCustomer | null;
   getCustomers: () => Promise<void>;
   getCustomer: (id: number) => Promise<void>;
-  updateCustomers: (customer: EditCustomer) => Promise<void>;
+  updateCustomers: (customer: EditCustomer) => Promise<unknown>;
   removeCustomers: (id: number) => Promise<number | undefined>;
   setSearchQuery: (query: string) => void;
   searchQuery: string;

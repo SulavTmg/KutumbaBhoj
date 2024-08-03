@@ -3,7 +3,7 @@ import Button from "../Button";
 import Input from "../form_elements/Input";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { addRestaurantSchema } from "../../schemas";
+import { updateRestaurantSchema } from "../../schemas";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
 import Exclamation from "../common/icon/Exclamation";
@@ -19,20 +19,15 @@ const EditRestaurant = () => {
   const [logoId, setLogoId] = useState<number | null>(null);
   const [imageId, setImageId] = useState<number | null>(null);
   const { id } = useParams();
+  const Id = Number(id);
 
   useEffect(() => {
     (async () => {
-      await restaurantStore.getState().getRestaurant(Number(id));
+      await restaurantStore.getState().getRestaurant(Id);
     })();
-  }, [id]);
+  }, [Id]);
 
   const { restaurant } = restaurantStore();
-
-  const handleReset = () => {
-    resetForm();
-    setResetFiles(true);
-    setTimeout(() => setResetFiles(false), 0);
-  };
 
   const formatedTime = (time: moment.Moment) => {
     return time.minutes() === 0 ? time.format("h A") : time.format("h:mm A");
@@ -43,7 +38,24 @@ const EditRestaurant = () => {
   } = assets;
 
   const timeString = restaurant?.OpeningHours || "";
-  const [openingTime, closingTime] = timeString.split("-");
+  const [openingTime, closingTime] = timeString
+    .split("-")
+    .map((time) => time.trim());
+
+  const parsedOpeningTime = moment(
+    openingTime,
+    ["h A", "h:mm A"],
+    true
+  ).isValid()
+    ? moment(openingTime, ["h A", "h:mm A"]).toDate()
+    : new Date();
+  const parsedClosingTime = moment(
+    closingTime,
+    ["h A", "h:mm A"],
+    true
+  ).isValid()
+    ? moment(closingTime, ["h A", "h:mm A"]).toDate()
+    : new Date();
 
   const initialValues = {
     restaurantName: restaurant?.Name || "",
@@ -51,8 +63,8 @@ const EditRestaurant = () => {
     contact: restaurant?.Contact || "",
     restaurantOwner: "",
     ownerContactDetails: "",
-    openingTime: openingTime,
-    closingTime: closingTime,
+    openingTime: parsedOpeningTime,
+    closingTime: parsedClosingTime,
   };
 
   const {
@@ -67,12 +79,24 @@ const EditRestaurant = () => {
   } = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
-    validationSchema: addRestaurantSchema,
+    validationSchema: updateRestaurantSchema,
     onSubmit: async (values) => {
       const imgIds: number[] = [];
-      if (logoId) imgIds.push(logoId);
-      if (imageId) imgIds.push(imageId);
+
+      if (logoId !== null) {
+        imgIds.push(logoId);
+      } else if (restaurant?.Images[0]?.Id) {
+        imgIds.push(Number(restaurant.Images[0].Id));
+      }
+
+      if (imageId !== null) {
+        imgIds.push(imageId);
+      } else if (restaurant?.Images[1]?.Id) {
+        imgIds.push(Number(restaurant.Images[1].Id));
+      }
+
       const restaurantData = {
+        id: Id,
         contact: values.contact,
         address: values.address,
         imageIds: imgIds,
@@ -81,18 +105,25 @@ const EditRestaurant = () => {
           moment(values.openingTime)
         )} - ${formatedTime(moment(values.closingTime))}`,
       };
+
       const response = await restaurantStore
         .getState()
-        .addRestaurant(restaurantData);
+        .updateRestaurant(restaurantData);
       const error = globalStore.getState().error;
       if (response) {
-        toast.success("Restaurant added successfully");
+        toast.success("Restaurant updated successfully");
         handleReset();
       } else {
         toast.error(error);
       }
     },
   });
+  const handleReset = async () => {
+    resetForm();
+    setResetFiles(true);
+    setTimeout(() => setResetFiles(false), 0);
+    await restaurantStore.getState().getRestaurant(Id);
+  };
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">
@@ -165,38 +196,6 @@ const EditRestaurant = () => {
               }
             />
           </div>
-          <div>
-            <Input
-              name="restaurantOwner"
-              type="text"
-              placeholder="Restaurant Owner"
-              className="w-full h-[56px] border rounded-[10px]"
-              value={values.restaurantOwner}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              errorMsg={
-                errors.restaurantOwner && touched.restaurantOwner
-                  ? `${errors.restaurantOwner}`
-                  : null
-              }
-            />
-          </div>
-          <div>
-            <Input
-              name="ownerContactDetails"
-              type="text"
-              placeholder="Owner Contact Details"
-              className="w-full h-[56px] border rounded-[10px]"
-              value={values.ownerContactDetails}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              errorMsg={
-                errors.ownerContactDetails && touched.ownerContactDetails
-                  ? `${errors.ownerContactDetails}`
-                  : null
-              }
-            />
-          </div>
           <div className="flex gap-5">
             <div className="flex flex-col w-full relative">
               <Flatpickr
@@ -225,7 +224,7 @@ const EditRestaurant = () => {
                     className="mr-1 flex-shrink-0 border-[#CC3D3D]"
                   />
                   <span className="text-[#CC3D3D] text-[10px] mt-px leading-tight">
-                    {errors.openingTime}
+                    {errors.openingTime as string}
                   </span>
                 </div>
               )}
@@ -257,7 +256,7 @@ const EditRestaurant = () => {
                     className="mr-1 flex-shrink-0 border-[#CC3D3D]"
                   />
                   <span className="text-[#CC3D3D] text-[10px] mt-px leading-tight">
-                    {errors.closingTime}
+                    {errors.closingTime as string}
                   </span>
                 </div>
               )}

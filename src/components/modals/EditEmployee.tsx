@@ -12,12 +12,12 @@ import { useEffect } from "react";
 
 const EditEmployee = () => {
   const { id } = useParams();
-
+  const Id = Number(id);
   useEffect(() => {
     (async () => {
-      await employeeStore.getState().getEmployee(Number(id));
+      await employeeStore.getState().getEmployee(Id);
     })();
-  }, [id]);
+  }, [Id]);
 
 
   const { employee } = employeeStore();
@@ -34,7 +34,6 @@ const EditEmployee = () => {
     shift: employee?.Shift || "",
     designation: employee?.Designation || "",
   };
-
 
   const {
     values,
@@ -54,7 +53,7 @@ const EditEmployee = () => {
       }`;
 
       const data = {
-        Id: Number(id),
+        Id: Id,
         Name: name,
         Contact: values.contact,
         Gender: values.gender,
@@ -62,13 +61,11 @@ const EditEmployee = () => {
         Designation: values.designation,
 
       };
-      console.log(data)
       const response = await employeeStore.getState().updateEmployee(data);
       const error = globalStore.getState().error;
       if (response) {
+        await employeeStore.getState().getEmployee(Id);
         toast.success("Employee updated successfully");
-        await employeeStore.getState().getEmployee(Number(id));
-        resetForm();
       } else {
         toast.error(error);
       }

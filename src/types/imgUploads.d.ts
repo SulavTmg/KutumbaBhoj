@@ -17,6 +17,11 @@ export type Img = {
   Images: string | null;
 };
 
+export type ImgPreview = {
+  name: string ;
+  url: string ;
+}
+
 export interface ImgStore {
   imgs: Img[]
   uploadImage: (formdata: FormData) => Promise<unknown>;

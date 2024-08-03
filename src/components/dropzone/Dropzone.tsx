@@ -19,7 +19,8 @@ const Dropzone = ({
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [rejected, setRejected] = useState<FileRejection[]>([]);
-  const[url, setUrl] = useState<string | null>(null);
+  const [url, setUrl] = useState<string | null>(null);
+  const [imgName, setImgName] = useState<string | null>(null);
 
   const removeFile = (name: string) => {
     setFiles((files) => files.filter((file) => file.name !== name));
@@ -63,8 +64,10 @@ const Dropzone = ({
     }
   }, [resetFile]);
 
-  const handleImageSelect = (id: number) => {
+  const handleImageSelect = (id: number, url: string, name: string) => {
     setImageId(id);
+    setUrl(url);
+    setImgName(name);
     setOpen(false);
   };
 
@@ -73,11 +76,11 @@ const Dropzone = ({
     formData.append("name", file.name.split(".")[0]);
     formData.append("Images", file);
     const response = await imgUploadStore.getState().uploadImage(formData);
-    const {error} = globalStore();
-    if(response) {
+    const { error } = globalStore();
+    if (response) {
       toast.success("Successfully uploaded");
       setFiles([]);
-    }else{
+    } else {
       toast.error(error);
     }
   };
@@ -133,36 +136,40 @@ const Dropzone = ({
                   key={index}
                   className=" cursor-pointer"
                   onClick={() => {
-                    handleImageSelect(img.id);
-                    setUrl(img.url);
+                    handleImageSelect(img.id, img.url, img.name!);
                   }}
                 >
                   <img
                     src={`https://admin.kutumbabazar.com/foodapi${img.url}`}
+                    alt={`${img.name}`}
                   />
                 </li>
               ))}
             </ul>
           </div>
         </Modal>
-        {url && <div className="flex justify-between items-center">
-          <div className="w-fit">
-            <img
-              src={`https://admin.kutumbabazar.com/foodapi${url}`}
-              className="size-14 rounded-lg relative"
-            />
+        {url && (
+          <div className="flex justify-between items-center">
+            <div className="w-fit">
+              <img
+                src={`https://admin.kutumbabazar.com/foodapi${url}`}
+                alt={`${imgName} main`}
+                className="size-14 rounded-lg relative"
+              />
+            </div>
+            <div className="flex items-center">
+              <button
+                type="button"
+                className="bg-white shadow-md border text-sm font-semibold w-[82px] h-[34px] rounded-md mr-4"
+                onClick={() => {
+                  setUrl(null);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-          <div className="flex items-center">
-            <button
-            type="button"
-              className="bg-white shadow-md border text-sm font-semibold w-[82px] h-[34px] rounded-md mr-4"
-              onClick={() =>{setUrl(null)}}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-          }
+        )}
       </div>
       <FilePreview
         rejected={rejected}

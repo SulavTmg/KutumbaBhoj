@@ -22,6 +22,15 @@ export const addRestaurantSchema = Yup.object({
   openingTime: Yup.date().required("Please enter opening time"),
   closingTime: Yup.date().required("Please enter closing time"),
 });
+export const updateRestaurantSchema = Yup.object({
+  restaurantName: Yup.string().required("Please enter restaurant name"),
+  address: Yup.string().required("Please enter restaurant address"),
+  contact: Yup.string()
+    .matches(/^[0-9]+$/, "Contact number must be digits only")
+    .required("Please enter the contact number"),
+  openingTime: Yup.date().required("Please enter opening time"),
+  closingTime: Yup.date().required("Please enter closing time"),
+});
 
 export const signUpSchema = Yup.object({
   name: Yup.string().required("Please enter your name"),

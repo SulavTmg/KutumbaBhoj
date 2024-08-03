@@ -1,6 +1,5 @@
 export type DropzoneProps = {
   className: string;
-  // setFieldValue: FormikProps<unknown>["setFieldValue"];
   fieldName: string;
   resetFile: boolean;
   setImageId: (id: number) => void;

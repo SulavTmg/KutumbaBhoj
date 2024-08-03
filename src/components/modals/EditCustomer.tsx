@@ -7,15 +7,17 @@ import { signUpSchema } from "../../schemas";
 import assets from "../../assets/assets";
 import { useParams } from "react-router-dom";
 import { customerStore, globalStore } from "../../store";
+import toast from "react-hot-toast";
 
 const EditEndUser = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { id } = useParams();
+  const Id = Number(id);
   useEffect(() => {
     (async () => {
-      await customerStore.getState().getCustomer(Number(id));
+      await customerStore.getState().getCustomer(Id);
     })();
-  }, [id]);
+  }, [Id]);
 
   const { customer } = customerStore();
 
@@ -48,7 +50,22 @@ const EditEndUser = () => {
     enableReinitialize: true,
     validationSchema: signUpSchema,
     onSubmit: async (values) => {
-      console.log(values);
+      const data = {
+        Id: Id,
+        Name: values.name,
+        Email: values.email,
+        Password: values.password,
+        Address: values.address,
+        Phone: values.phone,
+      };
+      const response = await customerStore.getState().updateCustomers(data);
+      const error = globalStore.getState().error;
+      if (response) {
+        await customerStore.getState().getCustomer(Id);
+        toast.success("Successfully updated");
+      } else {
+        toast.error(error);
+      }
     },
   });
 

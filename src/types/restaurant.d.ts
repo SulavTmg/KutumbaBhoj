@@ -8,6 +8,7 @@ export type RestaurantDetails = {
   closingTime: string;
   openingHours: string;
 };
+
 interface Image {
   Id: number;
   Name: string;
@@ -31,19 +32,20 @@ interface AddRestaurant {
   imageIds: number[];
 }
 export type Restaurant = {
-  Id: number;
-  Name: string;
-  OpeningHours: string;
-  Contact: string;
-  Address: string;
-  ImageIds: [];
+  id: number;
+  name: string;
+  openingHours: string;
+  contact: string;
+  address: string;
+  imageIds: [];
 };
 export interface RestaurantStore {
   restaurants: Restaurant[];
-  restaurant: Restaurant | null
+  restaurant: Restaurant | null;
   getRestaurants: () => Promise<void>;
   getRestaurant: (id: number) => Promise<void>;
   removeRestaurant: (id: number) => Promise< number | undefined>;
+  updateRestaurant: (restaurant: AddRestaurant) => Promise<unknown>;
   addRestaurant: (restaurant: AddRestaurant) => Promise<unknown>;
   setSearchQuery: (query: string) => void;
   searchQuery: string;

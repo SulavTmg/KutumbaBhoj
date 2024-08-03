@@ -76,6 +76,20 @@ const restaurantStore = create<RestaurantStore>((set, get) => ({
     }
   },
 
+  updateRestaurant: async (restaurant: AddRestaurant) => {
+    const globalState = globalStore.getState();
+    globalState.setError(null);
+    globalState.setLoading(true);
+    const response = await api.put<AddRestaurant>("/restaurants", restaurant);
+    if (response.error) {
+      globalState.setError(response.error.message);
+      globalState.setLoading(false);
+    } else {
+      globalState.setLoading(false);
+      get().getRestaurants();
+      return response.data;
+    }
+  },
   setSearchQuery: (query: string) => {
     set({ searchQuery: query });
     get().getRestaurants();
