@@ -7,6 +7,7 @@ import { authStore, globalStore } from "../../store";
 import assets from "../../assets/assets";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 type toggleProps = {
   toggleActive: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -39,7 +40,7 @@ const LoginForm = (props: toggleProps) => {
       await authStore.getState().login(values);
       const error = globalStore.getState().error;
       if (error) {
-        alert(error);
+        toast.error(error);
       } else {
         navigate("/");
         resetForm();

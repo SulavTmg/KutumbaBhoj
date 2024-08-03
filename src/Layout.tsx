@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import SideBar from "./components/navbar/SideBar.tsx";
 import { Outlet, useNavigate } from "react-router-dom";
 import { router } from "./main.tsx";
-import { Toaster } from "react-hot-toast";
 import {
   customerStore,
   employeeStore,
@@ -28,7 +27,6 @@ const Layout = () => {
       <SideBar />
       <main className="ml-[290px] bg-[#F3F2F7] min-h-screen h-full max-w-[calc(100vw-290px)] p-3">
         <Outlet />
-        <Toaster/>
       </main>
     </>
   );

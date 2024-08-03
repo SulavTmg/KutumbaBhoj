@@ -9,6 +9,6 @@ interface SignUp {
 export type AuthState = {
   setToken: (token: string | null) => void;
   login: (credentials: { email: string; password: string }) => Promise<void>;
-  signUp: (values: SignUp) => Promise<void>;
+  signUp: (values: SignUp) => Promise<unkown>;
   logout: () => void;
 };

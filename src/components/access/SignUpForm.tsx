@@ -5,6 +5,7 @@ import assets from "../../assets/assets";
 import Input from "../form_elements/Input";
 import Button from "../Button";
 import { authStore, globalStore } from "../../store";
+import toast from "react-hot-toast";
 
 type ToggleProps = {
   isActive?: boolean;
@@ -43,10 +44,13 @@ const SignUpForm = ({ isActive, toggleActive }: ToggleProps) => {
     initialValues: initialValues,
     validationSchema: signUpSchema,
     onSubmit: async (values) => {
-      await authStore.getState().signUp(values);
+      const response = await authStore.getState().signUp(values);
       const error = globalStore.getState().error;
-      if (error) {
-        alert(error);
+      if(response){
+        toast.success("Successfully signed up");
+        resetForm();
+      }else{
+        toast.error(error);
       }
     },
   });

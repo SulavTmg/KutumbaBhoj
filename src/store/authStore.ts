@@ -46,8 +46,8 @@ const authStore = create<AuthState>(() => ({
       globalState.setError(response.error?.message);
       globalState.setLoading(false);
     } else {
-      globalState.setError("Unexpected Error");
       globalState.setLoading(false);
+      return response.data;
     }
   },
 
