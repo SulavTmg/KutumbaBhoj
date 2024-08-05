@@ -144,12 +144,14 @@ const EditRestaurant = () => {
               fieldName="logo"
               resetFile={resetFiles}
               setImageId={setLogoId}
+              previewUrl={restaurant?.Images[0]?.Url || ""}
             />
             <Dropzone
               className="flex flex-col items-center justify-center w-full h-min"
               fieldName="image"
               resetFile={resetFiles}
               setImageId={setImageId}
+              previewUrl={restaurant?.Images[1]?.Url || ""}
             />
           </div>
           <div>

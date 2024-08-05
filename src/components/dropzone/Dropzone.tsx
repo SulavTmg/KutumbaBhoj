@@ -11,6 +11,7 @@ const Dropzone = ({
   className,
   fieldName,
   resetFile,
+  previewUrl,
   setImageId,
 }: DropzoneProps) => {
   const {
@@ -148,7 +149,7 @@ const Dropzone = ({
             </ul>
           </div>
         </Modal>
-        {url && (
+        {url ? (
           <div className="flex justify-between items-center">
             <div className="w-fit">
               <img
@@ -169,6 +170,17 @@ const Dropzone = ({
               </button>
             </div>
           </div>
+        ) : previewUrl ? (
+          <div className="flex justify-between items-center">
+            <div className="w-fit">
+              <img
+                src={`https://admin.kutumbabazar.com/foodapi${previewUrl}`}
+                className="size-14 rounded-lg relative"
+              />
+            </div>
+          </div>
+        ) : (
+          ""
         )}
       </div>
       <FilePreview

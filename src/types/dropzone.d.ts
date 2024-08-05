@@ -2,6 +2,7 @@ export type DropzoneProps = {
   className: string;
   fieldName: string;
   resetFile: boolean;
+  previewUrl: string;
   setImageId: (id: number) => void;
 };
 
