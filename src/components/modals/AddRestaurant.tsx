@@ -1,29 +1,25 @@
 import Header from "../common/Header";
 import Button from "../Button";
 import Input from "../form_elements/Input";
-import { useFormik } from "formik";
-import { useState } from "react";
-import { addRestaurantSchema } from "../../schemas";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
 import Exclamation from "../common/icon/Exclamation";
 import assets from "../../assets/assets";
 import Dropzone from "../dropzone/Dropzone";
-import { RestaurantDetails } from "../../types/restaurant";
-import { globalStore, restaurantStore } from "../../store";
 import moment from "moment";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { addRestaurantSchema } from "../../schemas";
+import { RestaurantDetails } from "../../types/restaurant";
+import { globalStore, restaurantStore } from "../../store";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 const AddRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const [logoId, setLogoId] = useState<number | null>(null);
   const [imageId, setImageId] = useState<number | null>(null);
-
-  const handleReset = () => {
-    resetForm();
-    setResetFiles(true);
-    setTimeout(() => setResetFiles(false), 0);
-  };
+  const navigate = useNavigate();
 
   const formatedTime = (time: moment.Moment) => {
     return time.minutes() === 0 ? time.format("h A") : time.format("h:mm A");
@@ -75,12 +71,18 @@ const AddRestaurant = () => {
       const error = globalStore.getState().error;
       if (response) {
         toast.success("Restaurant added successfully");
-        handleReset();
+        navigate("/restaurants");
       } else {
         toast.error(error);
       }
     },
   });
+
+  const handleReset = () => {
+    resetForm();
+    setResetFiles(true);
+    setTimeout(() => setResetFiles(false), 0);
+  };
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">

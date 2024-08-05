@@ -1,24 +1,25 @@
 import Header from "../common/Header";
 import Button from "../Button";
+import toast from "react-hot-toast";
 import Input from "../form_elements/Input";
+import Dropzone from "../dropzone/Dropzone";
+import Exclamation from "../common/icon/Exclamation";
+import moment from "moment";
+import assets from "../../assets/assets";
+import "flatpickr/dist/themes/material_green.css";
+import Flatpickr from "react-flatpickr";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { updateRestaurantSchema } from "../../schemas";
-import "flatpickr/dist/themes/material_green.css";
-import Flatpickr from "react-flatpickr";
-import Exclamation from "../common/icon/Exclamation";
-import assets from "../../assets/assets";
-import Dropzone from "../dropzone/Dropzone";
 import { globalStore, restaurantStore } from "../../store";
-import moment from "moment";
-import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const EditRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const [logoId, setLogoId] = useState<number | null>(null);
   const [imageId, setImageId] = useState<number | null>(null);
   const { id } = useParams();
+  const navigate = useNavigate();
   const Id = Number(id);
 
   useEffect(() => {
@@ -112,7 +113,7 @@ const EditRestaurant = () => {
       const error = globalStore.getState().error;
       if (response) {
         toast.success("Restaurant updated successfully");
-        handleReset();
+        navigate("/restaurants");
       } else {
         toast.error(error);
       }
@@ -122,7 +123,6 @@ const EditRestaurant = () => {
     resetForm();
     setResetFiles(true);
     setTimeout(() => setResetFiles(false), 0);
-    await restaurantStore.getState().getRestaurant(Id);
   };
 
   return (

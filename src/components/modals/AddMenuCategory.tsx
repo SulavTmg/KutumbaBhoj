@@ -1,25 +1,20 @@
-import { useFormik } from "formik";
-import Input from "../form_elements/Input";
-import { addCategorySchema } from "../../schemas";
-import Dropzone from "../dropzone/Dropzone";
-import Button from "../Button";
-import { useState } from "react";
-import Header from "../common/Header";
-import { useParams } from "react-router-dom";
-import assets from "../../assets/assets";
-import { globalStore, menuStore } from "../../store";
 import toast from "react-hot-toast";
+import Input from "../form_elements/Input";
+import Dropzone from "../dropzone/Dropzone";
+import Header from "../common/Header";
+import assets from "../../assets/assets";
+import Button from "../Button";
+import { useFormik } from "formik";
+import { addCategorySchema } from "../../schemas";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { globalStore, menuStore } from "../../store";
 
 const AddMenuCategory = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const [imageId, setImageId] = useState<number | null>(null);
-  const { id } = useParams<{ id: string }>();
-
-  const handleReset = () => {
-    resetForm();
-    setResetFiles(true);
-    setTimeout(() => setResetFiles(false), 0);
-  };
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const {
     icons: { BackArrow },
@@ -56,13 +51,18 @@ const AddMenuCategory = () => {
       const error = globalStore.getState().error;
       if (response) {
         toast.success("Category added successfully");
-        handleReset();
+        navigate(`/menu/${id}`);
       } else {
         toast.error(error);
       }
-      console.log(categoryData);
     },
   });
+
+  const handleReset = () => {
+    resetForm();
+    setResetFiles(true);
+    setTimeout(() => setResetFiles(false), 0);
+  };
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">

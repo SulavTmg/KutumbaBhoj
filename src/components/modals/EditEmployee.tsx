@@ -1,31 +1,31 @@
 import Header from "../common/Header";
 import Button from "../Button";
 import Input from "../form_elements/Input";
-import Select from "../form_elements/Select";
-import { useFormik } from "formik";
-import { editEmployeeSchema} from "../../schemas";
-import { employeeStore, globalStore } from "../../store";
-import toast from "react-hot-toast";
 import assets from "../../assets/assets";
-import { useParams } from "react-router-dom";
+import Select from "../form_elements/Select";
+import toast from "react-hot-toast";
+import { useFormik } from "formik";
+import { editEmployeeSchema } from "../../schemas";
+import { employeeStore, globalStore } from "../../store";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const EditEmployee = () => {
   const { id } = useParams();
   const Id = Number(id);
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       await employeeStore.getState().getEmployee(Id);
     })();
   }, [Id]);
 
-
   const { employee } = employeeStore();
 
   const {
     icons: { BackArrow },
   } = assets;
-  
+
   const initialvalues = {
     firstName: employee?.Name ? employee.Name.split(" ")[0] : "",
     lastName: employee?.Name ? employee.Name.split(" ").slice(1).join(" ") : "",
@@ -59,13 +59,12 @@ const EditEmployee = () => {
         Gender: values.gender,
         Shift: values.shift,
         Designation: values.designation,
-
       };
       const response = await employeeStore.getState().updateEmployee(data);
       const error = globalStore.getState().error;
       if (response) {
-        await employeeStore.getState().getEmployee(Id);
         toast.success("Employee updated successfully");
+        navigate("/employees");
       } else {
         toast.error(error);
       }

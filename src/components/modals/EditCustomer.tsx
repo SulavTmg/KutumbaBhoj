@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
 import Header from "../common/Header";
 import Button from "../Button";
 import Input from "../form_elements/Input";
+import assets from "../../assets/assets";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { signUpSchema } from "../../schemas";
-import assets from "../../assets/assets";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { customerStore, globalStore } from "../../store";
-import toast from "react-hot-toast";
 
 const EditEndUser = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
   const Id = Number(id);
   useEffect(() => {
     (async () => {
@@ -61,8 +62,8 @@ const EditEndUser = () => {
       const response = await customerStore.getState().updateCustomers(data);
       const error = globalStore.getState().error;
       if (response) {
-        await customerStore.getState().getCustomer(Id);
         toast.success("Successfully updated");
+        navigate("/end-user");
       } else {
         toast.error(error);
       }

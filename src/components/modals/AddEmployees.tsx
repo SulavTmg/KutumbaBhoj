@@ -2,16 +2,19 @@ import Header from "../common/Header";
 import Button from "../Button";
 import Input from "../form_elements/Input";
 import Select from "../form_elements/Select";
+import assets from "../../assets/assets";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { employeeSchema } from "../../schemas";
 import { employeeStore, globalStore } from "../../store";
-import toast from "react-hot-toast";
-import assets from "../../assets/assets";
 
 const AddEmployees = () => {
   const {
     icons: { BackArrow },
   } = assets;
+  const navigate = useNavigate();
+
   const initialvalues = {
     firstName: "",
     lastName: "",
@@ -58,7 +61,7 @@ const AddEmployees = () => {
       const error = globalStore.getState().error;
       if (response) {
         toast.success("Employee added successfully");
-        resetForm();
+        navigate("/employees");
       } else {
         toast.error(error);
       }
