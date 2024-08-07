@@ -32,12 +32,15 @@ const MenuDetails = () => {
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
       <div className="w-full">
         <div>
-          <img src={""} className="w-full rounded-t-lg" />
+          <img src={``} className="w-full rounded-t-lg" />
         </div>
         <div className="mx-[50px]">
           <div className="py-[30px] border-b flex justify-between">
             <div className="flex gap-4">
-              <img src={""} />
+              <img
+                src={`https://admin.kutumbabazar.com/foodapi${menu.Images[0].Url}`}
+                className="size-[100px] object-cover"
+              />
               <div className="flex flex-col gap-[10px]">
                 <h1 className="font-josefin font-bold text-3xl">{menu.Name}</h1>
                 <div className="flex gap-[10px]">
@@ -90,7 +93,8 @@ const MenuDetails = () => {
           </ul>
         </div>
         {selectedItem && (
-          <MenuLists restaurantId={Number(id)}
+          <MenuLists
+            restaurantId={Number(id)}
             menuLists={
               menu.Categories.find((category) => category.Name === selectedItem)
                 ?.Items || []

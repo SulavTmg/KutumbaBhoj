@@ -1,3 +1,5 @@
+import { Image } from "./restaurant";
+
 interface List {
   Id: number;
   Name: string;
@@ -26,6 +28,7 @@ export type Menu = {
   Address: string;
   Contact: string;
   Categories: Category[];
+  Images: Image[];
 };
 
 export interface AddCategory {
