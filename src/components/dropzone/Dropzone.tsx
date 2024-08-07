@@ -22,6 +22,8 @@ const Dropzone = ({
   const [rejected, setRejected] = useState<FileRejection[]>([]);
   const [url, setUrl] = useState<string | null>(null);
   const [imgName, setImgName] = useState<string | null>(null);
+  const { imgs, uploadImage } = imgUploadStore();
+  const { error } = globalStore();
 
   const removeFile = (name: string) => {
     setFiles((files) => files.filter((file) => file.name !== name));
@@ -55,8 +57,6 @@ const Dropzone = ({
     maxFiles: 1,
   });
 
-  const { imgs } = imgUploadStore();
-
   useEffect(() => {
     if (resetFile) {
       setFiles([]);
@@ -76,13 +76,17 @@ const Dropzone = ({
     const formData = new FormData();
     formData.append("name", file.name.split(".")[0]);
     formData.append("Images", file);
-    const response = await imgUploadStore.getState().uploadImage(formData);
-    const { error } = globalStore();
-    if (response) {
-      toast.success("Successfully uploaded");
-      setFiles([]);
-    } else {
-      toast.error(error);
+
+    try {
+      await uploadImage(formData);
+      if (!error) {
+        toast.success("Image successfully uploaded!");
+        setFiles([]);
+      } else {
+        toast.error(error);
+      }
+    } catch (uploadError) {
+      toast.error("Image upload failed");
     }
   };
 

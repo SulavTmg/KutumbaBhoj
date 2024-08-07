@@ -9,11 +9,12 @@ export type RestaurantDetails = {
   openingHours: string;
 };
 
-interface Image {
+export interface Image {
   Id: number;
   Name: string;
   Url: string;
 }
+
 interface Restaurant {
   Id: number;
   Name: string;
