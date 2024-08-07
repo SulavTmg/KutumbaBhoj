@@ -13,7 +13,7 @@ const Menu = () => {
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
       <div className="px-6 py-5">
-        <Header heading={"Menu"} className={"mb-8"} path="/" />
+        <Header heading={"Menu"} className={``} path="/" />
         <ul className="grid grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-[40px] mt-8">
           {restaurants.map((res) => (
             <Link to={`/menu/${res.Id}`} key={res.Id}>
