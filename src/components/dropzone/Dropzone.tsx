@@ -168,6 +168,7 @@ const Dropzone = ({
                 className="bg-white shadow-md border text-sm font-semibold w-[82px] h-[34px] rounded-md mr-4"
                 onClick={() => {
                   setUrl(null);
+                  setImageId(null);
                 }}
               >
                 Cancel

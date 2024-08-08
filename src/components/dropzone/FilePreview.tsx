@@ -62,7 +62,10 @@ const FilePreview = ({
                   loadingSize="14"
                   loadingStroke="2"
                   className="bg-[#121BC6] text-white text-sm border shadow-md font-semibold w-[82px] h-[34px] rounded-md "
-                  onClick={() => onSave(file)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSave(file);
+                  }}
                 />
               </div>
             </div>
