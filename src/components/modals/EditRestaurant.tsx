@@ -13,11 +13,10 @@ import { useEffect, useState } from "react";
 import { updateRestaurantSchema } from "../../schemas";
 import { globalStore, restaurantStore } from "../../store";
 import { useParams, useNavigate } from "react-router-dom";
+import { UpdateRestaurant, Image } from "../../types/restaurant";
 
 const EditRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
-  const [logoId, setLogoId] = useState<number | null>(null);
-  const [imageId, setImageId] = useState<number | null>(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const Id = Number(id);
@@ -58,12 +57,27 @@ const EditRestaurant = () => {
     ? moment(closingTime, ["h A", "h:mm A"]).toDate()
     : new Date();
 
+  const getImageId = (
+    newImageId: number | null,
+    images: Image[] | undefined,
+    index: number
+  ): number | undefined => {
+    if (newImageId) {
+      return newImageId;
+    }
+    else if (images && images[index]?.Id) {
+      return images[index].Id;
+    }
+  };
+
   const initialValues = {
     restaurantName: restaurant?.Name || "",
     address: restaurant?.Address || "",
     contact: restaurant?.Contact || "",
     restaurantOwner: "",
     ownerContactDetails: "",
+    logoId: null,
+    bannerId: null,
     openingTime: parsedOpeningTime,
     closingTime: parsedClosingTime,
   };
@@ -82,26 +96,17 @@ const EditRestaurant = () => {
     enableReinitialize: true,
     validationSchema: updateRestaurantSchema,
     onSubmit: async (values) => {
-      const imgIds: number[] = [];
+      const imgIds: (number | undefined)[] = [];
+      imgIds.push(getImageId(values.logoId, restaurant?.Images, 0));
+      imgIds.push(getImageId(values.bannerId, restaurant?.Images, 1));
+      const validImgIds = imgIds.filter((id) => id !== undefined) as number[];
 
-      if (logoId !== null) {
-        imgIds.push(logoId);
-      } else if (restaurant?.Images[0]?.Id) {
-        imgIds.push(Number(restaurant.Images[0].Id));
-      }
-
-      if (imageId !== null) {
-        imgIds.push(imageId);
-      } else if (restaurant?.Images[1]?.Id) {
-        imgIds.push(Number(restaurant.Images[1].Id));
-      }
-
-      const restaurantData = {
+      const restaurantData: UpdateRestaurant = {
         id: Id,
         contact: values.contact,
         address: values.address,
-        imageIds: imgIds,
         name: values.restaurantName,
+        imageIds: validImgIds,
         openingHours: `${formatedTime(
           moment(values.openingTime)
         )} - ${formatedTime(moment(values.closingTime))}`,
@@ -141,16 +146,16 @@ const EditRestaurant = () => {
           <div className="flex gap-8">
             <Dropzone
               className="flex flex-col items-center justify-center w-full h-min"
-              fieldName="logo"
+              fieldName="Logo"
               resetFile={resetFiles}
-              setImageId={setLogoId}
+              setImageId={(id) => setFieldValue("logoId", id)}
               previewUrl={restaurant?.Images[0]?.Url || ""}
             />
             <Dropzone
               className="flex flex-col items-center justify-center w-full h-min"
-              fieldName="image"
+              fieldName="Banner"
               resetFile={resetFiles}
-              setImageId={setImageId}
+              setImageId={(id) => setFieldValue("bannerId", id)}
               previewUrl={restaurant?.Images[1]?.Url || ""}
             />
           </div>

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
+import { FileWithPreview, DropzoneProps } from "../../types/dropzone";
+import { globalStore, imgUploadStore } from "../../store";
+import Exclamation from "../common/icon/Exclamation";
 import assets from "../../assets/assets";
 import Modal from "../Modal";
 import FilePreview from "./FilePreview";
-import { FileWithPreview, DropzoneProps } from "../../types/dropzone";
-import { globalStore, imgUploadStore } from "../../store";
 import toast from "react-hot-toast";
 
 const Dropzone = ({
@@ -13,6 +14,7 @@ const Dropzone = ({
   resetFile,
   previewUrl,
   setImageId,
+  errorMsg
 }: DropzoneProps) => {
   const {
     icons: { UploadIcon },
@@ -110,8 +112,13 @@ const Dropzone = ({
             ) : (
               <>
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Click to upload</span> or drag
-                  and drop
+                  <span className="font-semibold">
+                    Click to upload{" "}
+                    <span className="text-[#126837] font-bold">
+                      {fieldName}
+                    </span>
+                  </span>{" "}
+                  or drag and drop
                   <span className="text-xs text-center text-gray-500 dark:text-gray-400 block">
                     PNG, JPG
                   </span>
@@ -195,6 +202,18 @@ const Dropzone = ({
         removeRejected={removeRejected}
         onSave={handleSave}
       />
+      {errorMsg && (
+        <div className="flex items-center text-[#CC3D3D] text-xs mt-1">
+          <Exclamation
+            fill="red"
+            width="11px"
+            className="mr-1 flex-shrink-0 border-[#CC3D3D]"
+          />
+          <span className="text-[#CC3D3D] text-[10px] mt-px leading-tight">
+            {errorMsg}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

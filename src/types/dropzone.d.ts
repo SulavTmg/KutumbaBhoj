@@ -3,7 +3,8 @@ export type DropzoneProps = {
   fieldName: string;
   resetFile: boolean;
   previewUrl?: string;
-  setImageId: (id: number) => void;
+  errorMsg?: string,
+  setImageId: (id: number | null) => void;
 };
 
 export type FileWithPreview = File & { preview: string };

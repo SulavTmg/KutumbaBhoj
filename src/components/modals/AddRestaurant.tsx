@@ -17,8 +17,6 @@ import { useNavigate } from "react-router-dom";
 
 const AddRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
-  const [logoId, setLogoId] = useState<number | null>(null);
-  const [imageId, setImageId] = useState<number | null>(null);
   const navigate = useNavigate();
 
   const formatedTime = (time: moment.Moment) => {
@@ -38,6 +36,9 @@ const AddRestaurant = () => {
     openingTime: "",
     closingTime: "",
     openingHours: "",
+    logoId: null,
+    bannerId: null,
+    imageIds: [],
   };
 
   const {
@@ -53,9 +54,7 @@ const AddRestaurant = () => {
     initialValues: initialValues,
     validationSchema: addRestaurantSchema,
     onSubmit: async (values) => {
-      const imgIds: number[] = [];
-      if (logoId) imgIds.push(logoId);
-      if (imageId) imgIds.push(imageId);
+      const imgIds = [values.logoId, values.bannerId];
       const restaurantData = {
         contact: values.contact,
         address: values.address,
@@ -65,6 +64,7 @@ const AddRestaurant = () => {
           moment(values.openingTime)
         )} - ${formatedTime(moment(values.closingTime))}`,
       };
+
       const response = await restaurantStore
         .getState()
         .addRestaurant(restaurantData);
@@ -100,15 +100,17 @@ const AddRestaurant = () => {
           <div className="flex gap-8">
             <Dropzone
               className="flex flex-col items-center justify-center w-full h-min"
-              fieldName="logo"
+              fieldName="Logo"
               resetFile={resetFiles}
-              setImageId={setLogoId}
+              setImageId={(id) => setFieldValue("logoId", id)}
+              errorMsg={errors.logoId ? errors.logoId : ""}
             />
             <Dropzone
               className="flex flex-col items-center justify-center w-full h-min"
-              fieldName="image"
+              fieldName="Banner"
               resetFile={resetFiles}
-              setImageId={setImageId}
+              setImageId={(id) => setFieldValue("bannerId", id)}
+              errorMsg={errors.bannerId ? errors.bannerId : ""}
             />
           </div>
           <div>
