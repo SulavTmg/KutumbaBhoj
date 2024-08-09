@@ -3,6 +3,7 @@ import { globalStore } from ".";
 import {
   AddRestaurant,
   Restaurant,
+  UpdateRestaurant,
   RestaurantStore,
 } from "../types/restaurant";
 import { FetchAPI } from "../api/FetchAPI";
@@ -76,11 +77,14 @@ const restaurantStore = create<RestaurantStore>((set, get) => ({
     }
   },
 
-  updateRestaurant: async (restaurant: AddRestaurant) => {
+  updateRestaurant: async (restaurant: UpdateRestaurant) => {
     const globalState = globalStore.getState();
     globalState.setError(null);
     globalState.setLoading(true);
-    const response = await api.put<AddRestaurant>("/restaurants", restaurant);
+    const response = await api.put<UpdateRestaurant>(
+      "/restaurants",
+      restaurant
+    );
     if (response.error) {
       globalState.setError(response.error.message);
       globalState.setLoading(false);
