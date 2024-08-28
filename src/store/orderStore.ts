@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { FetchAPI } from "../api/FetchAPI";
-import { Order, OrderStore } from "../types/order";
+import { Order, OrderData, OrderStore } from "../types/order";
 import { globalStore } from ".";
 
 const api = new FetchAPI();
@@ -53,6 +53,21 @@ const orderStore = create<OrderStore>((set, get) => ({
     } else {
       globalState.setLoading(false);
       get().getOrders();
+    }
+  },
+
+  updateStauts: async(data: OrderData) => {
+    const globalState = globalStore.getState();
+    globalState.setLoading(true);
+    globalState.setError(null);
+    const response = await api.put("/orders", data);
+    if(response.error){
+      globalState.setError(response.error?.message);
+      globalState.setLoading(false);
+    }else{
+      globalState.setLoading(false);
+      get().getOrders();
+      return response.data;
     }
   },
 

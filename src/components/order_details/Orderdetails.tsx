@@ -1,11 +1,19 @@
 import assets from "../../assets/assets";
 import Header from "../common/Header";
-import { orderStore } from "../../store";
+import { globalStore, orderStore } from "../../store";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
+import toast from "react-hot-toast";
 
 const Orderdetails = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [statusUpdated, setStatusUpdated] = useState(false);
+
+  const handleToggle = () => {
+    setIsVisible(!isVisible);
+  };
+
   const {
     icons: { DownArrow, BackArrow },
     imgs: { GoogleMap },
@@ -17,10 +25,37 @@ const Orderdetails = () => {
     (async () => {
       await orderStore.getState().getOrder(Number(id));
     })();
-  }, [id]);
+    if (statusUpdated) {
+      setStatusUpdated(false);
+    }
+  }, [id, statusUpdated]);
 
   const { order } = orderStore();
-  console.log(order)
+
+  const updateStatus = async (status: string) => {
+    const data = {
+      Id: Number(id),
+      RestaurantId: order!.RestaurantId,
+      Restaurant: order!.Restaurant,
+      CustomerId: order!.CustomerId,
+      CustomerName: order!.CustomerName,
+      Total: order!.Total,
+      Payment: order!.Payment,
+      CreatedAt: order!.CreatedAt,
+      Status: status,
+      OrderedItems: order!.OrderedItems,
+    };
+    const response = await orderStore.getState().updateStauts(data);
+    const error = globalStore.getState().error;
+    if (response) {
+      toast.success("Status updated");
+      setIsVisible(false);
+      setStatusUpdated(true);
+    } else {
+      toast.error(error);
+      setIsVisible(false);
+    }
+  };
 
   if (!order) return <div>Loading...</div>;
 
@@ -61,10 +96,44 @@ const Orderdetails = () => {
               </div>
             </div>
             <div className="flex flex-col gap-8 h-full">
-              <span className=" bg-[#EFEFFD] text-[#5C59E8] px-3 py-1 rounded-full font-semibold text-sm flex w-fit gap-2">
-                {order.Status}
-                <img src={DownArrow} />
-              </span>
+              <div className="relative">
+                <div
+                  onClick={() => setIsVisible(!isVisible)}
+                  className={`left-0 right-0 top-0 bottom-0 fixed inset-0 z-20 ${
+                    isVisible ? "visible" : "invisible"
+                  }`}
+                ></div>
+                <button onClick={handleToggle}>
+                  <span className=" bg-[#EFEFFD] text-[#5C59E8] px-3 py-1 rounded-full font-semibold text-sm flex w-fit gap-2">
+                    {order.Status}
+                    <img src={DownArrow} />
+                  </span>
+                </button>
+                {isVisible && (
+                  <div className="absolute mt-2 z-20 rounded-lg text-sm text-gray-600 font-semibold bg-white shadow-md w-full">
+                    <ul>
+                      <li
+                        className="py-1 px-3 cursor-pointer hover:text-[#E46A11]"
+                        onClick={() => updateStatus("Processing")}
+                      >
+                        Processing
+                      </li>
+                      <li
+                        className="py-1 px-3 cursor-pointer hover:text-[#0D894F]"
+                        onClick={() => updateStatus("Delivered")}
+                      >
+                        Delivered
+                      </li>
+                      <li
+                        className="py-1 px-3 cursor-pointer hover:text-[#F04438]"
+                        onClick={() => updateStatus("Cancelled")}
+                      >
+                        Cancelled
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
               <div className="text-end">
                 <span className="text-sm text-[#667085] font-medium">
                   Contact No
