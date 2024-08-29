@@ -1,9 +1,12 @@
-export type Customer = {
-  Id: number;
+export type AddCustomer = {
   Name: string;
   Email: string;
   Phone: string;
   Address: string;
+};
+
+export type Customer = AddCustomer & {
+  Id: number;
 };
 
 export type EditCustomer = {
@@ -18,10 +21,6 @@ export type EditCustomer = {
 export interface CustomerStore {
   customers: Customer[];
   customer: EditCustomer | null;
-  getCustomers: () => Promise<void>;
-  getCustomer: (id: number) => Promise<void>;
-  updateCustomers: (customer: EditCustomer) => Promise<unknown>;
-  removeCustomers: (id: number) => Promise<number | undefined>;
-  setSearchQuery: (query: string) => void;
   searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }

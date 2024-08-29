@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import Header from "../components/common/Header";
 import Table from "../components/table/Table";
+import { orderRepository } from "../providers/RepositoryProvider";
 import { orderStore } from "../store";
 const Orders = () => {
-  const { orders, setSearchQuery } = orderStore();
-
+  const { orders } = orderStore();
+  const updateOrdersByQuery = (query: string) => {
+    orderRepository.search(query);
+  };
   useEffect(() => {
     orderStore.getState().order = null;
   });
@@ -42,7 +45,7 @@ const Orders = () => {
           search={true}
           btnName="Filters"
           filter={true}
-          onSearchChange={setSearchQuery}
+          onSearchChange={updateOrdersByQuery}
         />
       </div>
       <Table type="order" columns={columns} data={orders} actions={false} />

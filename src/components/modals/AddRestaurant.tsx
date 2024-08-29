@@ -11,9 +11,10 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { addRestaurantSchema } from "../../schemas";
 import { RestaurantDetails } from "../../types/restaurant";
-import { globalStore, restaurantStore } from "../../store";
+import { globalStore} from "../../store";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { restaurantRepository } from "../../providers/RepositoryProvider";
 
 const AddRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
@@ -65,11 +66,10 @@ const AddRestaurant = () => {
         )} - ${formatedTime(moment(values.closingTime))}`,
       };
 
-      const response = await restaurantStore
-        .getState()
-        .addRestaurant(restaurantData);
+      const response = await restaurantRepository.create(restaurantData);
       const error = globalStore.getState().error;
       if (response) {
+        restaurantRepository.getAll();
         toast.success("Restaurant added successfully");
         navigate("/restaurants");
       } else {

@@ -7,6 +7,7 @@ import assets from "../../assets/assets";
 import Modal from "../Modal";
 import FilePreview from "./FilePreview";
 import toast from "react-hot-toast";
+import { imageRepository } from "../../providers/RepositoryProvider";
 
 const Dropzone = ({
   className,
@@ -24,7 +25,7 @@ const Dropzone = ({
   const [rejected, setRejected] = useState<FileRejection[]>([]);
   const [url, setUrl] = useState<string | null>(null);
   const [imgName, setImgName] = useState<string | null>(null);
-  const { imgs, uploadImage } = imgUploadStore();
+  const { imgs } = imgUploadStore();
   const { error } = globalStore();
 
   const removeFile = (name: string) => {
@@ -80,7 +81,7 @@ const Dropzone = ({
     formData.append("Images", file);
 
     try {
-      await uploadImage(formData);
+      await imageRepository.uploadImage(formData);
       if (!error) {
         toast.success("Image successfully uploaded!");
         setFiles([]);
@@ -132,9 +133,9 @@ const Dropzone = ({
       <div className="mt-2">
         <button
           type="button"
-          onClick={() => {
+          onClick={async () => {
             setOpen(true);
-            imgUploadStore.getState().getImages();
+            await imageRepository.getImages();
           }}
           className="flex flex-start border w-fit px-2 py-1 rounded-md text-sm shadow-md mb-2"
         >

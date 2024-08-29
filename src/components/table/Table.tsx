@@ -6,13 +6,13 @@ import { TableProps } from "../../types/table";
 import { Employee } from "../../types/employee";
 import { Order } from "../../types/order";
 import { Link } from "react-router-dom";
-import {
-  customerStore,
-  employeeStore,
-  orderStore,
-  restaurantStore,
-} from "../../store";
 import toast from "react-hot-toast";
+import {
+  customerRepository,
+  employeeRepository,
+  orderRepository,
+  restaurantRepository,
+} from "../../providers/RepositoryProvider";
 
 const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
   const {
@@ -167,35 +167,42 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
                         onClick={async () => {
                           switch (type) {
                             case "customer": {
-                              const response = await customerStore
-                                .getState()
-                                .removeCustomers(Number(row["Id"]));
+                              const response = await customerRepository.delete(
+                                Number(row["Id"])
+                              );
                               if (response) {
+                                await customerRepository.getAll();
                                 toast.success("Successfully deleted");
                               }
                               break;
                             }
                             case "employee": {
-                              const response = await employeeStore
-                                .getState()
-                                .removeEmployee(Number(row["Id"]));
+                              const response = await employeeRepository.delete(
+                                Number(row["Id"])
+                              );
                               if (response) {
+                                await employeeRepository.getAll();
                                 toast.success("Successfully deleted");
                               }
                               break;
                             }
                             case "order": {
-                              await orderStore
-                                .getState()
-                                .removeOrder(Number(row["Id"]));
-
+                              const response = await orderRepository.delete(
+                                Number(row["Id"])
+                              );
+                              if (response) {
+                                await orderRepository.getAll();
+                                toast.success("Successfully deleted");
+                              }
                               break;
                             }
                             case "restaurant": {
-                              const response = await restaurantStore
-                                .getState()
-                                .removeRestaurant(Number(row["Id"]));
+                              const response =
+                                await restaurantRepository.delete(
+                                  Number(row["Id"])
+                                );
                               if (response) {
+                                await restaurantRepository.getAll();
                                 toast.success("Successfully deleted");
                               }
                               break;

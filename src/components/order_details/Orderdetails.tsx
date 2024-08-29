@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import toast from "react-hot-toast";
+import { orderRepository } from "../../providers/RepositoryProvider";
 
 const Orderdetails = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,11 +24,12 @@ const Orderdetails = () => {
 
   useEffect(() => {
     (async () => {
-      await orderStore.getState().getOrder(Number(id));
+      await orderRepository.getById(Number(id));
+      if (statusUpdated) {
+        toast.success("Status updated");
+        setStatusUpdated(false);
+      }
     })();
-    if (statusUpdated) {
-      setStatusUpdated(false);
-    }
   }, [id, statusUpdated]);
 
   const { order } = orderStore();
@@ -45,10 +47,9 @@ const Orderdetails = () => {
       Status: status,
       OrderedItems: order!.OrderedItems,
     };
-    const response = await orderStore.getState().updateStauts(data);
+    const response = await orderRepository.update(data);
     const error = globalStore.getState().error;
     if (response) {
-      toast.success("Status updated");
       setIsVisible(false);
       setStatusUpdated(true);
     } else {

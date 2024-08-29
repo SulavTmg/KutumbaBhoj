@@ -1,10 +1,13 @@
 import Header from "../../components/common/Header";
 import Table from "../../components/table/Table";
 import { customerStore } from "../../store";
+import { customerRepository } from "../../providers/RepositoryProvider";
 
 const EndUsers = () => {
-  const { customers, setSearchQuery } = customerStore();
-
+  const { customers } = customerStore();
+  const updateCustomersByQuery = (query: string) => {
+    customerRepository.search(query);
+  };
   const columns = [
     { header: "Customer Name", accessor: "Name" },
     { header: "Contact", accessor: "Phone" },
@@ -18,10 +21,15 @@ const EndUsers = () => {
         <Header
           heading="End-Users"
           search={true}
-          onSearchChange={setSearchQuery}
+          onSearchChange={updateCustomersByQuery}
         />
       </div>
-      <Table type="customer" actions={true} columns={columns} data={customers} />
+      <Table
+        type="customer"
+        actions={true}
+        columns={columns}
+        data={customers}
+      />
     </div>
   );
 };

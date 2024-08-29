@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import { signUpSchema } from "../../schemas";
 import { useParams, useNavigate } from "react-router-dom";
 import { customerStore, globalStore } from "../../store";
+import { customerRepository } from "../../providers/RepositoryProvider";
 
 const EditEndUser = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,7 +17,7 @@ const EditEndUser = () => {
   const Id = Number(id);
   useEffect(() => {
     (async () => {
-      await customerStore.getState().getCustomer(Id);
+      await customerRepository.getById(Id);
     })();
   }, [Id]);
 
@@ -59,9 +60,10 @@ const EditEndUser = () => {
         Address: values.address,
         Phone: values.phone,
       };
-      const response = await customerStore.getState().updateCustomers(data);
+      const response = await customerRepository.update(data);
       const error = globalStore.getState().error;
       if (response) {
+        await customerRepository.getAll();
         toast.success("Successfully updated");
         navigate("/end-user");
       } else {

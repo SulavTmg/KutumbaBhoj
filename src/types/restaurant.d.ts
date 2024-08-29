@@ -49,11 +49,6 @@ export type UpdateRestaurant = {
 export interface RestaurantStore {
   restaurants: Restaurant[];
   restaurant: Restaurant | null;
-  getRestaurants: () => Promise<void>;
-  getRestaurant: (id: number) => Promise<void>;
-  removeRestaurant: (id: number) => Promise<number | undefined>;
-  updateRestaurant: (restaurant: UpdateRestaurant) => Promise<unknown>;
-  addRestaurant: (restaurant: AddRestaurant) => Promise<unknown>;
-  setSearchQuery: (query: string) => void;
   searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }

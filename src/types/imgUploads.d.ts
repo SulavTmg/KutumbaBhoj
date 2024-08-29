@@ -18,12 +18,10 @@ export type Img = {
 };
 
 export type ImgPreview = {
-  name: string ;
-  url: string ;
-}
+  name: string;
+  url: string;
+};
 
 export interface ImgStore {
-  imgs: Img[]
-  uploadImage: (formdata: FormData) => Promise<unknown>;
-  getImages: ()=> Promise<void>;
+  imgs: Img[];
 }

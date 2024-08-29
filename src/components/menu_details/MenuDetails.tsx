@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import assets from "../../assets/assets";
-import Button from "../Button";
 import MenuLists from "./MenuLists";
 import { menuStore } from "../../store";
+import { menuRepository } from "../../providers/RepositoryProvider";
 
 const MenuDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,20 +13,26 @@ const MenuDetails = () => {
 
   useEffect(() => {
     (async () => {
-      await menuStore.getState().getMenu(Number(id));
+      await menuRepository.getMenu(Number(id));
     })();
   }, [id]);
 
   const { menu } = menuStore();
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
-  if (!menu) {
-    return <div>Loading...</div>;
-  }
-
+ 
   const handleItemClick = (item: string) => {
     setSelectedItem(item === selectedItem ? null : item);
   };
+
+  const selectedCategory = menu?.Categories.find(
+    (category) => category.Name === selectedItem
+  );
+
+   if (!menu) {
+     return <div>Loading...</div>;
+   }
+  
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
@@ -54,11 +60,9 @@ const MenuDetails = () => {
               </div>
             </div>
             <div className="mt-auto">
-              <Button
-                icon={Edit}
-                name="Edit"
-                className=" bg-[#5C59E8] text-white rounded-[10px] w-[116px] flex gap-[10px] px-7 py-[13px]"
-              />
+              <button  className=" bg-[#5C59E8] text-white rounded-[10px] w-[116px] flex gap-[10px] px-7 py-[13px]">
+                <img src={Edit} alt="edit-icon"/>Edit
+              </button>
             </div>
           </div>
         </div>
@@ -82,23 +86,23 @@ const MenuDetails = () => {
             ))}
             <div className="px-6 py-3">
               <Link to={`/menu/add-category/${id}`}>
-                <Button
+                <button
                   type="button"
-                  icon={AddIcon3}
-                  name="Add Categories"
                   className="text-[#5C59E8] text-[12px] flex items-center gap-2"
-                />
+                >
+                  <img src={AddIcon3} />
+                  Add Categories
+                </button>
               </Link>
             </div>
           </ul>
         </div>
-        {selectedItem && (
+        {selectedCategory && (
           <MenuLists
             restaurantId={Number(id)}
-            menuLists={
-              menu.Categories.find((category) => category.Name === selectedItem)
-                ?.Items || []
-            }
+            menuLists={selectedCategory?.Items || []}
+            categoryId={Number(selectedCategory.Id)}
+            menuRepository={menuRepository}
           />
         )}
       </div>

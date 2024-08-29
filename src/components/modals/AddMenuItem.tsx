@@ -5,33 +5,28 @@ import Header from "../common/Header";
 import assets from "../../assets/assets";
 import Button from "../Button";
 import { useFormik } from "formik";
-import { addCategorySchema } from "../../schemas";
-import { useEffect, useState } from "react";
+import { addMenuItemSchema } from "../../schemas";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { globalStore, menuStore } from "../../store";
-import { ItemDetails } from "../../types/menu";
+import { globalStore } from "../../store";
 import { menuRepository } from "../../providers/RepositoryProvider";
 
-const EditMenuItems = () => {
+const AddMenuItem = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const [imageId, setImageId] = useState<number | null>(null);
-  const { id } = useParams();
-  const Id = Number(id);
+  const { restaurantId, categoryId } = useParams<{
+    restaurantId: string;
+    categoryId: string;
+  }>();
   const navigate = useNavigate();
-  useEffect(() => {
-    (async () => {
-      await menuRepository.getItem(Id);
-    })();
-  }, [Id]);
 
-  const { item } = menuStore();
   const {
     icons: { BackArrow },
   } = assets;
 
   const initialValues = {
-    name: item?.Name || "",
-    price: item?.Price || "",
+    name: "",
+    price: "",
   };
 
   const {
@@ -44,33 +39,23 @@ const EditMenuItems = () => {
     resetForm,
   } = useFormik({
     initialValues: initialValues,
-    enableReinitialize: true,
-    validationSchema: addCategorySchema,
+    validationSchema: addMenuItemSchema,
     onSubmit: async (values) => {
       const imgIds: number[] = [];
-      if (imageId) {
-        imgIds.push(imageId);
-      } else if (item?.Images?.[0]?.Id) {
-        imgIds.push(item.Images[0].Id);
-      }
-
-      const itemData: ItemDetails = {
-        Id: Id,
-        RestaurantId: item?.RestaurantId,
-        CategoryId: Number(item?.CategoryId),
+      if (imageId) imgIds.push(imageId);
+      const itemData = {
+        RestaurantId: Number(restaurantId),
+        CategoryId: Number(categoryId),
         Name: values.name,
         Price: Number(values.price),
+        ImageIds: imgIds,
       };
-
-      if (imgIds.length > 0) {
-        itemData.ImageIds = imgIds;
-      }
-
-      const response = await menuRepository.update(itemData);
+      const response = await menuRepository.addItem(itemData);
       const error = globalStore.getState().error;
       if (response) {
-        toast.success("Successfully updated");
-        navigate(`/menu/${item?.RestaurantId}`);
+        await menuRepository.getMenu(Number(restaurantId));
+        toast.success("Category added successfully");
+        navigate(`/menu/${restaurantId}`);
       } else {
         toast.error(error);
       }
@@ -80,20 +65,17 @@ const EditMenuItems = () => {
   const handleReset = () => {
     resetForm();
     setResetFiles(true);
-    setImageId(null);
     setTimeout(() => setResetFiles(false), 0);
   };
-
-  if (globalStore.getState().loading) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">
       <div className="px-6 py-5">
         <Header
-          heading="Edit Items"
+          heading="Add Menu Item"
           btnName="Go Back"
           className="!text-[#5C59E8]"
-          path={`/menu/${item?.RestaurantId}`}
+          path={`/menu/${restaurantId}`}
           icon={BackArrow}
         />
       </div>
@@ -105,7 +87,6 @@ const EditMenuItems = () => {
               fieldName="image"
               resetFile={resetFiles}
               setImageId={setImageId}
-              previewUrl={item?.Images[0]?.Url || ""}
             />
           </div>
           <div>
@@ -154,4 +135,4 @@ const EditMenuItems = () => {
   );
 };
 
-export default EditMenuItems;
+export default AddMenuItem;

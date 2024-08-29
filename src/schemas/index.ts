@@ -83,7 +83,10 @@ export const editEmployeeSchema = Yup.object({
 });
 
 export const addCategorySchema = Yup.object({
-  category: Yup.string().required("Please enter the category"),
+  name: Yup.string().required("Please enter the name"),
+});
+
+export const addMenuItemSchema = Yup.object({
   name: Yup.string().required("Please enter the name"),
   price: Yup.number()
     .required("Please enter the price")

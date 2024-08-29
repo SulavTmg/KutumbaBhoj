@@ -9,6 +9,7 @@ import { editEmployeeSchema } from "../../schemas";
 import { employeeStore, globalStore } from "../../store";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { employeeRepository } from "../../providers/RepositoryProvider";
 
 const EditEmployee = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const EditEmployee = () => {
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      await employeeStore.getState().getEmployee(Id);
+      await employeeRepository.getById(Id);
     })();
   }, [Id]);
 
@@ -60,9 +61,10 @@ const EditEmployee = () => {
         Shift: values.shift,
         Designation: values.designation,
       };
-      const response = await employeeStore.getState().updateEmployee(data);
+      const response = await employeeRepository.update(data);
       const error = globalStore.getState().error;
       if (response) {
+        await employeeRepository.getAll();
         toast.success("Employee updated successfully");
         navigate("/employees");
       } else {
@@ -71,7 +73,7 @@ const EditEmployee = () => {
     },
   });
 
-  if (!employee) return <div>Loading...</div>;
+  if (globalStore.getState().loading) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">

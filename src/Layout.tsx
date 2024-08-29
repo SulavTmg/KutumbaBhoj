@@ -3,11 +3,11 @@ import SideBar from "./components/navbar/SideBar.tsx";
 import { Outlet, useNavigate } from "react-router-dom";
 import { router } from "./main.tsx";
 import {
-  customerStore,
-  employeeStore,
-  orderStore,
-  restaurantStore,
-} from "./store";
+  customerRepository,
+  employeeRepository,
+  orderRepository,
+  restaurantRepository,
+} from "./providers/RepositoryProvider.ts";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -17,11 +17,12 @@ const Layout = () => {
     if (location.search) {
       navigate(location.pathname);
     }
-    employeeStore.getState().getEmployees();
-    orderStore.getState().getOrders();
-    customerStore.getState().getCustomers();
-    restaurantStore.getState().getRestaurants();
+    employeeRepository.getAll();
+    orderRepository.getAll();
+    customerRepository.getAll();
+    restaurantRepository.getAll();
   }, [location.pathname, location.search, navigate]);
+  
   return (
     <>
       <SideBar />

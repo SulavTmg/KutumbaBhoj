@@ -25,6 +25,7 @@ import EditRestaurant from "./components/modals/EditRestaurant";
 import EditEmployee from "./components/modals/EditEmployee";
 import EditEndUser from "./components/modals/EditCustomer";
 import EditMenuItems from "./components/modals/EditMenuItems";
+import AddMenuItem from "./components/modals/AddMenuItem";
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
       {
         path: "/menu/add-category/:id",
         element: <AddMenuCategory />,
+      },
+      {
+        path: "/menu/add-item/:restaurantId/:categoryId",
+        element: <AddMenuItem />,
       },
       {
         path: "/menu/edit-items/:id",

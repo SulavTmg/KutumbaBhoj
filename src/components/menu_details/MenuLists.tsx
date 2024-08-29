@@ -1,11 +1,14 @@
 import toast from "react-hot-toast";
 import assets from "../../assets/assets";
-import { menuStore } from "../../store";
 import { MenuListsProps } from "../../types/menu";
-import Button from "../Button";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const MenuLists = ({ restaurantId, menuLists }: MenuListsProps) => {
+const MenuLists = ({
+  restaurantId,
+  menuLists,
+  categoryId,
+  menuRepository,
+}: MenuListsProps) => {
   const {
     icons: { AddIcon3 },
   } = assets;
@@ -32,12 +35,10 @@ const MenuLists = ({ restaurantId, menuLists }: MenuListsProps) => {
                   </button>
                   <button
                     onClick={async () => {
-                      const response = await menuStore
-                        .getState()
-                        .removeItem(item.Id);
+                      const response = await menuRepository.delete(item.Id);
                       if (response) {
+                        await menuRepository.getMenu(restaurantId);
                         toast.success("Successfully removed");
-                        await menuStore.getState().getMenu(restaurantId);
                       }
                     }}
                     className="text-[#CC3D3D]"
@@ -50,11 +51,12 @@ const MenuLists = ({ restaurantId, menuLists }: MenuListsProps) => {
           ))}
         </tbody>
       </table>
-      <Button
-        icon={AddIcon3}
-        name="Add Items"
-        className="text-[#5C59E8] text-[12px] p-4 flex items-center gap-2"
-      />
+      <Link to={`/menu/add-item/${restaurantId}/${categoryId}`}>
+        <button className="text-[#5C59E8] text-[12px] p-4 flex items-center gap-2">
+          <img src={AddIcon3} />
+          Add Item
+        </button>
+      </Link>
     </div>
   );
 };

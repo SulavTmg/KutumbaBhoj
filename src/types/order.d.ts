@@ -1,11 +1,6 @@
 export interface OrderStore {
   orders: Order[];
   order: Order | null;
-  getOrders: () => Promise<void>;
-  getOrder: (id: number) => Promise<void>;
-  removeOrder: (id: number) => Promise<void>;
-  updateStauts: (data: OrderData) => Promise<unknown>
-  setSearchQuery: (query: string) => void;
   searchQuery: string;
 }
 

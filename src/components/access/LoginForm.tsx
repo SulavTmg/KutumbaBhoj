@@ -3,11 +3,12 @@ import Input from "../form_elements/Input";
 import Button from "../Button";
 import { singnInSchema } from "../../schemas";
 import { useFormik } from "formik";
-import { authStore, globalStore } from "../../store";
+import { globalStore } from "../../store";
 import assets from "../../assets/assets";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { accessRepository } from "../../providers/RepositoryProvider";
 
 type toggleProps = {
   toggleActive: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -37,7 +38,7 @@ const LoginForm = (props: toggleProps) => {
     initialValues: initialValues,
     validationSchema: singnInSchema,
     onSubmit: async (values) => {
-      await authStore.getState().login(values);
+      await accessRepository.login(values);
       const error = globalStore.getState().error;
       if (error) {
         toast.error(error);
@@ -53,7 +54,7 @@ const LoginForm = (props: toggleProps) => {
         <img src={Logo} alt="kutumba-bhoj-logo" className="size-36 md:w-56" />
       </div>
       <header className="mb-[46px]">
-        <h1 className=" font-sans text-lg md:text-3xl md:mb-1 leading-10 font-semibold ">
+        <h1 className="font-sans text-lg md:text-3xl md:mb-1 leading-10 font-semibold ">
           Welecome Back
         </h1>
         <span className="font-thin text-xs md:text-base text-[#A2A1A8]">

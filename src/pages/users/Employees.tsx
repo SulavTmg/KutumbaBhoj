@@ -1,9 +1,14 @@
 import Header from "../../components/common/Header";
 import Table from "../../components/table/Table";
+import {employeeRepository}  from "../../providers/RepositoryProvider";
 import { employeeStore } from "../../store";
 
 const Employees = () => {
-  const { employees, setSearchQuery } = employeeStore();
+  const { employees } = employeeStore();
+
+  const updateEmployeesByQuery = (query: string) => {
+    employeeRepository.search(query);
+  };
 
   const columns = [
     {
@@ -38,10 +43,16 @@ const Employees = () => {
           heading="All Employees"
           path="/employees/add-employee"
           search={true}
-          onSearchChange={setSearchQuery}
+          onSearchChange={updateEmployeesByQuery}
         />
       </div>
-      <Table type="employee" actions={true} columns={columns} data={employees} nameId={true} />
+      <Table
+        type="employee"
+        actions={true}
+        columns={columns}
+        data={employees}
+        nameId={true}
+      />
     </div>
   );
 };

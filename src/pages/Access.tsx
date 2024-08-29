@@ -28,8 +28,8 @@ const Access = () => {
         <div className="invisible hidden sm:visible sm:block w-1/2 h-full overflow-hidden relative ">
           <ImgSlider />
         </div>
-        <div className=" w-full sm:w-1/2 h-full relative">
-          <div className="flex justify-center">
+        <div className="w-full sm:w-1/2 h-full relative">
+          <div className="h-full flex justify-center">
             <LoginForm toggleActive={toggleActive} />
           </div>
         </div>

@@ -14,6 +14,7 @@ import { updateRestaurantSchema } from "../../schemas";
 import { globalStore, restaurantStore } from "../../store";
 import { useParams, useNavigate } from "react-router-dom";
 import { UpdateRestaurant, Image } from "../../types/restaurant";
+import { restaurantRepository } from "../../providers/RepositoryProvider";
 
 const EditRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
@@ -23,7 +24,7 @@ const EditRestaurant = () => {
 
   useEffect(() => {
     (async () => {
-      await restaurantStore.getState().getRestaurant(Id);
+      await restaurantRepository.getById(Id);
     })();
   }, [Id]);
 
@@ -64,8 +65,7 @@ const EditRestaurant = () => {
   ): number | undefined => {
     if (newImageId) {
       return newImageId;
-    }
-    else if (images && images[index]?.Id) {
+    } else if (images && images[index]?.Id) {
       return images[index].Id;
     }
   };
@@ -112,11 +112,10 @@ const EditRestaurant = () => {
         )} - ${formatedTime(moment(values.closingTime))}`,
       };
 
-      const response = await restaurantStore
-        .getState()
-        .updateRestaurant(restaurantData);
+      const response = await restaurantRepository.update(restaurantData);
       const error = globalStore.getState().error;
       if (response) {
+        await restaurantRepository.getAll();
         toast.success("Restaurant updated successfully");
         navigate("/restaurants");
       } else {
@@ -124,11 +123,14 @@ const EditRestaurant = () => {
       }
     },
   });
+
   const handleReset = async () => {
     resetForm();
     setResetFiles(true);
     setTimeout(() => setResetFiles(false), 0);
   };
+
+  if (globalStore.getState().loading) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">

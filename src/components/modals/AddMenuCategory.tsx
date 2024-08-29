@@ -8,7 +8,8 @@ import { useFormik } from "formik";
 import { addCategorySchema } from "../../schemas";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { globalStore, menuStore } from "../../store";
+import { globalStore } from "../../store";
+import { menuRepository } from "../../providers/RepositoryProvider";
 
 const AddMenuCategory = () => {
   const [resetFiles, setResetFiles] = useState(false);
@@ -21,7 +22,6 @@ const AddMenuCategory = () => {
   } = assets;
 
   const initialValues = {
-    category: "",
     name: "",
     price: "",
   };
@@ -42,12 +42,10 @@ const AddMenuCategory = () => {
       if (imageId) imgIds.push(imageId);
       const categoryData = {
         RestaurantId: Number(id),
-        Category: values.category,
         Name: values.name,
-        Price: Number(values.price),
         ImageIds: imgIds,
       };
-      const response = await menuStore.getState().addCategory(categoryData);
+      const response = await menuRepository.addCategory(categoryData);
       const error = globalStore.getState().error;
       if (response) {
         toast.success("Category added successfully");
@@ -87,22 +85,6 @@ const AddMenuCategory = () => {
           </div>
           <div>
             <Input
-              name="category"
-              type="text"
-              placeholder="Category"
-              className="w-full h-[56px] border rounded-[10px]"
-              value={values.category}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              errorMsg={
-                errors.category && touched.category
-                  ? `${errors.category}`
-                  : null
-              }
-            />
-          </div>
-          <div>
-            <Input
               name="name"
               type="text"
               placeholder="Name"
@@ -111,20 +93,6 @@ const AddMenuCategory = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               errorMsg={errors.name && touched.name ? `${errors.name}` : null}
-            />
-          </div>
-          <div>
-            <Input
-              name="price"
-              type="text"
-              placeholder="Price"
-              className="w-full h-[56px] border rounded-[10px]"
-              value={values.price}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              errorMsg={
-                errors.price && touched.price ? `${errors.price}` : null
-              }
             />
           </div>
           <div className="col-span-2">
