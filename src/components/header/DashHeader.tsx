@@ -1,16 +1,16 @@
 import { useState } from "react";
 import profile from "../../assets/profile/Pp.png";
-import { authStore } from "../../store";
 import { useNavigate } from "react-router-dom";
 import assets from "../../assets/assets";
+import { accessRepository } from "../../providers/RepositoryProvider";
 
 const DashHeader = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    authStore.getState().logout();
+  const handleLogout = async () => {
+    await accessRepository.logout();
     navigate("/login");
   };
 
