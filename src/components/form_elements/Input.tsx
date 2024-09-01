@@ -21,7 +21,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div>
           {label && (
             <label
-              htmlFor={`${name}`}
+              htmlFor={id}
               className={` text-[8px] sm:text-[11px] leading-4 text-[#0D693C] ${labelCss}`}
             >
               {label}
