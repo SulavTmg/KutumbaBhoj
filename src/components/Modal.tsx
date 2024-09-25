@@ -1,9 +1,20 @@
 import { ReactNode } from "react";
 
+interface Role {
+  pageName: string;
+  roles: {
+    view: boolean;
+    edit: boolean;
+    delete: boolean;
+  };
+}
+
 type ModalProps = {
   onClose: () => void;
+  onSave?: (roles: Role[]) => void;
   children: ReactNode;
   open: boolean;
+  roles?: Role[];
 };
 
 const Modal = ({ onClose, children, open }: ModalProps) => {

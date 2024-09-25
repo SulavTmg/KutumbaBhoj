@@ -1,7 +1,7 @@
 import TimeNav from "../../components/insights/TimeNav";
 import Cards from "../../components/insights/Cards";
-import LineChart from "../../components/insights/LineChart";
-import RadialBarChart from "../../components/insights/RadialBarChart";
+import AreaChart from "../../components/insights/AreaChart";
+import PieCharts from "../../components/insights/PieCharts";
 import BarChart from "../../components/insights/BarChart";
 import Header from "../../components/common/Header";
 import ProgressBar from "../../components/common/ProgressBar";
@@ -18,40 +18,19 @@ const Insights = () => {
         <Header heading="Insights" />
         <TimeNav />
         <Cards />
-        <div className=" bg-white rounded-lg max-w[1010px] shadow-md">
-          <LineChart />
+        <div className=" bg-white rounded-lg py-6 h-[375px] max-w[1010px] shadow-md">
+          <AreaChart />
         </div>
-        <div className="flex flex-wrap gap-8">
-          <div className=" md:basis-[60%] md:flex-grow bg-white rounded-lg shadow-md">
-            <div className="mx-7 mt-6">
-              <h1 className="text-[#464255] font-bold text-2xl font-josefin">
-                Pie Chart
-              </h1>
-            </div>
-            <div className="flex sm:flex-wrap justify-center items-center">
-              <RadialBarChart
-                data={[81]}
-                color={"#FF5B5B"}
-                title={"Total Orders"}
-              />
-              <RadialBarChart
-                data={[22]}
-                color={"#00B074"}
-                title={"Customer Growth"}
-              />
-              <RadialBarChart
-                data={[62]}
-                color={"#2D9CDB"}
-                title={"Total Revenue"}
-              />
-            </div>
+        <div className="grid grid-cols-1 auto-rows-[230px] sm:grid-cols-3 gap-y-8 sm:gap-8 sm:auto-rows-[320px]">
+          <div className="col-span-2 bg-white rounded-md shadow-md">
+            <PieCharts />
           </div>
-          <div className="bg-white flex-grow basis-80 rounded-md shadow-md w-full">
+          <div className="bg-white rounded-md shadow-md w-full">
             <BarChart />
           </div>
         </div>
         <div className="flex flex-wrap gap-8 font-josefin">
-          <div className="bg-white flex-grow rounded-3xl px-8 py-5">
+          <div className="bg-white flex-grow rounded-3xl px-8 py-5 shadow-md">
             <div className="mb-7">
               <h1 className=" text-[#000] opacity-50">
                 Most Ordered Restaurants
@@ -110,7 +89,7 @@ const Insights = () => {
               </div>
             </div>
           </div>
-          <div className="flex-grow bg-white rounded-3xl px-8 py-5">
+          <div className="flex-grow bg-white rounded-3xl px-8 py-5 shadow-md">
             <div className="mb-7">
               <h1 className=" text-[#000] opacity-50">
                 Most Ordered Food Item
@@ -159,7 +138,7 @@ const Insights = () => {
             </div>
           </div>
         </div>
-        <RankingList/>
+        <RankingList />
       </div>
     </>
   );

@@ -1,64 +1,62 @@
-import { ApexOptions } from "apexcharts";
-import ReactApexChart from "react-apexcharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { barChartData } from "../../data";
 
-const BarChart = () => {
-  const options: ApexOptions = {
-    series: [
-      {
-        name: "Orders",
-        data: [200, 150, 580, 320, 280, 380, 280],
-      },
-    ],
-    chart: {
-      type: "bar",
-      toolbar: {
-        show: false,
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        borderRadiusApplication: "end",
-        horizontal: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    yaxis: {
-      min: 0,
-      max: 800,
-    },
-    xaxis: {
-      categories: ["Mon", "Wed", "Tue", "Thu", "Fri", "Sat", "Sun"],
-    },
-    title: {
-      text: "Daily Orders",
-      style: {
-        fontFamily: "Josefin Sans , sans-serif",
-        color: "#333843",
-        fontSize: "20px",
-        fontWeight: "600",
-      },
-    },
-    subtitle: {
-      text: "Revenue and Sales",
-      style: {
-        fontFamily: "Josefin Sans , sans-serif",
-      },
-    },
-  };
-
+const BarCharts = () => {
   return (
-    <div id="chart" className="p-5 ">
-      <ReactApexChart
-        options={options}
-        series={options.series}
-        type="bar"
-        height={250}
-      />
+    <div className="font-josefin w-full h-full">
+      <div className="p-4">
+        <h3 className="text-xl font-medium">Daily Orders</h3>
+        <h4 className="text-xs">Weekly Analysis of Orders</h4>
+      </div>
+      <div className="w-full h-full">
+        <ResponsiveContainer width="99%" height="100%">
+          <BarChart
+            layout="vertical"
+            data={barChartData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 0,
+              bottom:80 ,
+            }}
+            barSize={12}
+          >
+            <XAxis
+              type="number"
+              fontSize="10px"
+              domain={[0, 800]}
+              ticks={[0, 100, 200, 300, 400, 500, 600, 700, 800]}
+              axisLine={false}
+              tickLine={false}
+            />
+            <YAxis
+              fontSize="10px"
+              dataKey="name"
+              type="category"
+              axisLine={false}
+              tickLine={false}
+            />
+            <Tooltip
+              cursor={{ fill: "none" }}
+              contentStyle={{ borderRadius: "8px" }}
+            />
+            <Legend />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Bar legendType="none" dataKey="orders" fill="#00B074" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
 
-export default BarChart;
+export default BarCharts;

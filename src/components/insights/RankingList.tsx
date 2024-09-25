@@ -3,7 +3,7 @@ import data from "../../data/insightsData.json";
 const RankingList = () => {
   return (
     <div className="flex flex-wrap gap-8 font-josefin">
-      <div className="flex-grow bg-white rounded-md">
+      <div className="flex-grow bg-white rounded-md shadow-md">
         <h2 className=" text-[#000] opacity-50 text-center mb-8 mt-4">
           Frequent Ordering Customer
         </h2>
@@ -35,7 +35,7 @@ const RankingList = () => {
           ))}
         </ul>
       </div>
-      <div className=" flex-grow bg-white rounded-md ">
+      <div className=" flex-grow bg-white rounded-md shadow-md">
         <h2 className="text-center text-[#000] opacity-50 mb-8 mt-4">
           Restaurants with Good Reviews
         </h2>

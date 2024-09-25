@@ -25,11 +25,11 @@ const Access = () => {
   return (
     !token && (
       <div className="flex w-full h-screen items-start">
-        <div className="invisible hidden sm:visible sm:block w-1/2 h-full overflow-hidden relative ">
+        <div className="invisible hidden md:visible md:block w-1/2 h-full overflow-hidden relative ">
           <ImgSlider />
         </div>
-        <div className="w-full sm:w-1/2 h-full relative">
-          <div className="h-full flex justify-center">
+        <div className="w-full md:w-1/2 h-full relative">
+          <div className="h-full w-full flex justify-center items-center">
             <LoginForm toggleActive={toggleActive} />
           </div>
         </div>
