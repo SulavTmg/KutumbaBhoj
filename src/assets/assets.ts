@@ -36,6 +36,7 @@ import Cancelled from "./icons/cardIcons/Cancelled.svg";
 import Delivered from "./icons/cardIcons/Delivered.svg";
 import Revenue from "./icons/cardIcons/Revenue.svg";
 import SearchIcon from "./icons/dashboardIcons/SearchIcon.svg";
+import ListIcon from "./icons/dashboardIcons/ListIcon.svg";
 //////////Imgs/////////////////
 import GoogleMap from "./images/GoogleMap.svg";
 //////////ActionIcons///////////////////
@@ -56,9 +57,12 @@ import CloseIcon from "./icons/actionIcons/CloseIcon.svg";
 import DownArrow from "./icons/DownArrow.svg";
 import TickIcon from "./icons/TickIcon.svg";
 import BackArrow from "./icons/BackArrow.svg";
+import TickedUser from "./icons/actionIcons/TickedUser.svg"
 
 export default {
   icons: {
+    ListIcon,
+    TickedUser,
     BackArrow,
     TickIcon,
     CloseIcon,
