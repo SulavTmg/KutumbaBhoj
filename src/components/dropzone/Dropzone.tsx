@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone, FileRejection } from "react-dropzone";
 import { FileWithPreview, DropzoneProps } from "../../types/dropzone";
-import { globalStore, imgUploadStore } from "../../store";
+import { useGlobalStore, useImgUploadStore } from "../../store";
 import Exclamation from "../common/icon/Exclamation";
 import assets from "../../assets/assets";
 import Modal from "../Modal";
 import FilePreview from "./FilePreview";
 import toast from "react-hot-toast";
-import { imageRepository } from "../../providers/RepositoryProvider";
+import { useService } from "../../providers/ServiceProvider";
 
 const Dropzone = ({
   className,
@@ -15,18 +15,19 @@ const Dropzone = ({
   resetFile,
   previewUrl,
   setImageId,
-  errorMsg
+  errorMsg,
 }: DropzoneProps) => {
   const {
     icons: { UploadIcon },
   } = assets;
+  const { imgService } = useService();
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [rejected, setRejected] = useState<FileRejection[]>([]);
   const [url, setUrl] = useState<string | null>(null);
   const [imgName, setImgName] = useState<string | null>(null);
-  const { imgs } = imgUploadStore();
-  const { error } = globalStore();
+  const error = useGlobalStore((state) => state.error);
+  const { imgs } = useImgUploadStore();
 
   const removeFile = (name: string) => {
     setFiles((files) => files.filter((file) => file.name !== name));
@@ -81,7 +82,7 @@ const Dropzone = ({
     formData.append("Images", file);
 
     try {
-      await imageRepository.uploadImage(formData);
+      await imgService.uploadImage(formData);
       if (!error) {
         toast.success("Image successfully uploaded!");
         setFiles([]);
@@ -135,7 +136,7 @@ const Dropzone = ({
           type="button"
           onClick={async () => {
             setOpen(true);
-            await imageRepository.getImages();
+            await imgService.getImages();
           }}
           className="flex flex-start border w-fit px-2 py-1 rounded-md text-sm shadow-md mb-2"
         >

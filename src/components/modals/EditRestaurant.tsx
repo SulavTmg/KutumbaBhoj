@@ -11,24 +11,25 @@ import Flatpickr from "react-flatpickr";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { updateRestaurantSchema } from "../../schemas";
-import { globalStore, restaurantStore } from "../../store";
+import { useGlobalStore, useRestaurantStore } from "../../store";
 import { useParams, useNavigate } from "react-router-dom";
-import { UpdateRestaurant, Image } from "../../types/restaurant";
-import { restaurantRepository } from "../../providers/RepositoryProvider";
+import { Image, Restaurant } from "../../types/restaurant";
+import { useService } from "../../providers/ServiceProvider";
 
 const EditRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const { id } = useParams();
-  const navigate = useNavigate();
   const Id = Number(id);
+  const navigate = useNavigate();
+  const {restaurantService} = useService();
 
   useEffect(() => {
     (async () => {
-      await restaurantRepository.getById(Id);
+      await restaurantService.getRestaurantById(Id);
     })();
-  }, [Id]);
+  }, [Id, restaurantService]);
 
-  const { restaurant } = restaurantStore();
+  const restaurant = useRestaurantStore((state) => state.restaurant);
 
   const formatedTime = (time: moment.Moment) => {
     return time.minutes() === 0 ? time.format("h A") : time.format("h:mm A");
@@ -101,21 +102,21 @@ const EditRestaurant = () => {
       imgIds.push(getImageId(values.bannerId, restaurant?.Images, 1));
       const validImgIds = imgIds.filter((id) => id !== undefined) as number[];
 
-      const restaurantData: UpdateRestaurant = {
-        id: Id,
-        contact: values.contact,
-        address: values.address,
-        name: values.restaurantName,
-        imageIds: validImgIds,
-        openingHours: `${formatedTime(
+      const restaurantData: Restaurant = {
+        Id: Id,
+        Contact: values.contact,
+        Address: values.address,
+        Name: values.restaurantName,
+        ImageIds: validImgIds,
+        OpeningHours: `${formatedTime(
           moment(values.openingTime)
         )} - ${formatedTime(moment(values.closingTime))}`,
       };
 
-      const response = await restaurantRepository.update(restaurantData);
-      const error = globalStore.getState().error;
+      const response = await restaurantService.updateRestaurant(restaurantData);
+      const error = useGlobalStore.getState().error;
       if (response) {
-        await restaurantRepository.getAll();
+        await restaurantService.getRestaurants();
         toast.success("Restaurant updated successfully");
         navigate("/restaurants");
       } else {
@@ -130,7 +131,7 @@ const EditRestaurant = () => {
     setTimeout(() => setResetFiles(false), 0);
   };
 
-  if (globalStore.getState().loading) return <div>Loading...</div>;
+  if (useGlobalStore.getState().loading) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">
@@ -151,14 +152,14 @@ const EditRestaurant = () => {
               fieldName="Logo"
               resetFile={resetFiles}
               setImageId={(id) => setFieldValue("logoId", id)}
-              previewUrl={restaurant?.Images[0]?.Url || ""}
+              previewUrl={restaurant?.Images![0]?.Url || ""}
             />
             <Dropzone
               className="flex flex-col items-center justify-center w-full h-min"
               fieldName="Banner"
               resetFile={resetFiles}
               setImageId={(id) => setFieldValue("bannerId", id)}
-              previewUrl={restaurant?.Images[1]?.Url || ""}
+              previewUrl={restaurant?.Images![1]?.Url || ""}
             />
           </div>
           <div>

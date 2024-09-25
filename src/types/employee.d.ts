@@ -5,17 +5,12 @@ export type Employee = {
   Gender: string;
   Designation: string;
   Shift: string;
-  Joined: string;
+  Address?: string;
+  Joined?: string;
+  Role?: string;
+  VehicleType?: string;
+  VehicleNumber?: string;
 };
-
-export interface EmployeeData {
-  Id: number;
-  Name: string;
-  Contact: string;
-  Gender: string;
-  Designation: string;
-  Shift: string;
-}
 
 export interface EmployeeStore {
   employees: Employee[];

@@ -7,21 +7,23 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { signUpSchema } from "../../schemas";
 import { useParams, useNavigate } from "react-router-dom";
-import { customerStore, globalStore } from "../../store";
-import { customerRepository } from "../../providers/RepositoryProvider";
+import { useCustomerStore, useGlobalStore } from "../../store";
+import { useService } from "../../providers/ServiceProvider";
+import { Customer } from "../../types/customer";
 
 const EditEndUser = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { id } = useParams();
-  const navigate = useNavigate();
   const Id = Number(id);
+  const navigate = useNavigate();
+  const {customerService} = useService();
   useEffect(() => {
     (async () => {
-      await customerRepository.getById(Id);
+      await customerService.getCustomerById(Id);
     })();
-  }, [Id]);
+  }, [Id, customerService]);
 
-  const { customer } = customerStore();
+  const customer = useCustomerStore((state) => state.customer);
 
   const {
     icons: { BackArrow, EyeOpen, EyeClose },
@@ -52,7 +54,7 @@ const EditEndUser = () => {
     enableReinitialize: true,
     validationSchema: signUpSchema,
     onSubmit: async (values) => {
-      const data = {
+      const data: Customer = {
         Id: Id,
         Name: values.name,
         Email: values.email,
@@ -60,10 +62,10 @@ const EditEndUser = () => {
         Address: values.address,
         Phone: values.phone,
       };
-      const response = await customerRepository.update(data);
-      const error = globalStore.getState().error;
+      const response = await customerService.updateCustomer(data);
+      const error = useGlobalStore.getState().error;
       if (response) {
-        await customerRepository.getAll();
+        await customerService.getCustomers();
         toast.success("Successfully updated");
         navigate("/end-user");
       } else {
@@ -72,7 +74,7 @@ const EditEndUser = () => {
     },
   });
 
-  if (globalStore.getState().loading) return <div>Loading...</div>;
+  if (useGlobalStore.getState().loading) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">

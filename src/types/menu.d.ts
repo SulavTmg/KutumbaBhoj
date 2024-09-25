@@ -1,4 +1,3 @@
-import { MenuRepository } from "../repositories/MenuRepository";
 import { Image } from "./restaurant";
 
 interface List {
@@ -11,7 +10,6 @@ type MenuListsProps = {
   menuLists: List[];
   restaurantId: number;
   categoryId: number;
-  menuRepository: MenuRepository;
 };
 
 interface Item {

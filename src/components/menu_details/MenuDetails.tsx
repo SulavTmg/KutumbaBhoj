@@ -2,25 +2,25 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import assets from "../../assets/assets";
 import MenuLists from "./MenuLists";
-import { menuStore } from "../../store";
-import { menuRepository } from "../../providers/RepositoryProvider";
+import { useMenuStore } from "../../store";
+import { useService } from "../../providers/ServiceProvider";
 
 const MenuDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const ID = Number(id);
   const {
     icons: { LocationIcon, PhoneIcon, Edit, AddIcon3 },
   } = assets;
-
+  const{menuService} = useService();
   useEffect(() => {
     (async () => {
-      await menuRepository.getMenu(Number(id));
+      await menuService.getMenu(Number(ID));
     })();
-  }, [id]);
+  }, [ID, menuService]);
 
-  const { menu } = menuStore();
+  const menu = useMenuStore((state) => state.menu);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
- 
   const handleItemClick = (item: string) => {
     setSelectedItem(item === selectedItem ? null : item);
   };
@@ -29,10 +29,9 @@ const MenuDetails = () => {
     (category) => category.Name === selectedItem
   );
 
-   if (!menu) {
-     return <div>Loading...</div>;
-   }
-  
+  if (!menu) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] w-full bg-white border-[rgba(0,0,.125)]">
@@ -60,8 +59,9 @@ const MenuDetails = () => {
               </div>
             </div>
             <div className="mt-auto">
-              <button  className=" bg-[#5C59E8] text-white rounded-[10px] w-[116px] flex gap-[10px] px-7 py-[13px]">
-                <img src={Edit} alt="edit-icon"/>Edit
+              <button className=" bg-[#5C59E8] text-white rounded-[10px] w-[116px] flex gap-[10px] px-7 py-[13px]">
+                <img src={Edit} alt="edit-icon" />
+                Edit
               </button>
             </div>
           </div>
@@ -99,10 +99,9 @@ const MenuDetails = () => {
         </div>
         {selectedCategory && (
           <MenuLists
-            restaurantId={Number(id)}
+            restaurantId={ID}
             menuLists={selectedCategory?.Items || []}
             categoryId={Number(selectedCategory.Id)}
-            menuRepository={menuRepository}
           />
         )}
       </div>

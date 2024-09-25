@@ -1,12 +1,13 @@
 import Header from "../../components/common/Header";
 import Table from "../../components/table/Table";
-import { customerStore } from "../../store";
-import { customerRepository } from "../../providers/RepositoryProvider";
+import { useCustomerStore } from "../../store";
+import { useService } from "../../providers/ServiceProvider";
 
 const EndUsers = () => {
-  const { customers } = customerStore();
-  const updateCustomersByQuery = (query: string) => {
-    customerRepository.search(query);
+  const { customerService } = useService();
+  const customers = useCustomerStore((state) => state.customers);
+  const updateCustomersByQuery = async (query: string) => {
+    await customerService.searchCustomer(query);
   };
   const columns = [
     { header: "Customer Name", accessor: "Name" },
@@ -25,6 +26,7 @@ const EndUsers = () => {
         />
       </div>
       <Table
+        tableType="Primary"
         type="customer"
         actions={true}
         columns={columns}

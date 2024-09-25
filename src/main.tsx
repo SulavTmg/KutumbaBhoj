@@ -26,6 +26,7 @@ import EditEmployee from "./components/modals/EditEmployee";
 import EditEndUser from "./components/modals/EditCustomer";
 import EditMenuItems from "./components/modals/EditMenuItems";
 import AddMenuItem from "./components/modals/AddMenuItem";
+import { ServiceProvider } from "./providers/ServiceProvider";
 
 export const router = createBrowserRouter([
   {
@@ -129,7 +130,9 @@ export const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <Toaster />
+    <ServiceProvider>
+      <RouterProvider router={router} />
+      <Toaster />
+    </ServiceProvider>
   </React.StrictMode>
 );

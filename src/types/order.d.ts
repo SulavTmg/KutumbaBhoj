@@ -12,27 +12,14 @@ interface OrderedItem {
   Price: number;
 }
 
-interface OrderData {
-  Id: number;
-  RestaurantId: number;
-  Restaurant: string;
-  CustomerId: number;
-  CustomerName: string;
-  Total: number;
-  Payment: string;
-  CreatedAt: string;
-  Status: string;
-  OrderedItems: OrderedItem[];
-}
-
 interface Order {
   Id: number;
   RestaurantId: number;
   Restaurant: string;
   CustomerId: number;
   CustomerName: string;
-  Address: string;
-  Contact: string;
+  Address?: string;
+  Contact?: string;
   Total: number;
   Payment: string;
   CreatedAt: string;

@@ -4,9 +4,9 @@ import { signUpSchema } from "../../schemas";
 import assets from "../../assets/assets";
 import Input from "../form_elements/Input";
 import Button from "../Button";
-import { globalStore } from "../../store";
+import { useGlobalStore } from "../../store";
 import toast from "react-hot-toast";
-import { accessRepository } from "../../providers/RepositoryProvider";
+import { useService } from "../../providers/ServiceProvider";
 
 type ToggleProps = {
   isActive?: boolean;
@@ -19,7 +19,7 @@ const SignUpForm = ({ isActive, toggleActive }: ToggleProps) => {
   const {
     icons: { CloseIcon, EyeOpen, EyeClose },
   } = assets;
-
+  const { authService } = useService();
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -45,12 +45,12 @@ const SignUpForm = ({ isActive, toggleActive }: ToggleProps) => {
     initialValues: initialValues,
     validationSchema: signUpSchema,
     onSubmit: async (values) => {
-      const response = await accessRepository.signUp(values);
-      const error = globalStore.getState().error;
-      if(response){
+      const response = await authService.signUp(values);
+      const error = useGlobalStore.getState().error;
+      if (response) {
         toast.success("Successfully signed up");
         resetForm();
-      }else{
+      } else {
         toast.error(error);
       }
     },
@@ -92,7 +92,10 @@ const SignUpForm = ({ isActive, toggleActive }: ToggleProps) => {
               <img src={CloseIcon} />
             </button>
           </header>
-          <form className="px-[8.33vw] pt-8 mb-[4rem]" onSubmit={handleSubmit}>
+          <form
+            className=" px-[14vw] md:px-[8.33vw] pt-8 mb-[4rem]"
+            onSubmit={handleSubmit}
+          >
             <div className="flex flex-col gap-7">
               <div>
                 <Input

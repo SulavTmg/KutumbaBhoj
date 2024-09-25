@@ -3,12 +3,12 @@ import Input from "../form_elements/Input";
 import Button from "../Button";
 import { singnInSchema } from "../../schemas";
 import { useFormik } from "formik";
-import { globalStore } from "../../store";
+import { useGlobalStore } from "../../store";
 import assets from "../../assets/assets";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { accessRepository } from "../../providers/RepositoryProvider";
+import { useService } from "../../providers/ServiceProvider";
 
 type toggleProps = {
   toggleActive: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -16,16 +16,19 @@ type toggleProps = {
 
 const LoginForm = (props: toggleProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const { authService } = useService();
+  const navigate = useNavigate();
+
   const {
     logos: { Logo },
     icons: { EyeOpen, EyeClose },
   } = assets;
+
   const initialValues = {
     email: "",
     password: "",
   };
 
-  const navigate = useNavigate();
   const {
     values,
     touched,
@@ -38,8 +41,8 @@ const LoginForm = (props: toggleProps) => {
     initialValues: initialValues,
     validationSchema: singnInSchema,
     onSubmit: async (values) => {
-      await accessRepository.login(values);
-      const error = globalStore.getState().error;
+      await authService.login(values);
+      const error = useGlobalStore.getState().error;
       if (error) {
         toast.error(error);
       } else {
@@ -49,15 +52,19 @@ const LoginForm = (props: toggleProps) => {
     },
   });
   return (
-    <div className="md:max-w-[445px] md:w-full">
+    <div className=" md:max-w-[445px] md:w-full md:mx-12">
       <div className="">
-        <img src={Logo} alt="kutumba-bhoj-logo" className="size-36 md:w-56" />
+        <img
+          src={Logo}
+          alt="kutumba-bhoj-logo"
+          className="w-[9rem] mb-5 md:w-56"
+        />
       </div>
       <header className="mb-[46px]">
         <h1 className="font-sans text-lg md:text-3xl md:mb-1 leading-10 font-semibold ">
           Welecome Back
         </h1>
-        <span className="font-thin text-xs md:text-base text-[#A2A1A8]">
+        <span className="font-thin text-[10px] md:text-base text-[#A2A1A8]">
           Please enter your email and password to continue
         </span>
       </header>
@@ -109,7 +116,7 @@ const LoginForm = (props: toggleProps) => {
           </div>
         </div>
         <div className="flex justify-between items-center mt-7">
-          <CheckBox />
+          <CheckBox label={true} />
           <a className="text-[10px] sm:text-sm">Forget Password?</a>
         </div>
         <div className="my-6 sm:my-[30px]">

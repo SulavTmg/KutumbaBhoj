@@ -8,8 +8,9 @@ import { useFormik } from "formik";
 import { addMenuItemSchema } from "../../schemas";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { globalStore } from "../../store";
-import { menuRepository } from "../../providers/RepositoryProvider";
+import { useGlobalStore } from "../../store";
+import { useService } from "../../providers/ServiceProvider";
+import { AddItem } from "../../types/menu";
 
 const AddMenuItem = () => {
   const [resetFiles, setResetFiles] = useState(false);
@@ -19,7 +20,7 @@ const AddMenuItem = () => {
     categoryId: string;
   }>();
   const navigate = useNavigate();
-
+  const { menuService } = useService();
   const {
     icons: { BackArrow },
   } = assets;
@@ -43,17 +44,17 @@ const AddMenuItem = () => {
     onSubmit: async (values) => {
       const imgIds: number[] = [];
       if (imageId) imgIds.push(imageId);
-      const itemData = {
+      const itemData: AddItem = {
         RestaurantId: Number(restaurantId),
         CategoryId: Number(categoryId),
         Name: values.name,
         Price: Number(values.price),
         ImageIds: imgIds,
       };
-      const response = await menuRepository.addItem(itemData);
-      const error = globalStore.getState().error;
+      const response = await menuService.addItem(itemData);
+      const error = useGlobalStore.getState().error;
       if (response) {
-        await menuRepository.getMenu(Number(restaurantId));
+        await menuService.getMenu(Number(restaurantId));
         toast.success("Category added successfully");
         navigate(`/menu/${restaurantId}`);
       } else {

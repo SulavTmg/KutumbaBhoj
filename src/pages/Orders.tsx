@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import Header from "../components/common/Header";
 import Table from "../components/table/Table";
-import { orderRepository } from "../providers/RepositoryProvider";
-import { orderStore } from "../store";
+import { useService } from "../providers/ServiceProvider";
+import { useOrderStore } from "../store";
 const Orders = () => {
-  const { orders } = orderStore();
-  const updateOrdersByQuery = (query: string) => {
-    orderRepository.search(query);
+  const { orderService } = useService();
+  const orders = useOrderStore((state) => state.orders);
+  const updateOrdersByQuery = async (query: string) => {
+    await orderService.searchOrder(query);
   };
   useEffect(() => {
-    orderStore.getState().order = null;
+    useOrderStore.getState().order = null;
   });
   const columns = [
     {
@@ -48,7 +49,13 @@ const Orders = () => {
           onSearchChange={updateOrdersByQuery}
         />
       </div>
-      <Table type="order" columns={columns} data={orders} actions={false} />
+      <Table
+        tableType="Primary"
+        type="order"
+        columns={columns}
+        data={orders}
+        actions={false}
+      />
     </div>
   );
 };

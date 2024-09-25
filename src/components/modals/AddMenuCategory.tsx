@@ -8,15 +8,15 @@ import { useFormik } from "formik";
 import { addCategorySchema } from "../../schemas";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { globalStore } from "../../store";
-import { menuRepository } from "../../providers/RepositoryProvider";
+import { useGlobalStore } from "../../store";
+import { useService } from "../../providers/ServiceProvider";
 
 const AddMenuCategory = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const [imageId, setImageId] = useState<number | null>(null);
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const {menuService} = useService();
   const {
     icons: { BackArrow },
   } = assets;
@@ -45,8 +45,8 @@ const AddMenuCategory = () => {
         Name: values.name,
         ImageIds: imgIds,
       };
-      const response = await menuRepository.addCategory(categoryData);
-      const error = globalStore.getState().error;
+      const response = await menuService.addCategory(categoryData);
+      const error = useGlobalStore.getState().error;
       if (response) {
         toast.success("Category added successfully");
         navigate(`/menu/${id}`);

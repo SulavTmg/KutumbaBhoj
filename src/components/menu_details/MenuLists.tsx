@@ -2,17 +2,13 @@ import toast from "react-hot-toast";
 import assets from "../../assets/assets";
 import { MenuListsProps } from "../../types/menu";
 import { Link } from "react-router-dom";
+import { useService } from "../../providers/ServiceProvider";
 
-const MenuLists = ({
-  restaurantId,
-  menuLists,
-  categoryId,
-  menuRepository,
-}: MenuListsProps) => {
+const MenuLists = ({ restaurantId, menuLists, categoryId }: MenuListsProps) => {
   const {
     icons: { AddIcon3 },
   } = assets;
-
+  const { menuService } = useService();
   return (
     <div className="border rounded-lg w-full font-josefin">
       <table className="w-full">
@@ -35,9 +31,9 @@ const MenuLists = ({
                   </button>
                   <button
                     onClick={async () => {
-                      const response = await menuRepository.delete(item.Id);
+                      const response = await menuService.deleteItem(item.Id);
                       if (response) {
-                        await menuRepository.getMenu(restaurantId);
+                        await menuService.getMenu(restaurantId);
                         toast.success("Successfully removed");
                       }
                     }}

@@ -7,15 +7,16 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { employeeSchema } from "../../schemas";
-import { globalStore } from "../../store";
-import { employeeRepository } from "../../providers/RepositoryProvider";
+import { useGlobalStore } from "../../store";
+import { useService } from "../../providers/ServiceProvider";
+import { Employee } from "../../types/employee";
 
 const AddEmployees = () => {
   const {
     icons: { BackArrow },
   } = assets;
   const navigate = useNavigate();
-
+  const { employeeService } = useService();
   const initialvalues = {
     firstName: "",
     lastName: "",
@@ -46,7 +47,7 @@ const AddEmployees = () => {
         values.lastName ? ` ${values.lastName}` : ""
       }`;
 
-      const data = {
+      const data: Employee = {
         Id: Number(values.employeeID),
         Name: name,
         Contact: values.contact,
@@ -58,10 +59,10 @@ const AddEmployees = () => {
         VehicleType: values.vehicleType,
         VehicleNumber: values.vehicleNumber,
       };
-      const response = await employeeRepository.create(data);
-      const error = globalStore.getState().error;
+      const response = await employeeService.addEmployee(data);
+      const error = useGlobalStore.getState().error;
       if (response) {
-        await employeeRepository.getAll();
+        await employeeService.getEmployees();
         toast.success("Employee added successfully");
         navigate("/employees");
       } else {

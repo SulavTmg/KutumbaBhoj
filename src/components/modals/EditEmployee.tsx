@@ -6,22 +6,24 @@ import Select from "../form_elements/Select";
 import toast from "react-hot-toast";
 import { useFormik } from "formik";
 import { editEmployeeSchema } from "../../schemas";
-import { employeeStore, globalStore } from "../../store";
+import { useEmployeeStore, useGlobalStore } from "../../store";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { employeeRepository } from "../../providers/RepositoryProvider";
+import { useService } from "../../providers/ServiceProvider";
+import { Employee } from "../../types/employee";
 
 const EditEmployee = () => {
   const { id } = useParams();
   const Id = Number(id);
   const navigate = useNavigate();
+  const { employeeService } = useService();
   useEffect(() => {
     (async () => {
-      await employeeRepository.getById(Id);
+      await employeeService.getEmployeeById(Id);
     })();
-  }, [Id]);
+  }, [Id, employeeService]);
 
-  const { employee } = employeeStore();
+  const employee = useEmployeeStore((state) => state.employee);
 
   const {
     icons: { BackArrow },
@@ -53,7 +55,7 @@ const EditEmployee = () => {
         values.lastName ? ` ${values.lastName}` : ""
       }`;
 
-      const data = {
+      const data: Employee = {
         Id: Id,
         Name: name,
         Contact: values.contact,
@@ -61,10 +63,10 @@ const EditEmployee = () => {
         Shift: values.shift,
         Designation: values.designation,
       };
-      const response = await employeeRepository.update(data);
-      const error = globalStore.getState().error;
+      const response = await employeeService.updateEmployee(data);
+      const error = useGlobalStore.getState().error;
       if (response) {
-        await employeeRepository.getAll();
+        await employeeService.getEmployees();
         toast.success("Employee updated successfully");
         navigate("/employees");
       } else {
@@ -73,7 +75,7 @@ const EditEmployee = () => {
     },
   });
 
-  if (globalStore.getState().loading) return <div>Loading...</div>;
+  if (useGlobalStore.getState().loading) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">

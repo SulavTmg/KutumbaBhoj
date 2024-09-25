@@ -1,16 +1,17 @@
 import assets from "../../assets/assets";
 import Header from "../common/Header";
-import { globalStore, orderStore } from "../../store";
+import { useGlobalStore, useOrderStore } from "../../store";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import toast from "react-hot-toast";
-import { orderRepository } from "../../providers/RepositoryProvider";
+import { Order } from "../../types/order";
+import { useService } from "../../providers/ServiceProvider";
 
 const Orderdetails = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [statusUpdated, setStatusUpdated] = useState(false);
-
+  const { orderService } = useService();
   const handleToggle = () => {
     setIsVisible(!isVisible);
   };
@@ -24,18 +25,19 @@ const Orderdetails = () => {
 
   useEffect(() => {
     (async () => {
-      await orderRepository.getById(Number(id));
+      await orderService.getOrderById(Number(id));
       if (statusUpdated) {
         toast.success("Status updated");
+        await orderService.getOrders();
         setStatusUpdated(false);
       }
     })();
-  }, [id, statusUpdated]);
+  }, [id, statusUpdated, orderService]);
 
-  const { order } = orderStore();
+  const order = useOrderStore((state) => state.order);
 
   const updateStatus = async (status: string) => {
-    const data = {
+    const data: Order = {
       Id: Number(id),
       RestaurantId: order!.RestaurantId,
       Restaurant: order!.Restaurant,
@@ -47,8 +49,8 @@ const Orderdetails = () => {
       Status: status,
       OrderedItems: order!.OrderedItems,
     };
-    const response = await orderRepository.update(data);
-    const error = globalStore.getState().error;
+    const response = await orderService.updateOrder(data);
+    const error = useGlobalStore.getState().error;
     if (response) {
       setIsVisible(false);
       setStatusUpdated(true);

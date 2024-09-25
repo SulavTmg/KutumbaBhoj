@@ -10,16 +10,16 @@ import moment from "moment";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { addRestaurantSchema } from "../../schemas";
-import { RestaurantDetails } from "../../types/restaurant";
-import { globalStore} from "../../store";
+import { Restaurant, RestaurantDetails } from "../../types/restaurant";
+import { useGlobalStore } from "../../store";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { restaurantRepository } from "../../providers/RepositoryProvider";
+import { useService } from "../../providers/ServiceProvider";
 
 const AddRestaurant = () => {
   const [resetFiles, setResetFiles] = useState(false);
   const navigate = useNavigate();
-
+  const { restaurantService } = useService();
   const formatedTime = (time: moment.Moment) => {
     return time.minutes() === 0 ? time.format("h A") : time.format("h:mm A");
   };
@@ -56,20 +56,20 @@ const AddRestaurant = () => {
     validationSchema: addRestaurantSchema,
     onSubmit: async (values) => {
       const imgIds = [values.logoId, values.bannerId];
-      const restaurantData = {
-        contact: values.contact,
-        address: values.address,
-        imageIds: imgIds,
-        name: values.restaurantName,
-        openingHours: `${formatedTime(
+      const restaurantData: Restaurant = {
+        Contact: values.contact,
+        Address: values.address,
+        ImageIds: imgIds,
+        Name: values.restaurantName,
+        OpeningHours: `${formatedTime(
           moment(values.openingTime)
         )} - ${formatedTime(moment(values.closingTime))}`,
       };
 
-      const response = await restaurantRepository.create(restaurantData);
-      const error = globalStore.getState().error;
+      const response = await restaurantService.addRestaurant(restaurantData);
+      const error = useGlobalStore.getState().error;
       if (response) {
-        restaurantRepository.getAll();
+        restaurantService.getRestaurants();
         toast.success("Restaurant added successfully");
         navigate("/restaurants");
       } else {

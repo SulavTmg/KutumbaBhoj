@@ -1,13 +1,14 @@
 import Header from "../../components/common/Header";
 import Table from "../../components/table/Table";
-import {employeeRepository}  from "../../providers/RepositoryProvider";
-import { employeeStore } from "../../store";
+import { useService } from "../../providers/ServiceProvider";
+import { useEmployeeStore } from "../../store";
 
 const Employees = () => {
-  const { employees } = employeeStore();
+  const { employeeService } = useService();
+  const employees = useEmployeeStore((state) => state.employees);
 
-  const updateEmployeesByQuery = (query: string) => {
-    employeeRepository.search(query);
+  const updateEmployeesByQuery = async (query: string) => {
+    await employeeService.searchEmployee(query);
   };
 
   const columns = [
@@ -47,6 +48,7 @@ const Employees = () => {
         />
       </div>
       <Table
+        tableType="Primary"
         type="employee"
         actions={true}
         columns={columns}

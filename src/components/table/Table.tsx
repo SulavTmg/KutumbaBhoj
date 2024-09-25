@@ -6,19 +6,27 @@ import { TableProps } from "../../types/table";
 import { Employee } from "../../types/employee";
 import { Order } from "../../types/order";
 import { Link } from "react-router-dom";
+import EditRole from "../modals/EditRole";
+import Modal from "../Modal";
 import toast from "react-hot-toast";
-import {
-  customerRepository,
-  employeeRepository,
-  orderRepository,
-  restaurantRepository,
-} from "../../providers/RepositoryProvider";
+import { useService } from "../../providers/ServiceProvider";
 
-const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
+const Table = ({
+  tableType,
+  columns,
+  data,
+  actions,
+  type,
+  nameId,
+}: TableProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
-    icons: { EyeIcon, EditIcon, DeleteIcon },
+    icons: { EyeIcon, EditIcon, DeleteIcon, TickedUser },
   } = assets;
   const [currentPage, setCurrentPage] = useState(1);
+  const { employeeService, customerService, orderService, restaurantService } =
+    useService();
+
   const itemsPerPage = 5;
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -29,7 +37,7 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
     setCurrentPage(pageNumber);
   };
 
-  const getPath = (type: string, id: number) => {
+  const getPath = (type: string, id: number): string => {
     switch (type) {
       case "restaurant":
         return `/restaurants/edit-restaurant/${id}`;
@@ -38,7 +46,7 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
       case "employee":
         return `/employees/edit-employee/${id}`;
       default:
-        return "/";
+        return "#";
     }
   };
 
@@ -75,9 +83,9 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
                       <div className="flex items-center">
                         <img
                           src={`https://admin.kutumbabazar.com/foodapi/${
-                            (row as Restaurant).Images[0]?.Url
+                            (row as Restaurant).Images![0]?.Url
                           }`}
-                          alt={(row as Restaurant).Images[0]?.Name}
+                          alt={(row as Restaurant).Images![0]?.Name}
                           className="size-11 mr-2"
                         />
                         <span>{(row as Restaurant).Name}</span>
@@ -120,7 +128,7 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
                       <div>
                         {(() => {
                           const date = new Date(
-                            (row as Restaurant | Employee)[column.accessor]
+                            (row as Restaurant | Employee)[column.accessor]!
                           );
                           const formattedDate = date.toLocaleDateString();
                           const formattedTime = date.toLocaleTimeString([], {
@@ -155,11 +163,22 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
                 {actions && (
                   <td className="px-6">
                     <div className="flex gap-2">
-                      <button>
-                        <img src={EyeIcon} alt="View" />
+                      <button
+                        onClick={
+                          tableType === "Secondary"
+                            ? () => setIsModalOpen(true)
+                            : undefined
+                        }
+                      >
+                        <img
+                          src={tableType === "Primary" ? EyeIcon : TickedUser}
+                          alt={`${
+                            tableType === "Primary" ? "View" : "TickedUser"
+                          }`}
+                        />
                       </button>
                       <button>
-                        <Link to={getPath(type, row["Id"])}>
+                        <Link to={getPath(type, row["Id"]!)}>
                           <img src={EditIcon} alt="Edit" />
                         </Link>
                       </button>
@@ -167,42 +186,44 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
                         onClick={async () => {
                           switch (type) {
                             case "customer": {
-                              const response = await customerRepository.delete(
-                                Number(row["Id"])
-                              );
+                              const response =
+                                await customerService.deleteCustomer(
+                                  Number(row["Id"])
+                                );
                               if (response) {
-                                await customerRepository.getAll();
+                                await customerService.getCustomers();
                                 toast.success("Successfully deleted");
                               }
                               break;
                             }
                             case "employee": {
-                              const response = await employeeRepository.delete(
-                                Number(row["Id"])
-                              );
+                              const response =
+                                await employeeService.deleteEmployee(
+                                  Number(row["Id"])
+                                );
                               if (response) {
-                                await employeeRepository.getAll();
+                                await employeeService.getEmployees();
                                 toast.success("Successfully deleted");
                               }
                               break;
                             }
                             case "order": {
-                              const response = await orderRepository.delete(
+                              const response = await orderService.deleteOrder(
                                 Number(row["Id"])
                               );
                               if (response) {
-                                await orderRepository.getAll();
+                                await orderService.getOrders();
                                 toast.success("Successfully deleted");
                               }
                               break;
                             }
                             case "restaurant": {
                               const response =
-                                await restaurantRepository.delete(
+                                await restaurantService.deleteRestaurant(
                                   Number(row["Id"])
                                 );
                               if (response) {
-                                await restaurantRepository.getAll();
+                                await restaurantService.getRestaurants();
                                 toast.success("Successfully deleted");
                               }
                               break;
@@ -233,6 +254,9 @@ const Table = ({ columns, data, actions, type, nameId }: TableProps) => {
           onPageChange={handlePageChange}
         />
       </div>
+      <Modal onClose={() => setIsModalOpen(!isModalOpen)} open={isModalOpen}>
+        <EditRole />
+      </Modal>
     </>
   );
 };

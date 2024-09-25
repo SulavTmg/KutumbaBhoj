@@ -1,9 +1,11 @@
 import Header from "../../components/common/Header";
 import Table from "../../components/table/Table";
-import { restaurantStore } from "../../store";
+import { useRestaurantStore } from "../../store";
 
 const Restaurants = () => {
-  const { restaurants, setSearchQuery } = restaurantStore();
+  const restaurants = useRestaurantStore((state) => state.restaurants);
+  const setSearchQuery = useRestaurantStore((state) => state.setSearchQuery);
+
   const columns = [
     {
       header: "Restaurant Name",
@@ -38,6 +40,7 @@ const Restaurants = () => {
         />
       </div>
       <Table
+      tableType="Primary"
         type="restaurant"
         columns={columns}
         data={restaurants}

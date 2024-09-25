@@ -8,9 +8,9 @@ import { useFormik } from "formik";
 import { addCategorySchema } from "../../schemas";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { globalStore, menuStore } from "../../store";
+import { useGlobalStore, useMenuStore } from "../../store";
 import { ItemDetails } from "../../types/menu";
-import { menuRepository } from "../../providers/RepositoryProvider";
+import { useService } from "../../providers/ServiceProvider";
 
 const EditMenuItems = () => {
   const [resetFiles, setResetFiles] = useState(false);
@@ -18,13 +18,14 @@ const EditMenuItems = () => {
   const { id } = useParams();
   const Id = Number(id);
   const navigate = useNavigate();
+  const {menuService} = useService();
   useEffect(() => {
     (async () => {
-      await menuRepository.getItem(Id);
+      await menuService.getItem(Id);
     })();
-  }, [Id]);
+  }, [Id, menuService]);
 
-  const { item } = menuStore();
+  const item = useMenuStore((state) => state.item);
   const {
     icons: { BackArrow },
   } = assets;
@@ -66,8 +67,8 @@ const EditMenuItems = () => {
         itemData.ImageIds = imgIds;
       }
 
-      const response = await menuRepository.update(itemData);
-      const error = globalStore.getState().error;
+      const response = await menuService.updateItem(itemData);
+      const error = useGlobalStore.getState().error;
       if (response) {
         toast.success("Successfully updated");
         navigate(`/menu/${item?.RestaurantId}`);
@@ -84,7 +85,7 @@ const EditMenuItems = () => {
     setTimeout(() => setResetFiles(false), 0);
   };
 
-  if (globalStore.getState().loading) return <div>Loading...</div>;
+  if (useGlobalStore.getState().loading) return <div>Loading...</div>;
 
   return (
     <div className="rounded-lg shadow-[rgba(0,0,0,0.1)_0px_0px_10px] bg-white border-[rgba(0,0,.125)]">

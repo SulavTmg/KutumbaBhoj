@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import Header from "../../components/common/Header";
-import { menuStore, restaurantStore } from "../../store";
+import { useMenuStore, useRestaurantStore } from "../../store";
 import { Link } from "react-router-dom";
 
 const Menu = () => {
-  const { restaurants } = restaurantStore();
+  const restaurants = useRestaurantStore((state) => state.restaurants);
 
   useEffect(() => {
-    menuStore.getState().menu = null;
+    useMenuStore.getState().menu = null;
   }, []); 
 
   return (
