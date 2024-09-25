@@ -19,32 +19,16 @@ export interface Image {
 }
 
 interface Restaurant {
-  Id: number;
+  Id?: number;
   Name: string;
   Contact: string;
   OpeningHours: string;
   Address: string;
-  Review: number;
-  Joined: string;
-  Images: Image[];
+  Review?: number;
+  Joined?: string;
+  Images?: Image[];
+  ImageIds: (number | null)[];
 }
-
-interface AddRestaurant {
-  name: string;
-  contact: string;
-  openingHours: string;
-  address: string;
-  imageIds?: (number | null)[];
-}
-
-export type UpdateRestaurant = {
-  id: number;
-  name: string;
-  openingHours: string;
-  contact: string;
-  address: string;
-  imageIds: (number | null)[];
-};
 
 export interface RestaurantStore {
   restaurants: Restaurant[];

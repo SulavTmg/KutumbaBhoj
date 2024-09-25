@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import employeeStore from "./employeeStore";
-import authStore from "./authStore";
-import orderStore from "./orderStore";
-import customerStore from "./customerStore";
-import restaurantStore from "./restaurantStore";
-import imgUploadStore from "./imgUploadStore";
-import menuStore from "./menuStore";
+import useEmployeeStore from "./useEmployeeStore";
+import useAuthStore from "./useAuthStore";
+import useOrderStore from "./useOrderStore";
+import useCustomerStore from "./useCustomerStore";
+import useRestaurantStore from "./useRestaurantStore";
+import useImgUploadStore from "./useImgUploadStore";
+import useMenuStore from "./useMenuStore";
 
 interface GlobalStore {
   loading: boolean;
@@ -14,7 +14,7 @@ interface GlobalStore {
   setError: (error: string | null) => void;
 }
 
-const globalStore = create<GlobalStore>((set) => ({
+const useGlobalStore = create<GlobalStore>((set) => ({
   loading: false,
   error: null,
 
@@ -22,4 +22,4 @@ const globalStore = create<GlobalStore>((set) => ({
   setError: (error: string | null) => set({ error }),
 }));
 
-export {employeeStore, authStore, orderStore, customerStore, globalStore, restaurantStore, imgUploadStore, menuStore};
+export {useEmployeeStore,useAuthStore, useCustomerStore,useImgUploadStore,useMenuStore,useOrderStore,useRestaurantStore, useGlobalStore};
